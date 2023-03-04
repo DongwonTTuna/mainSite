@@ -58,7 +58,7 @@ body {
     @apply min-h-[1000px] h-full relative mx-auto w-fit;
   }
   .mainSite .textWrapper {
-    @apply absolute top-[110px] left-8 z-10  whitespace-nowrap text-[70px];
+    @apply absolute top-[110px] left-8 z-10 whitespace-nowrap text-[70px];
   }
   .mainSite .gridWrapper {
     @apply relative top-24 left-6 2xl:left-0 4xl:left-6 grid min-w-[1500px] w-fit gap-6 grid-flow-col grid-cols-4 4xl:grid-cols-5; 
