@@ -61,10 +61,10 @@ body {
     @apply min-h-[900px] h-screen relative top-10 mx-auto w-fit;
   }
   .mainSite .textWrapper {
-    @apply absolute top-[140px] left-14 lg:left-0 z-10  whitespace-nowrap text-[70px];
+    @apply absolute top-[110px] left-14 lg:left-0 z-10  whitespace-nowrap text-[70px];
   }
   .mainSite .gridWrapper {
-    @apply relative top-24 left-32 lg:left-16 grid min-w-[1250px] w-fit gap-6 grid-flow-col grid-cols-4 4xl:grid-cols-5; 
+    @apply relative top-24 left-0 lg:left-16 grid min-w-[1500px] w-fit gap-6 grid-flow-col grid-cols-4 4xl:grid-cols-5; 
     grid-template-rows: repeat(20, 19px);
   }
   .mainSite .gridWrapper .container {
@@ -75,19 +75,19 @@ body {
     @apply rounded-[20px];
   }
   .mainSite .gridWrapper .firstItem {
-    @apply w-[300px] row-span-full row-start-[12] row-end-[21];
+    @apply w-[350px] row-span-full row-start-[12] row-end-[21];
   }
   .mainSite .gridWrapper .secondItem {
-    @apply w-[300px]  row-span-full row-start-[9] row-end-[21];
+    @apply w-[350px]  row-span-full row-start-[9] row-end-[21];
   }
   .mainSite .gridWrapper .thirdItem {
-    @apply w-[300px] row-span-full;
+    @apply w-[350px] row-span-full;
   }
   .mainSite .gridWrapper .fourthItem {
-    @apply w-[300px] row-start-[1] row-end-[11];
+    @apply w-[350px] row-start-[1] row-end-[11];
   }
   .mainSite .gridWrapper .fifthItem {
-    @apply w-[300px] row-start-[11] row-end-[21];
+    @apply w-[350px] row-start-[11] row-end-[21];
   }
   .mainSite .gridWrapper .sixthItem {
     @apply w-[0px] row-span-full row-start-[1] row-end-[13] hidden 4xl:w-[300px] 4xl:block;

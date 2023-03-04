@@ -151,7 +151,7 @@ export default component$(() => {
           Fullstack Engineer
         </p>
         <Link
-          class="ml-[60px] block mt-7 cursor-pointer"
+          class="ml-[60px] block mt-10 cursor-pointer"
           href="/works/frontend"
         >
           <button class="border-[1px] border-black p-5 rounded-[10px] text-2xl">
