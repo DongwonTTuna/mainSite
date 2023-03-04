@@ -1,5 +1,5 @@
 import { component$, useBrowserVisibleTask$ } from "@builder.io/qwik";
-import { Link, useNavigate } from "@builder.io/qwik-city";
+import { useNavigate } from "@builder.io/qwik-city";
 import { Image } from "@unpic/qwik";
 import Swiper, { Autoplay } from "swiper";
 import type { SwiperOptions } from "swiper";
