@@ -1,5 +1,5 @@
 import { component$, useBrowserVisibleTask$ } from "@builder.io/qwik";
-import { Link } from "@builder.io/qwik-city";
+import { Link, useNavigate } from "@builder.io/qwik-city";
 import { Image } from "@unpic/qwik";
 import Swiper, { Autoplay } from "swiper";
 import type { SwiperOptions } from "swiper";
@@ -63,12 +63,12 @@ const thirdGrid: Array<ImageItems> = [
   },
   {
     src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/v1677918257/lovelyWoman_uz5qrc.png",
-    alt: "LovelyWoman"
+    alt: "LovelyWoman",
   },
   {
     src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/v1677918258/structure_fdirbv.png",
-    alt:"bigStructure"
-  }
+    alt: "bigStructure",
+  },
 ];
 const fourthGrid: Array<ImageItems> = [
   {
@@ -142,6 +142,7 @@ export default component$(() => {
     new Swiper(".swiper", SwiperOptions);
   });
 
+  const nav = useNavigate();
   return (
     <div class="mainSite">
       <div class="textWrapper">
@@ -150,14 +151,9 @@ export default component$(() => {
           <br />
           Fullstack Engineer
         </p>
-        <Link
-          class="ml-[60px] block mt-10 cursor-pointer"
-          href="/works/frontend"
-        >
-          <button class="border-[1px] border-black p-5 rounded-[10px] text-2xl">
-            Check My Works
-          </button>
-        </Link>
+        <button onClick$={()=>nav("/works/frontend")} class=" ml-10 mt-20 border-[1px] border-black p-5 rounded-[10px] text-2xl">
+          Check My Works
+        </button>
       </div>
       <div class="gridWrapper">
         <div class="firstItem container">

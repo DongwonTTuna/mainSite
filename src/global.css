@@ -15,9 +15,6 @@ body {
 
 @layer components {
 
-  .content {
-    @apply overflow-x-hidden;
-  }
 
   /* Header */
 
@@ -58,13 +55,13 @@ body {
   /* Main website First Component */
 
   .mainSite {
-    @apply min-h-[900px] h-screen relative top-10 mx-auto w-fit;
+    @apply min-h-[1000px] h-full relative top-10 mx-auto w-fit;
   }
   .mainSite .textWrapper {
-    @apply absolute top-[110px] left-14 lg:left-0 z-10  whitespace-nowrap text-[70px];
+    @apply absolute top-[110px] left-8 z-10  whitespace-nowrap text-[70px];
   }
   .mainSite .gridWrapper {
-    @apply relative top-24 left-0 lg:left-16 grid min-w-[1500px] w-fit gap-6 grid-flow-col grid-cols-4 4xl:grid-cols-5; 
+    @apply relative top-24 left-6 2xl:left-0 4xl:left-6 grid min-w-[1500px] w-fit gap-6 grid-flow-col grid-cols-4 4xl:grid-cols-5; 
     grid-template-rows: repeat(20, 19px);
   }
   .mainSite .gridWrapper .container {
