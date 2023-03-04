@@ -5,7 +5,7 @@ import FirstComponent from "~/components/main/FirstComponent";
 export default component$(() => {
 
   return (
-    <div>
+    <div class="content">
       <FirstComponent/>
     </div>
   );
