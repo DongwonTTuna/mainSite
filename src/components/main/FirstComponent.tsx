@@ -167,10 +167,12 @@ export default component$(() => {
                     ) : (
                       <div class="swiper-slide" key={`frsl${index}`}>
                         <Image
+                          loading="eager"
                           layout="fullWidth"
                           height={500}
                           style={{ height: "100%" }}
                           src={item.src}
+                          srcSet={item.src}
                           alt={item.alt}
                         />
                       </div>
@@ -192,10 +194,12 @@ export default component$(() => {
                     ) : (
                       <div class="swiper-slide" key={`frsl${index}`}>
                         <Image
+                        loading="eager"
                           layout="fullWidth"
                           height={500}
                           style={{ height: "100%" }}
                           src={item.src}
+                          srcSet={item.src}
                           alt={item.alt}
                         />
                       </div>
@@ -217,10 +221,12 @@ export default component$(() => {
                     ) : (
                       <div class="swiper-slide" key={`frsl${index}`}>
                         <Image
+                        loading="eager"
                           layout="fullWidth"
                           height={500}
                           style={{ height: "100%" }}
                           src={item.src}
+                          srcSet={item.src}
                           alt={item.alt}
                         />
                       </div>
@@ -242,10 +248,12 @@ export default component$(() => {
                     ) : (
                       <div class="swiper-slide" key={`frsl${index}`}>
                         <Image
+                        loading="eager"
                           layout="fullWidth"
                           height={500}
                           style={{ height: "100%" }}
                           src={item.src}
+                          srcSet={item.src}
                           alt={item.alt}
                         />
                       </div>
@@ -267,10 +275,12 @@ export default component$(() => {
                     ) : (
                       <div class="swiper-slide" key={`frsl${index}`}>
                         <Image
+                        loading="eager"
                           layout="fullWidth"
                           height={500}
                           style={{ height: "100%" }}
                           src={item.src}
+                          srcSet={item.src}
                           alt={item.alt}
                         />
                       </div>
@@ -292,10 +302,12 @@ export default component$(() => {
                     ) : (
                       <div class="swiper-slide" key={`frsl${index}`}>
                         <Image
+                        loading="eager"
                           layout="fullWidth"
                           height={500}
                           style={{ height: "100%" }}
                           src={item.src}
+                          srcSet={item.src}
                           alt={item.alt}
                         />
                       </div>
