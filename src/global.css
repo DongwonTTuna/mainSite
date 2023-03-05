@@ -14,8 +14,6 @@ body {
 }
 
 @layer components {
-
-
   /* Header */
 
   .header {
@@ -32,7 +30,7 @@ body {
     transition: box-shadow 0.3s ease-in-out;
   }
   .header .menu {
-    @apply flex min-w-[400px] w-[70vw] max-w-[1720px] h-[53px] justify-around items-center text-[24px];
+    @apply flex min-w-[700px] w-[70vw] max-w-[1720px] h-[53px] justify-around items-center text-[24px];
   }
   .header .menu .item {
     @apply border-b-[1px] border-black w-[130px] text-center rounded-md;
@@ -61,7 +59,7 @@ body {
     @apply absolute top-[110px] left-8 z-10 whitespace-nowrap text-[70px];
   }
   .mainSite .gridWrapper {
-    @apply relative top-24 left-6 2xl:left-0 4xl:left-6 grid min-w-[1500px] w-fit gap-6 grid-flow-col grid-cols-4 4xl:grid-cols-5; 
+    @apply relative top-24 left-6 2xl:left-0 4xl:left-6 grid min-w-[1500px] w-fit gap-6 grid-flow-col grid-cols-4 4xl:grid-cols-5;
     grid-template-rows: repeat(20, 19px);
   }
   .mainSite .gridWrapper .container {
@@ -87,6 +85,6 @@ body {
     @apply w-[350px] row-start-[11] row-end-[21];
   }
   .mainSite .gridWrapper .sixthItem {
-    @apply w-[0px] row-span-full row-start-[1] row-end-[13] hidden 4xl:w-[300px] 4xl:block;
+    @apply w-[0px] row-span-full row-start-[1] row-end-[13] invisible 4xl:w-[300px] 4xl:visible;
   }
 }
