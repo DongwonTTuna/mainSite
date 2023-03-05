@@ -10,7 +10,7 @@ interface ImageItems {
 
 const firstGrid: Array<ImageItems> = [
   {
-    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677905872/cloud_flower_b09xvx",
+    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677905872/dongwontuna/cloud_flower_b09xvx",
     alt: "cloudFlower",
   },
   {
@@ -18,7 +18,7 @@ const firstGrid: Array<ImageItems> = [
     alt: "",
   },
   {
-    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677905873/plant_d0nr8q",
+    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677905873/dongwontuna/plant_d0nr8q",
     alt: "plant",
   },
   {
@@ -32,7 +32,7 @@ const secondGrid: Array<ImageItems> = [
     alt: "",
   },
   {
-    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677909435/treehoust_cbnk5d",
+    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677909435/dongwontuna/treehoust_cbnk5d",
     alt: "treeCity",
   },
   {
@@ -40,33 +40,33 @@ const secondGrid: Array<ImageItems> = [
     alt: "",
   },
   {
-    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677916854/island_lqml8z",
+    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677916854/dongwontuna/island_lqml8z",
     alt: "island",
   },
 ];
 const thirdGrid: Array<ImageItems> = [
   {
-    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677918031/tree_wmrdwz",
+    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677918031/dongwontuna/tree_wmrdwz",
     alt: "JapanTree",
   },
   {
-    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677909576/sunset_uwgbwi",
+    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677909576/dongwontuna/sunset_uwgbwi",
     alt: "sunset",
   },
   {
-    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677917024/papercut_uvceqh",
+    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677917024/dongwontuna/papercut_uvceqh",
     alt: "paperCutBird",
   },
   {
-    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677917529/blondeMan_txwr0f",
+    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677917529/dongwontuna/blondeMan_txwr0f",
     alt: "blondeMan",
   },
   {
-    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677918257/lovelyWoman_uz5qrc",
+    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677918257/dongwontuna/lovelyWoman_uz5qrc",
     alt: "LovelyWoman",
   },
   {
-    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677918258/structure_fdirbv",
+    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677918258/dongwontuna/structure_fdirbv.png",
     alt: "bigStructure",
   },
 ];
@@ -76,7 +76,7 @@ const fourthGrid: Array<ImageItems> = [
     alt: "",
   },
   {
-    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677905873/pastel_tree_deswod",
+    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677905873/dongwontuna/pastel_tree_deswod",
     alt: "pastel_tree",
   },
   {
@@ -84,13 +84,13 @@ const fourthGrid: Array<ImageItems> = [
     alt: "",
   },
   {
-    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677917529/isfahan_pt0wpk",
+    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677917529/dongwontuna/isfahan_pt0wpk",
     alt: "isfahan",
   },
 ];
 const fifthGrid: Array<ImageItems> = [
   {
-    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677905872/cat_lczscz",
+    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677905872/dongwontuna/cat_lczscz",
     alt: "cat",
   },
   {
@@ -98,7 +98,7 @@ const fifthGrid: Array<ImageItems> = [
     alt: "",
   },
   {
-    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677914893/cat2_tuzvuz",
+    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677914893/dongwontuna/cat2_tuzvuz",
     alt: "cat2",
   },
   {
@@ -106,7 +106,7 @@ const fifthGrid: Array<ImageItems> = [
     alt: "",
   },
   {
-    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677917529/terminator_nhzwxs",
+    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677917529/dongwontuna/terminator_nhzwxs",
     alt: "terminator",
   },
   {
@@ -116,15 +116,15 @@ const fifthGrid: Array<ImageItems> = [
 ];
 const sixthGrid: Array<ImageItems> = [
   {
-    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677905872/doggy_c4dlem",
+    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677905872/dongwontuna/doggy_c4dlem",
     alt: "Doggy",
   },
   {
-    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677905873/reflect_ball_wgo0mh",
+    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677905873/dongwontuna/reflect_ball_wgo0mh",
     alt: "reflect",
   },
   {
-    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677909575/man_clscxx",
+    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677909575/dongwontuna/man_clscxx",
     alt: "man",
   },
 ];
@@ -175,7 +175,7 @@ export default component$(() => {
                           height={500}
                           style={{ height: "100%" }}
                           src={item.src}
-                          srcSet={item.src}
+                          srcSet=""
                           alt={item.alt}
                         />
                       </div>
@@ -202,7 +202,7 @@ export default component$(() => {
                           height={500}
                           style={{ height: "100%" }}
                           src={item.src}
-                          srcSet={item.src}
+                          srcSet=""
                           alt={item.alt}
                         />
                       </div>
@@ -229,7 +229,7 @@ export default component$(() => {
                           height={500}
                           style={{ height: "100%" }}
                           src={item.src}
-                          srcSet={item.src}
+                          srcSet=""
                           alt={item.alt}
                         />
                       </div>
@@ -256,7 +256,7 @@ export default component$(() => {
                           height={500}
                           style={{ height: "100%" }}
                           src={item.src}
-                          srcSet={item.src}
+                          srcSet=""
                           alt={item.alt}
                         />
                       </div>
@@ -283,7 +283,7 @@ export default component$(() => {
                           height={500}
                           style={{ height: "100%" }}
                           src={item.src}
-                          srcSet={item.src}
+                          srcSet=""
                           alt={item.alt}
                         />
                       </div>
@@ -310,7 +310,7 @@ export default component$(() => {
                           height={500}
                           style={{ height: "100%" }}
                           src={item.src}
-                          srcSet={item.src}
+                          srcSet=""
                           alt={item.alt}
                         />
                       </div>

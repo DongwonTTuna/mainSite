@@ -11,7 +11,8 @@ const Header = component$(() => {
               layout="constrained"
               width={200}
               height={200}
-              src="https://res.cloudinary.com/dfd9pdmuf/image/upload/v1677865569/TunaCompress_bmaa13.png"
+              src="https://res.cloudinary.com/dfd9pdmuf/image/upload/w_512,f_auto/v1677865569/dongwontuna/TunaCompress_bmaa13"
+              srcSet=""
               alt="TunaLogo"
             />
           </div>
@@ -34,7 +35,8 @@ const Header = component$(() => {
                 layout="constrained"
                 width={50}
                 height={50}
-                src="https://res.cloudinary.com/dfd9pdmuf/image/upload/v1677865766/instagram_bhtla1.png"
+                src="https://res.cloudinary.com/dfd9pdmuf/image/upload/w_50,f_auto/v1677865766/dongwontuna/instagram_bhtla1"
+                srcSet=""
                 alt="InstagramLink"
               />
             </div>
@@ -45,7 +47,8 @@ const Header = component$(() => {
                 layout="constrained"
                 width={50}
                 height={50}
-                src="https://res.cloudinary.com/dfd9pdmuf/image/upload/v1677865766/github_ierqcd.png"
+                src="https://res.cloudinary.com/dfd9pdmuf/image/upload/w_50,f_auto/v1677865766/dongwontuna/github_ierqcd"
+                srcSet=""
                 alt="GithubLink"
               />
             </div>
@@ -56,7 +59,8 @@ const Header = component$(() => {
                 layout="constrained"
                 width={50}
                 height={50}
-                src="https://res.cloudinary.com/dfd9pdmuf/image/upload/v1677865767/telegram_whkmrc.png"
+                src="https://res.cloudinary.com/dfd9pdmuf/image/upload/w_50,f_auto/v1677865767/dongwontuna/telegram_whkmrc"
+                srcSet=""
                 alt="TelegramLink"
               />
             </div>
