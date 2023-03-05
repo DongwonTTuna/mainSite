@@ -90,7 +90,7 @@ const fourthGrid: Array<ImageItems> = [
 ];
 const fifthGrid: Array<ImageItems> = [
   {
-    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/v1677905872/cat_lczscz.png",
+    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677905872/cat_lczscz",
     alt: "cat",
   },
   {
@@ -98,7 +98,7 @@ const fifthGrid: Array<ImageItems> = [
     alt: "",
   },
   {
-    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/v1677914893/cat2_tuzvuz.png",
+    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677914893/cat2_tuzvuz",
     alt: "cat2",
   },
   {
@@ -106,7 +106,7 @@ const fifthGrid: Array<ImageItems> = [
     alt: "",
   },
   {
-    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/v1677917529/terminator_nhzwxs.png",
+    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677917529/terminator_nhzwxs",
     alt: "terminator",
   },
   {
