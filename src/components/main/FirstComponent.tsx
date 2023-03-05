@@ -10,7 +10,7 @@ interface ImageItems {
 
 const firstGrid: Array<ImageItems> = [
   {
-    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/v1677905872/cloud_flower_b09xvx.png",
+    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677905872/cloud_flower_b09xvx",
     alt: "cloudFlower",
   },
   {
@@ -18,7 +18,7 @@ const firstGrid: Array<ImageItems> = [
     alt: "",
   },
   {
-    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/v1677905873/plant_d0nr8q.png",
+    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677905873/plant_d0nr8q",
     alt: "plant",
   },
   {
@@ -32,7 +32,7 @@ const secondGrid: Array<ImageItems> = [
     alt: "",
   },
   {
-    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/v1677909435/treehoust_cbnk5d.png",
+    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677909435/treehoust_cbnk5d",
     alt: "treeCity",
   },
   {
@@ -40,33 +40,33 @@ const secondGrid: Array<ImageItems> = [
     alt: "",
   },
   {
-    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/v1677916854/island_lqml8z.png",
+    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677916854/island_lqml8z",
     alt: "island",
   },
 ];
 const thirdGrid: Array<ImageItems> = [
   {
-    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/v1677918031/tree_wmrdwz.png",
+    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677918031/tree_wmrdwz",
     alt: "JapanTree",
   },
   {
-    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/v1677909576/sunset_uwgbwi.png",
+    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677909576/sunset_uwgbwi",
     alt: "sunset",
   },
   {
-    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/v1677917024/papercut_uvceqh.png",
+    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677917024/papercut_uvceqh",
     alt: "paperCutBird",
   },
   {
-    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/v1677917529/blondeMan_txwr0f.png",
+    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677917529/blondeMan_txwr0f",
     alt: "blondeMan",
   },
   {
-    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/v1677918257/lovelyWoman_uz5qrc.png",
+    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677918257/lovelyWoman_uz5qrc",
     alt: "LovelyWoman",
   },
   {
-    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/v1677918258/structure_fdirbv.png",
+    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677918258/structure_fdirbv",
     alt: "bigStructure",
   },
 ];
@@ -76,7 +76,7 @@ const fourthGrid: Array<ImageItems> = [
     alt: "",
   },
   {
-    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/v1677905873/pastel_tree_deswod.png",
+    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677905873/pastel_tree_deswod",
     alt: "pastel_tree",
   },
   {
@@ -84,7 +84,7 @@ const fourthGrid: Array<ImageItems> = [
     alt: "",
   },
   {
-    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/v1677917529/isfahan_pt0wpk.png",
+    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677917529/isfahan_pt0wpk",
     alt: "isfahan",
   },
 ];
@@ -116,15 +116,15 @@ const fifthGrid: Array<ImageItems> = [
 ];
 const sixthGrid: Array<ImageItems> = [
   {
-    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/v1677905872/doggy_c4dlem.png",
+    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677905872/doggy_c4dlem",
     alt: "Doggy",
   },
   {
-    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/v1677905873/reflect_ball_wgo0mh.png",
+    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677905873/reflect_ball_wgo0mh",
     alt: "reflect",
   },
   {
-    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/v1677909575/man_clscxx.png",
+    src: "https://res.cloudinary.com/dfd9pdmuf/image/upload/w_640,f_auto/v1677909575/man_clscxx",
     alt: "man",
   },
 ];
@@ -151,7 +151,10 @@ export default component$(() => {
           <br />
           Fullstack Engineer
         </p>
-        <button onClick$={()=>nav("/works/frontend")} class=" ml-10 mt-20 border-[1px] border-black p-5 rounded-[10px] text-2xl">
+        <button
+          onClick$={() => nav("/works/frontend")}
+          class=" ml-10 mt-20 border-[1px] border-black p-5 rounded-[10px] text-2xl"
+        >
           Check My Works
         </button>
       </div>
@@ -194,7 +197,7 @@ export default component$(() => {
                     ) : (
                       <div class="swiper-slide" key={`frsl${index}`}>
                         <Image
-                        loading="eager"
+                          loading="eager"
                           layout="fullWidth"
                           height={500}
                           style={{ height: "100%" }}
@@ -221,7 +224,7 @@ export default component$(() => {
                     ) : (
                       <div class="swiper-slide" key={`frsl${index}`}>
                         <Image
-                        loading="eager"
+                          loading="eager"
                           layout="fullWidth"
                           height={500}
                           style={{ height: "100%" }}
@@ -248,7 +251,7 @@ export default component$(() => {
                     ) : (
                       <div class="swiper-slide" key={`frsl${index}`}>
                         <Image
-                        loading="eager"
+                          loading="eager"
                           layout="fullWidth"
                           height={500}
                           style={{ height: "100%" }}
@@ -275,7 +278,7 @@ export default component$(() => {
                     ) : (
                       <div class="swiper-slide" key={`frsl${index}`}>
                         <Image
-                        loading="eager"
+                          loading="eager"
                           layout="fullWidth"
                           height={500}
                           style={{ height: "100%" }}
@@ -302,7 +305,7 @@ export default component$(() => {
                     ) : (
                       <div class="swiper-slide" key={`frsl${index}`}>
                         <Image
-                        loading="eager"
+                          loading="eager"
                           layout="fullWidth"
                           height={500}
                           style={{ height: "100%" }}
