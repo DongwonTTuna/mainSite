@@ -12,6 +12,7 @@ export default function PagePC() {
         width={500}
         height={500}
         alt='DongwonTTuna'
+        quality={100}
       />
     </main>
   )

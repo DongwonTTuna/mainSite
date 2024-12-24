@@ -12,6 +12,7 @@ export default function PageSP() {
         height={300}
         alt='DongwonTTuna'
         className={CSS.main__image}
+        quality={100}
       />
     </main>
   )
