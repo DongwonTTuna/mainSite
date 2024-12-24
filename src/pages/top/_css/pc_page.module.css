@@ -1,10 +1,11 @@
-.dongwon {
-
+.main__container {
+    animation: dongwon-tuna 20s infinite;
+    height: 100dvh;
 }
+
 .main__image {
     width: fit-content;
     display: block;
-    animation: dongwon-tuna 20s infinite ease-in-out;
     position: absolute;
     top: 50%;
     left: 50%;

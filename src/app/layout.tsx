@@ -3,7 +3,7 @@ import '@public/css/globals.css'
 import 'sanitize.css'
 
 export const metadata: Metadata = {
-  title: '@DongwonTTuna',
+  title: 'DongwonTTuna',
   description: 'Introducing About @DongwonTTuna',
 }
 
