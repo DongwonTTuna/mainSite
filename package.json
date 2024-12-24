@@ -8,7 +8,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "lint-staged": "lint-staged --allow-empty"
+    "lint-staged": "lint-staged --allow-empty",
+    "pages:build": "npx @cloudflare/next-on-pages",
+    "preview": "npm run pages:build && wrangler pages dev",
+    "deploy": "npm run pages:build && wrangler pages deploy"
   },
   "dependencies": {
     "next": "^15.1.2",
@@ -31,7 +34,8 @@
     "stylelint-no-unsupported-browser-features": "^8.0.2",
     "typescript": "^5.7.2",
     "husky": "^9.1.7",
-    "lint-staged": "^15.2.11"
+    "lint-staged": "^15.2.11",
+    "@cloudflare/next-on-pages": "^1.13.7"
   },
   "husky": {
     "hooks": {

@@ -1,6 +1,6 @@
 module.exports = {
   env: {
-    browser: true,
+    browser: true
   },
   plugins: ['react', 'compat'],
   ignores: [
@@ -11,41 +11,20 @@ module.exports = {
     '**/dist/**',
     '**/dist-types/**',
     'pnpm-lock.yaml',
-    '**/*.js',
+    '**/*.js'
   ],
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
     ecmaFeatures: {
-      jsx: true,
+      jsx: true
     },
-    project: './tsconfig.json',
+    project: './tsconfig.json'
   },
   extends: [
     'next/core-web-vitals',
     'next/typescript',
     'plugin:compat/recommended',
-    "plugin:prettier/recommended"],
-
-  rules: {
-    /**
-     *  prettier rulesに合うように、eslintのrulesを設定する
-     *   printWidth: 120,
-     *   tabWidth: 2,
-     *   useTabs: false,
-     *   semi: false,
-     *   singleQuote: true,
-     *   quoteProps: 'consistent',
-     *   jsxSingleQuote: true,
-     *   trailingComma: 'es5',
-     *   bracketSpacing: true,
-     *   bracketSameLine: false,
-     *   arrowParens: 'always',
-     *   proseWrap: 'preserve',
-     *   htmlWhitespaceSensitivity: 'css',
-     *   embeddedLanguageFormatting: 'off',
-     *   parser: 'typescript',
-     */
-
-  }
+    'plugin:prettier/recommended'
+  ]
 }
