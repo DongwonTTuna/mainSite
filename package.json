@@ -17,7 +17,8 @@
     "next": "^15.1.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "sanitize.css": "^13.0.0"
+    "sanitize.css": "^13.0.0",
+    "@unpic/react": "^0.1.15"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
