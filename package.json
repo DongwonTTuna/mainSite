@@ -9,7 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "lint-staged": "lint-staged --allow-empty",
-    "pages:build": "next build && next export",
+    "pages:build": "npx @cloudflare/next-on-pages",
     "preview": "npm run pages:build && wrangler pages dev",
     "deploy": "npm run pages:build && wrangler pages deploy"
   },

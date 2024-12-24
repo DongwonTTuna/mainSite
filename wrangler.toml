@@ -1,4 +1,4 @@
-name = "dongwontuna.net"
+name = "dongwontuna-net"
 compatibility_date = "2024-12-25"
 compatibility_flags = ["nodejs_compat"]
 pages_build_output_dir = ".vercel/output/static"
