@@ -1,9 +1,5 @@
 module.exports = {
-  env: {
-    browser: true
-  },
-  plugins: ['react', 'compat'],
-  ignores: [
+  ignorePatterns: [
     'node_modules/*',
     '.node_modules/*',
     '**/node_modules/**',
@@ -13,6 +9,10 @@ module.exports = {
     'pnpm-lock.yaml',
     '**/*.js'
   ],
+  env: {
+    browser: true
+  },
+  plugins: ['react', 'compat'],
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
