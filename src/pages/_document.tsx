@@ -1,7 +1,5 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 import type { Metadata } from 'next'
-import '@public/css/globals.css'
-import 'sanitize.css'
 
 export const metadata: Metadata = {
   title: 'DongwonTTuna',
@@ -28,5 +26,4 @@ export class MyDocument extends Document {
     )
   }
 }
-
 export default MyDocument
