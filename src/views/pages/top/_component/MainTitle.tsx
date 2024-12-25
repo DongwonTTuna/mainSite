@@ -5,7 +5,13 @@ import { getRandomKey } from '@lib/common/generate-key'
 export default function MainTitlePC() {
   const words = [
     'Hi! This is',
-    <a key={getRandomKey()} className={CSS.github__link} href={'https://github.com/dongwonttuna'}>
+    <a
+      key={getRandomKey()}
+      className={CSS.github__link}
+      href={'https://github.com/dongwonttuna'}
+      target={'_blank'}
+      rel={'noopener noreferrer'}
+    >
       @DongwonTTuna
     </a>,
   ]
