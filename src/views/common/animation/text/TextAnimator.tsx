@@ -14,7 +14,6 @@ type Props = ComponentProps<typeof motion.p> & {
 export default function TextAnimator(props: Props) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true })
-  console.log(getRandomKey())
   return (
     <AnimatePresence>
       {props.text.map((word, i) => (

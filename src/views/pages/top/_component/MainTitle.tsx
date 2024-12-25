@@ -1,10 +1,11 @@
 import CSS from '../_css/pc_page.module.css'
 import TextAnimator from '@views/common/animation/text/TextAnimator'
+import { getRandomKey } from '@lib/common/generate-key'
 
 export default function MainTitlePC() {
   const words = [
     'Hi! This is',
-    <a className={CSS.github__link} href={'https://github.com/dongwonttuna'}>
+    <a key={getRandomKey()} className={CSS.github__link} href={'https://github.com/dongwonttuna'}>
       @DongwonTTuna
     </a>,
   ]
