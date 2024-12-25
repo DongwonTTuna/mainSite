@@ -1,37 +1,41 @@
 .main__container {
-    animation: dongwon-tuna 20s infinite;
-    height: 100dvh;
+  animation: dongwon-tuna 20s infinite;
+  height: 100dvh;
 }
 
 .main__image {
-    width: fit-content;
-    display: block;
-    position: absolute;
-    top: 55%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 0;
+  width: fit-content;
+  display: block;
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
 }
 
 .main__title {
-    font-weight: 500;
+  font-weight: 500;
 }
 
 .github__link {
-    display: block;
+  display: block;
 }
 
 @keyframes dongwon-tuna {
-    0% {
-        filter: drop-shadow(200px 150px 100px #8f8fff) drop-shadow(-250px -120px 80px #57aaff) drop-shadow(200px -120px 80px #ff6c6c);
-    }
-    33% {
-        filter: drop-shadow(200px -120px 100px #8f8fff) drop-shadow(200px 150px 80px #57aaff) drop-shadow(-250px -120px 80px #ff6c6c);
-    }
-    66% {
-        filter: drop-shadow(-250px -120px 100px #8f8fff) drop-shadow(200px -120px 80px #57aaff) drop-shadow(200px 120px 80px #ff6c6c);
-    }
-    100% {
-        filter: drop-shadow(200px 150px 100px #8f8fff) drop-shadow(-250px -120px 80px #57aaff) drop-shadow(200px -120px 80px #ff6c6c);
-    }
+  0% {
+    filter: drop-shadow(200px 150px 100px #8f8fff) drop-shadow(-250px -120px 80px #57aaff)
+      drop-shadow(200px -120px 80px #ff6c6c);
+  }
+  33% {
+    filter: drop-shadow(200px -120px 100px #8f8fff) drop-shadow(200px 150px 80px #57aaff)
+      drop-shadow(-250px -120px 80px #ff6c6c);
+  }
+  66% {
+    filter: drop-shadow(-250px -120px 100px #8f8fff) drop-shadow(200px -120px 80px #57aaff)
+      drop-shadow(200px 120px 80px #ff6c6c);
+  }
+  100% {
+    filter: drop-shadow(200px 150px 100px #8f8fff) drop-shadow(-250px -120px 80px #57aaff)
+      drop-shadow(200px -120px 80px #ff6c6c);
+  }
 }

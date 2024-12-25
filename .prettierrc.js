@@ -12,6 +12,5 @@ module.exports = {
   arrowParens: 'always',
   proseWrap: 'preserve',
   htmlWhitespaceSensitivity: 'css',
-  embeddedLanguageFormatting: 'off',
-  parser: 'typescript',
+  embeddedLanguageFormatting: 'off'
 }

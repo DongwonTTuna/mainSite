@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'DongwonTTuna',
-  description: 'Introducing About @DongwonTTuna',
+  description: 'Introducing About @DongwonTTuna'
 }
 
 export class MyDocument extends Document {

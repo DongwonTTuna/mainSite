@@ -4,7 +4,7 @@ import 'sanitize.css'
 
 export const metadata: Metadata = {
   title: 'DongwonTTuna',
-  description: 'Introducing About @DongwonTTuna',
+  description: 'Introducing About @DongwonTTuna'
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

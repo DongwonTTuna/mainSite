@@ -38,20 +38,20 @@ module.exports = {
     'jsx-quotes': ['error', 'prefer-single'],
     'comma-dangle': ['error', 'only-multiline'],
     'object-curly-spacing': ['error', 'always'],
-    'object-curly-newline': [
-      'error',
-      { multiline: true, consistent: true },
-    ],
+    'object-curly-newline': ['error', { multiline: true, consistent: true }],
     'arrow-parens': ['error', 'always'],
     'brace-style': ['error', '1tbs', { allowSingleLine: true }],
     'react/jsx-first-prop-new-line': ['error', 'multiline-multiprop'],
     'react/jsx-indent': ['error', 2],
     'react/jsx-indent-props': ['error', 2],
     'react/jsx-max-props-per-line': ['error', { maximum: 1 }],
-    'react/jsx-wrap-multilines': ['error', {
-      'declaration': 'parens-new-line',
-      'assignment': 'parens-new-line',
-      'return': 'parens-new-line',
-    }],
-  },
+    'react/jsx-wrap-multilines': [
+      'error',
+      {
+        declaration: 'parens-new-line',
+        assignment: 'parens-new-line',
+        return: 'parens-new-line'
+      }
+    ]
+  }
 }
