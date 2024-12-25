@@ -1,8 +1,13 @@
 @import url('sanitize.css');
 
 * {
-  font-family: "Noto Sans JP", sans-serif;
+    font-family: "Noto Sans JP", sans-serif;
     font-optical-sizing: auto;
     font-weight: 100;
     font-style: normal;
+    user-select: none;
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
 }

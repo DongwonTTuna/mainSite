@@ -7,11 +7,19 @@
     width: fit-content;
     display: block;
     position: absolute;
-    top: 50%;
+    top: 55%;
     left: 50%;
     transform: translate(-50%, -50%);
+    z-index: 0;
 }
 
+.main__title {
+    font-weight: 500;
+}
+
+.github__link {
+    display: block;
+}
 
 @keyframes dongwon-tuna {
     0% {
