@@ -49,7 +49,7 @@
   "lint-staged": {
     "*.{ts,tsx}": [
       "eslint -c .eslintrc.js --fix",
-      "prettier --config prettier.config.js --write --ignore-path .gitignore"
+      "prettier --config .prettierrc.js --write --ignore-path .gitignore"
     ],
     "*.{scss,css}": [
       "stylelint --fix --ignore-path .gitignore --aei"

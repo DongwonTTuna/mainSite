@@ -13,7 +13,7 @@ export default function MainTitlePC() {
       rel={'noopener noreferrer'}
     >
       @DongwonTTuna
-    </a>,
+    </a>
   ]
 
   return (
