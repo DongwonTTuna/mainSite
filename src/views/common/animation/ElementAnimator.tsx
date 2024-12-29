@@ -11,7 +11,7 @@ type Props = ComponentProps<typeof motion.p> & {
   style?: CSSProperties
 }
 
-export default function TextAnimator(props: Props) {
+export default function ElementAnimator(props: Props) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true })
   return (

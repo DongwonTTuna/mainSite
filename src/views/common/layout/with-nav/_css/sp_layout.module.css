@@ -1,0 +1,9 @@
+.main__container {
+    height: 100dvh;
+}
+
+.main__content {
+    width: 360px;
+    margin: 0 auto;
+    height: 100%;
+}

@@ -1,0 +1,12 @@
+.circle {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: transparent;
+    border-radius: 50%;
+    pointer-events: none;
+    border: 2px solid #5e5e5e;
+    mix-blend-mode: difference;
+    z-index: 100;
+    transform: translate(-50%, -50%);
+}

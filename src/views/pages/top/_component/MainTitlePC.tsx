@@ -1,5 +1,5 @@
 import CSS from '../_css/pc_page.module.css'
-import TextAnimator from '@views/common/animation/text/TextAnimator'
+import ElementAnimator from '@views/common/animation/ElementAnimator'
 import { getRandomKey } from '@lib/common/generate-key'
 
 export default function MainTitlePC() {
@@ -18,7 +18,7 @@ export default function MainTitlePC() {
 
   return (
     <h1 className={CSS.main__title}>
-      <TextAnimator
+      <ElementAnimator
         text={words}
         className={CSS.main__title}
         transition={{ delay: 0.5, duration: 1 }}
