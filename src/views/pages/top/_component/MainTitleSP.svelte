@@ -14,7 +14,6 @@
 
 <style>
     .main__title {
-        font-weight: 500;
         display: flex;
         flex-direction: column;
         align-items: flex-start;

@@ -1,5 +1,5 @@
 <h1 class="main__title">
-	<p>
+	<p class="hello">
 		Hi! This is
 	</p>
 	<a
@@ -15,11 +15,14 @@
 
 <style>
     .main__title {
-        font-weight: 500;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
         justify-content: center;
+    }
+
+    .hello {
+        font-weight: 500;
     }
 
     .github__link {
