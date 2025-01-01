@@ -13,6 +13,10 @@ import HeaderSP from './_components/HeaderSP.svelte';
 
 
 <style>
+    .main__container {
+        height: 100dvh;
+    }
+
     .main__content {
         width: 360px;
         margin: 0 auto;

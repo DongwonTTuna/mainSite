@@ -3,23 +3,27 @@
 	import DongwonTTunaImage from './_component/DongwonTTunaImage.svelte';
 </script>
 
-<div class="dongwonttuna__detail">
-	<MainTitleSP />
-	<div class="dongwonttuna__img__container">
-		<DongwonTTunaImage isMobile={true} />
+<div class="page__container">
+	<div class="dongwonttuna__detail">
+		<MainTitleSP />
+		<div class="dongwonttuna__img__container">
+			<DongwonTTunaImage isMobile={true} />
+		</div>
 	</div>
 </div>
 
-
 <style>
+    .page__container {
+        animation: dongwon-tuna 20s infinite;
+				height: 100%;
+    }
+
     .dongwonttuna__detail {
-        height: 100dvh;
         display: flex;
         flex-direction: column;
         position: relative;
         top: 50%;
         transform: translateY(-50%);
-        animation: dongwon-tuna 20s infinite;
     }
 
     @keyframes dongwon-tuna {
