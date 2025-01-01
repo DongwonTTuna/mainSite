@@ -26,6 +26,11 @@
         transform: translateY(-50%);
     }
 
+		.dongwonttuna__img__container {
+				position: relative;
+				right: -100px;
+		}
+
     @keyframes dongwon-tuna {
         0% {
             filter: drop-shadow(150px 113px 75px #8f8fff) drop-shadow(-188px -90px 60px #57aaff) drop-shadow(150px -90px 60px #ff6c6c);
