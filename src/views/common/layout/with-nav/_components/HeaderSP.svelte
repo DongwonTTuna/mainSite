@@ -86,7 +86,7 @@
     .menu__icon span {
         display: block;
         width: 30px;
-        height: 4px;
+        height: 1px;
         background-color: #333;
         border-radius: 999px;
     }

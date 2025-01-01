@@ -1,5 +1,5 @@
 <h1 class="main__title">
-	<p>
+	<p class="hello">
 		Hi! This is
 	</p>
 	<a
@@ -20,6 +20,10 @@
         align-items: flex-start;
         justify-content: center;
     }
+
+		.hello {
+				font-weight: 500;
+		}
 
     .github__link {
         transition: scale 0.3s;
