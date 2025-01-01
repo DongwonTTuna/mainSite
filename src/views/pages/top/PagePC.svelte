@@ -15,7 +15,6 @@
 
 <style>
     .dongwonttuna__detail {
-        height: 100dvh;
         position: relative;
         top: 50%;
         transform: translateY(-50%);
