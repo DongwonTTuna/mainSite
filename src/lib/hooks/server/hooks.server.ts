@@ -1,4 +1,8 @@
-import type { Handle } from '@sveltejs/kit';
-import { i18n } from '$lib/i18n/i18n';
-const handleParaglide: Handle = i18n.handle();
-export const handle: Handle = handleParaglide;
+import {sequence} from '@sveltejs/kit/hooks';
+import { deviceDetectionHandler } from '$lib/hooks/server/device-detection-handler';
+import { handleParaglide } from '$lib/hooks/server/i18n-handler';
+
+export const handle = sequence(
+	deviceDetectionHandler,
+	handleParaglide
+)
