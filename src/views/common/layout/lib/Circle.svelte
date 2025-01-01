@@ -6,8 +6,8 @@
 	const handleMouseMove = (e: MouseEvent) => {
 		if (!circleElement) return;
 		setTimeout(() => {
-			circleElement.style.left = `${e.clientX}px`;
-			circleElement.style.top = `${e.clientY}px`;
+			circleElement!.style.left = `${e.clientX}px`;
+			circleElement!.style.top = `${e.clientY}px`;
 		}, 100);
 	};
 

@@ -1,10 +1,6 @@
 <script lang="ts">
 	import { Image } from '@unpic/svelte';
 
-	type ComponentProps = {
-		isMobile: boolean;
-	}
-
 	let { isMobile } = $props();
 
 	const imageWidth = isMobile ? 300 : 500;

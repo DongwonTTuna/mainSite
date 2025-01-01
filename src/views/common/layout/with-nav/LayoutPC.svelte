@@ -11,10 +11,6 @@
 
 
 <style>
-    .main__container {
-        height: 100dvh;
-    }
-
     .main__content {
         width: 1024px;
         margin: 0 auto;

@@ -13,6 +13,7 @@
 
 <style>
     .dongwonttuna__detail {
+        height: 100dvh;
         display: flex;
         flex-direction: column;
         position: relative;
