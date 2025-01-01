@@ -1,0 +1,17 @@
+name: setup
+description: Setup Node.js and pnpm 9.14
+
+runs:
+    using: composite
+    steps:
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+            node-version: "22.12"
+            cache: 'pnpm'
+      - uses: pnpm/action-setup@v4
+        name: Setup pnpm 9.14
+        with:
+          version: 9.14
+          run_install: true
+

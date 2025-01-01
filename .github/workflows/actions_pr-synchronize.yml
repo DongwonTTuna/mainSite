@@ -1,0 +1,83 @@
+name: "Actions for pull request synchronize"
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review]
+    branches-ignore: [stage**]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  run-linters:
+    name: Run ESLint
+    runs-on: ubuntu-22.04-2core-arm64
+    timeout-minutes: 15
+    permissions:
+      id-token: write
+      contents: write
+      pull-requests: read
+    if: github.event.pull_request.draft == false
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: ./.github/actions/setup
+
+      - name: Lint execute
+        env:
+          NODE_OPTIONS: "--max-old-space-size=5376"
+        run: |
+          npx eslint . -c .eslintrc.js --ignore-path .eslintignore --ext 'svelte,ts'
+
+  svelte-check:
+    name: Run Svelte Check
+    runs-on: ubuntu-22.04-2core-arm64
+    timeout-minutes: 15
+    permissions:
+      id-token: write
+      contents: write
+      pull-requests: read
+    if: github.event.pull_request.draft == false
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: ./.github/actions/setup
+
+      - name: Check package
+        run: pnpm run check
+
+  svelte-unit-test:
+    name: Svelte Unit Test
+    runs-on: ubuntu-22.04-2core-arm64
+    needs: ["run-linters", "svelte-check"]
+    timeout-minutes: 15
+    permissions:
+      id-token: write
+      contents: write
+      pull-requests: read
+    if: github.event.pull_request.draft == false
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: ./.github/actions/setup
+
+      - run: pnpm run test
+        env:
+          TZ: "Asia/Tokyo"
+          NODE_OPTIONS: "--max-old-space-size=5376"
