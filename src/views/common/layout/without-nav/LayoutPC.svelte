@@ -13,6 +13,7 @@
 <style>
     .main__container {
         height: 100dvh;
+        overflow: hidden;
     }
 
     .main__content {

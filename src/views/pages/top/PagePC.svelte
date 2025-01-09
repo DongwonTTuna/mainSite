@@ -17,7 +17,7 @@
 <style>
     .dongwonttuna__detail {
         position: relative;
-        top: 43%;
+        top: 45%;
         transform: translateY(-50%);
         animation: dongwon-tuna 20s infinite;
     }
