@@ -1,6 +1,5 @@
 <script lang="ts">
-
-import HeaderSP from './_components/HeaderSP.svelte';
+	import HeaderSP from './_components/HeaderSP.svelte';
 </script>
 
 
@@ -15,6 +14,7 @@ import HeaderSP from './_components/HeaderSP.svelte';
 <style>
     .main__container {
         height: 100dvh;
+        overflow: hidden;
     }
 
     .main__content {

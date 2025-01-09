@@ -15,7 +15,7 @@
 <style>
     .page__container {
         animation: dongwon-tuna 20s infinite;
-				height: 100%;
+        height: 100%;
     }
 
     .dongwonttuna__detail {
@@ -26,10 +26,10 @@
         transform: translateY(-50%);
     }
 
-		.dongwonttuna__img__container {
-				position: relative;
-				right: -100px;
-		}
+    .dongwonttuna__img__container {
+        position: relative;
+        right: -100px;
+    }
 
     @keyframes dongwon-tuna {
         0% {
