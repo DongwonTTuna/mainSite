@@ -10,7 +10,9 @@ export default defineConfig({
 			outdir: './src/lib/i18n/generated'
 		})
 	],
-
+	server: {
+		port: 3000
+	},
 	test: {
 		include: ['src/__tests__/unit/*.{test,spec}.{js,ts}']
 	}

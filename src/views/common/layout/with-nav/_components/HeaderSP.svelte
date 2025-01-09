@@ -1,5 +1,9 @@
 <script lang="ts">
-	const menuItems = [
+	import FullSizeModal from '$views/common/modal/FullSizeModal.svelte';
+	import WaveUnderText from '$views/common/text/WaveUnderText.svelte';
+	import { browser } from '$app/environment';
+
+	let menuItems = [
 		{
 			label: 'Home',
 			href: '/'
@@ -11,13 +15,24 @@
 		{
 			label: 'Contact',
 			href: '/contact'
+		},
+		{
+			label: 'Blog',
+			href: '/blog'
 		}
 	];
 
-	// メニューの開閉状態
-	let isMenuOpen = false;
+	if (browser) {
+		const url = new URL(window.location.href);
+		const path = url.pathname;
 
-	const setIsMenuOpen = (isOpen: boolean) => {
+		menuItems = menuItems.filter((i) => path !== i.href)
+	}
+
+	// メニューの開閉状態
+	let isMenuOpen = $state(false);
+
+	const toggleModal = (isOpen: boolean) => {
 		isMenuOpen = isOpen;
 	};
 </script>
@@ -26,98 +41,66 @@
 <header class="header">
 	<div class="header__container">
 		<div class="hamburger__menu">
-			<div class="menu__icon" onclick={() => setIsMenuOpen(true)}>
+			<button aria-label="hamburger" type="button" class="menu__icon" onclick={() => toggleModal(true)}>
 				<span></span>
 				<span></span>
 				<span></span>
-			</div>
+			</button>
 		</div>
-		<div class="header__body" class:open={isMenuOpen}>
-			<div class="header__button">
-				<div class="menu__icon" onclick={() => setIsMenuOpen(false)}>
-					<span class="x"></span>
-					<span class="x"></span>
-				</div>
-			</div>
-			<ul class="header__menu">
-				{#each menuItems as item}
-					<li class="header__menu__item">
-						<a href={item.href} class="header__menu__link">
-							{item.label}
-						</a>
-					</li>
-				{/each}
-			</ul>
-		</div>
+		{#if isMenuOpen}
+			<FullSizeModal closeModal={() => toggleModal(false)} title="サイドバー">
+				<ul class="header__menu">
+					{#each menuItems as item}
+						<WaveUnderText>
+							<li class="header__menu__item">
+								<a href={item.href} class="header__menu__link">
+									{item.label}
+								</a>
+							</li>
+						</WaveUnderText>
+					{/each}
+				</ul>
+			</FullSizeModal>
+		{/if}
 	</div>
 </header>
 
 <style>
-    .header {
-        /* ハンバーガーメニュー */
-    }
-
     .header__container {
         padding: 10px 12px;
         display: flex;
         justify-content: flex-end;
     }
 
-    .button__item__button {
-
-    }
-
-    .hamburger__menu {
-
-    }
-
-    .header__container {
-
-    }
-
     .menu__icon {
         display: flex;
         flex-direction: column;
         justify-content: space-around;
-        width: 30px;
-        height: 25px;
+        height: 30px;
     }
 
     .menu__icon span {
         display: block;
         width: 30px;
-        height: 1px;
-        background-color: #333;
-        border-radius: 999px;
+        height: 1.5px;
+        background: #818181;
     }
 
-    .header__body {
-        position: absolute;
-        display: none;
-        height: 0;
-        background-color: #fff;
-        transition: height 0.3s;
-        z-index: 1000;
-    }
-
-    .open {
-        /** 上から滑らかに開く */
-        display: block;
-        height: 400px;
-
-    }
-
-    .x:nth-child(1) {
-        transform: rotate(45deg) translateY(9px);
-    }
-
-    .x:nth-child(2) {
-        transform: rotate(-45deg) translateY(-9px);
-    }
-
-    .header__button {
+    .header__menu {
         display: flex;
-        justify-content: flex-end;
-        padding: 10px 0;
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+        height: 100%;
+        list-style: none;
+        padding: 0;
     }
+
+    .header__menu__item {
+        width: 120px;
+        text-align: center;
+        padding: 8px 24px;
+    }
+
+
 </style>
