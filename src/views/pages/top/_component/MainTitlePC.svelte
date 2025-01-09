@@ -1,6 +1,6 @@
 <h1 class="main__title">
 	<p class="hello">
-		Hi! This is
+		Welcome here! I am
 	</p>
 	<a
 		class="github__link"

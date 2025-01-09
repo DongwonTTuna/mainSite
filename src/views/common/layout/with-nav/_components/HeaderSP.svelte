@@ -1,33 +1,9 @@
 <script lang="ts">
 	import FullSizeModal from '$views/common/modal/FullSizeModal.svelte';
 	import WaveUnderText from '$views/common/text/WaveUnderText.svelte';
-	import { browser } from '$app/environment';
+	import { getMenuItems } from '$views/common/layout/with-nav/_components/menu-items';
 
-	let menuItems = [
-		{
-			label: 'Home',
-			href: '/'
-		},
-		{
-			label: 'About',
-			href: '/about'
-		},
-		{
-			label: 'Contact',
-			href: '/contact'
-		},
-		{
-			label: 'Blog',
-			href: '/blog'
-		}
-	];
-
-	if (browser) {
-		const url = new URL(window.location.href);
-		const path = url.pathname;
-
-		menuItems = menuItems.filter((i) => path !== i.href)
-	}
+	let menuItems = getMenuItems();
 
 	// メニューの開閉状態
 	let isMenuOpen = $state(false);
