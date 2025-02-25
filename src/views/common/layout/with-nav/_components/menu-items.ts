@@ -24,8 +24,8 @@ export const getMenuItems = () => {
 			href: '/contact'
 		},
 		{
-			label: 'Blog',
-			href: '/blog'
+			label: 'Product',
+			href: '/product'
 		}
 	];
 
