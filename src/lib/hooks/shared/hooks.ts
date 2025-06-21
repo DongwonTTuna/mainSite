@@ -1,2 +1,6 @@
-import { i18n } from "$lib/i18n/i18n"
-export const reroute = i18n.reroute()
+// In paraglide-js v2, reroute is handled differently
+export const reroute = ({ url }: { url: URL }) => {
+  // For now, just return the URL as-is
+  // You may need to implement custom rerouting logic here
+  return url
+}

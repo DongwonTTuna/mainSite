@@ -16,13 +16,16 @@
 ## Work Experience
 
 ### Nextbeat Inc.
+
 **Period**: April 2024 - Present  
 **Position**: Engineer
 
 ### FamilyMart Co., Ltd.
+
 **Period**: March 2022 - December 2022  
 **Employment Type**: Part-time  
 **Responsibilities**:
+
 - Product stocking
 - Cash register operations
 - Customer service
@@ -30,9 +33,11 @@
 **Achievement**: Recognized for perfect attendance and adherence to procedures, entrusted with customer phone support and increased work days.
 
 ### Niku no Hanamasa Co., Ltd.
+
 **Period**: February 2021 - February 2022  
 **Employment Type**: Part-time  
 **Responsibilities**:
+
 - Product stocking
 - Meat preparation and cutting
 - Customer service
@@ -42,6 +47,7 @@
 ## Technical Skills
 
 ### Programming Experience
+
 - **Years of Experience**: 10 years
 - **Frontend**: HTML, CSS, JavaScript, React, Next.js, TailwindCSS
 - **Backend**: Python, Django, Java, JavaFX
@@ -50,10 +56,12 @@
 ### Projects
 
 #### College Projects
+
 - **Seat Assignment System**: Practical system with data storage and image export features
 - **Cryptocurrency Chart Viewer**: Trading system built with JavaFX
 
 #### Freelance Development
+
 - **BiodenKR** (July 2024)
 
 ## Certifications
@@ -67,13 +75,17 @@
 ## Self Introduction
 
 ### User-Centered Development
+
 Throughout 10 years of programming experience, I have always prioritized user experience. By thinking from the user's perspective rather than developer convenience, I create truly useful systems.
 
 ### Proactivity and Self-Initiative
+
 Beyond basic school curriculum, I proactively learned practical technologies to become job-ready. Achieved A-rank on Paiza platform and continuously improved skills through practical projects.
 
 ### Responsibility
+
 Understanding that web applications are the first touchpoint for customers, I pay attention to every detail from design to usability. I provide continuous improvements and support based on customer feedback after release.
 
 ### Customer-Oriented Thinking
+
 Through 2 years of customer service experience, I developed the ability to think from the customer's perspective rather than my own, which enhances my end-user focused development approach.

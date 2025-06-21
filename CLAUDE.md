@@ -22,12 +22,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **Components**: Use .svelte extension, follow kebab-case for filenames
 - **CSS**: Browser compatibility checked with stylelint (except css-nesting)
 - **Internationalization**: Uses paraglide with translations in messages/\*.json
+- **Comments**: Use JSDoc style for function and component documentation
+  - 꼭 필요한 경우에만 주석을 작성하고, 코드가 명확하게 이해될 수 있도록 작성합니다.
+  - 최대한 코드로 의도를 표현하고, 주석은 코드로만 의도를 전달할 수 없을 때 작성합니다.
 
 ## Architecture Overview
 
 This is DongwonTTuna's portfolio site built with SvelteKit 2.x and deployed on Cloudflare Pages.
 
 ### Developer Information
+
 Personal profile and resume information is available in [PROFILE.md](./PROFILE.md).
 
 ### Project Structure
@@ -47,25 +51,30 @@ Personal profile and resume information is available in [PROFILE.md](./PROFILE.m
 ## MCP (Model Context Protocol) Usage Guidelines
 
 ### Overview
+
 MCP is an open protocol that enables Claude to securely connect to external tools and data sources through standardized server connections.
 
 ### Configuration
+
 - **Server Setup**: Add MCP servers via CLI using transport methods (stdio, SSE, HTTP)
 - **Scopes**: Configure servers at local (project-specific), project (team-shared), or user (personal) level
 - **Authentication**: Supports OAuth 2.0 for secure remote server connections
 
 ### Available MCP Tools in This Session
+
 - `mcp__ide__getDiagnostics`: Get diagnostic information from the IDE
 - `mcp__brave-search__brave_web_search`: Perform web searches (up to 20 results)
 - `mcp__brave-search__brave_local_search`: Search for local businesses and places
 
 ### Best Practices
+
 1. **Security**: Only use trusted MCP servers - third-party servers can pose security risks
 2. **Resource References**: Use "@" mentions to reference external resources
 3. **Commands**: Execute server-specific commands via slash commands
-4. **Tool Priority**: Prefer MCP-provided tools (prefixed with "mcp__") over built-in tools when available
+4. **Tool Priority**: Prefer MCP-provided tools (prefixed with "mcp\_\_") over built-in tools when available
 
 ### Common Use Cases
+
 - Database schema exploration and queries
 - API documentation access and testing
 - Web searches for current information
@@ -73,6 +82,7 @@ MCP is an open protocol that enables Claude to securely connect to external tool
 - Secure external data retrieval
 
 ### Important Notes
+
 - MCP servers run in isolated environments for security
 - Always verify server authenticity before connecting
 - Use project-scope servers for team collaboration

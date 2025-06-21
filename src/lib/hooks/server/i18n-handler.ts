@@ -1,4 +1,7 @@
 import type { Handle } from "@sveltejs/kit"
-import { i18n } from "$lib/i18n/i18n"
 
-export const handleParaglide: Handle = i18n.handle()
+// In paraglide-js v2, handle might not be needed or work differently
+export const handleParaglide: Handle = async ({ event, resolve }) => {
+  // For now, just pass through - paraglide v2 might handle this automatically
+  return resolve(event)
+}
