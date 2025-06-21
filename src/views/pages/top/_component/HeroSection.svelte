@@ -75,6 +75,26 @@
     left: 300px;
   }
 
+  @media (max-width: 768px) {
+    .hero-section {
+      padding: var(--spacing-base);
+    }
+
+    .hero-content {
+      left: 0;
+      padding: var(--spacing-lg);
+      background: var(--color-background-overlay);
+      border: 1px solid var(--color-border-accent);
+      border-radius: var(--radius-lg);
+      backdrop-filter: var(--blur-lg);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .hero-visual {
+      opacity: 0.2;
+    }
+  }
+
   .hero-title {
     margin-bottom: var(--spacing-base);
   }
