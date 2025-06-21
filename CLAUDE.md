@@ -18,6 +18,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Architecture Overview
 
 This is DongwonTTuna's portfolio site built with SvelteKit 2.x and deployed on Cloudflare Pages.
+TOP page만 사용하며, 그 이외에는 어떠한 페이지도 사용하지 않습니다.
 
 ### Developer Information
 
@@ -46,6 +47,7 @@ This project uses **Paraglide JS v2** (`@inlang/paraglide-js`) for type-safe int
 ### Language Switching
 
 The runtime supports multiple strategies for locale detection:
+
 1. Cookie (`PARAGLIDE_LOCALE`)
 2. Global variable
 3. Base locale fallback (en)

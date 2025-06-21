@@ -1,52 +1,81 @@
-<script>
-  import MainTitleSP from "./_component/MainTitleSP.svelte"
-  import DongwonTTunaImage from "./_component/DongwonTTunaImage.svelte"
+<script lang="ts">
+  import ProfileSection from './_component/ProfileSection.svelte'
+  import HeroSection from './_component/HeroSection.svelte'
+  import SkillsSection from './_component/SkillsSection.svelte'
+  import ExperienceSection from './_component/ExperienceSection.svelte'
 </script>
 
-<div class="page__container">
-  <div class="dongwonttuna__detail">
-    <MainTitleSP />
-    <div class="dongwonttuna__img__container">
-      <DongwonTTunaImage isMobile={true} />
-    </div>
-  </div>
+<div class="page-container-sp">
+  <HeroSection />
+  <ProfileSection />
+  <SkillsSection />
+  <ExperienceSection />
 </div>
 
 <style>
-  .page__container {
-    animation: dongwon-tuna 20s infinite;
-    height: 100%;
+  .page-container-sp {
+    min-height: 100vh;
+    width: 100%;
+    overflow-x: hidden;
   }
 
-  .dongwonttuna__detail {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
+  :global(.page-container-sp .hero-section) {
+    padding: 1rem;
   }
 
-  .dongwonttuna__img__container {
-    position: relative;
-    right: -100px;
+  :global(.page-container-sp .name) {
+    font-size: clamp(2.5rem, 10vw, 4rem);
   }
 
-  @keyframes dongwon-tuna {
-    0% {
-      filter: drop-shadow(150px 113px 75px #8f8fff) drop-shadow(-188px -90px 60px #57aaff)
-        drop-shadow(150px -90px 60px #ff6c6c);
-    }
-    33% {
-      filter: drop-shadow(150px -90px 75px #8f8fff) drop-shadow(150px 113px 60px #57aaff)
-        drop-shadow(-188px -90px 60px #ff6c6c);
-    }
-    66% {
-      filter: drop-shadow(-188px -90px 75px #8f8fff) drop-shadow(150px -90px 60px #57aaff)
-        drop-shadow(150px 90px 60px #ff6c6c);
-    }
-    100% {
-      filter: drop-shadow(150px 113px 75px #8f8fff) drop-shadow(-188px -90px 60px #57aaff)
-        drop-shadow(150px -90px 60px #ff6c6c);
-    }
+  :global(.page-container-sp .role) {
+    font-size: clamp(1.25rem, 5vw, 2rem);
+  }
+
+  :global(.page-container-sp .hero-subtitle) {
+    font-size: 1rem;
+  }
+
+  :global(.page-container-sp .section-title) {
+    font-size: 2rem;
+  }
+
+  :global(.page-container-sp .profile-grid),
+  :global(.page-container-sp .skills-grid),
+  :global(.page-container-sp .about-grid),
+  :global(.page-container-sp .projects-grid) {
+    grid-template-columns: 1fr;
+  }
+
+  :global(.page-container-sp .container) {
+    padding: 0 1rem;
+  }
+
+  :global(.page-container-sp .profile-section),
+  :global(.page-container-sp .skills-section),
+  :global(.page-container-sp .experience-section) {
+    padding: 3rem 0;
+  }
+
+  :global(.page-container-sp .experience-number) {
+    font-size: 3rem;
+  }
+
+  :global(.page-container-sp .experience-text) {
+    font-size: 1.25rem;
+  }
+
+  :global(.page-container-sp .shape-1) {
+    width: 200px;
+    height: 200px;
+  }
+
+  :global(.page-container-sp .shape-2) {
+    width: 150px;
+    height: 150px;
+  }
+
+  :global(.page-container-sp .shape-3) {
+    width: 125px;
+    height: 125px;
   }
 </style>

@@ -5,7 +5,6 @@
 - **Birth Date**: August 14, 1999 (25 years old)
 - **Nationality**: Korean
 - **Location**: Takasaki, Gunma, Japan
-- **Phone**: 070-8453-2597
 - **GitHub**: [DongwonTTuna](https://github.com/DongwonTTuna)
 
 ## Education

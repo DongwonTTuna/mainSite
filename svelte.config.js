@@ -12,9 +12,9 @@ const config = {
     // See https://svelte.dev/docs/kit/adapters for more information about adapters.
     adapter: adapter(),
     alias: {
-      $i18n: "src/lib/i18n/runtime",
+      "$i18n": "src/lib/i18n/runtime",
       "$i18n/*": "src/lib/i18n/runtime/*",
-      $views: "src/views"
+      "$views": "src/views"
     },
     files: {
       hooks: {

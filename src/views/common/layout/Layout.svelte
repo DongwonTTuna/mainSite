@@ -1,7 +1,7 @@
 <script lang="ts">
   import Circle from "./lib/Circle.svelte"
   import LanguageSwitcher from "../components/LanguageSwitcher.svelte"
-  
+
   export let isMobile: boolean
 </script>
 
@@ -19,7 +19,6 @@
 
 <style>
   .main__container {
-    height: 100dvh;
     overflow: hidden;
     position: relative;
   }
@@ -29,15 +28,5 @@
     top: 20px;
     right: 20px;
     z-index: 1000;
-  }
-
-  .main__content {
-    width: 1024px;
-    margin: 0 auto;
-    height: 100%;
-  }
-
-  .main__content.mobile {
-    width: 360px;
   }
 </style>
