@@ -45,13 +45,13 @@
     min-height: 100vh;
     width: 100%;
     overflow-x: hidden;
-    background: #000011;
+    background: var(--color-background);
   }
 
   .section-wrapper {
     opacity: 1;
     transform: translateY(0);
-    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all var(--transition-slow);
   }
   
   /* Optional: Add animation on scroll if you want to keep it
@@ -67,8 +67,8 @@
   */
 
   :global(.section-wrapper > section) {
-    margin: 2rem auto;
-    max-width: 1200px;
+    margin: var(--spacing-xl) auto;
+    max-width: var(--max-width-container);
   }
 
 </style>

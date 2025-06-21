@@ -38,6 +38,200 @@ Personal profile and resume information is available in [PROFILE.md](./PROFILE.m
 3. **Component organization**: \_components, \_images, \_types folders within each feature
 4. **API routes**: Located in src/routes/api for server-side functionality
 
+## Design System
+
+### Overview
+
+This project implements a comprehensive design system using CSS custom properties (CSS variables) to ensure consistency, maintainability, and theme support. All design tokens are defined in `/static/css/global.css`.
+
+### Design Tokens
+
+#### Typography
+```css
+--font-family-primary: "Noto Sans JP", sans-serif
+--font-family-mono: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', monospace
+
+/* Font Sizes */
+--font-size-xs: 0.75rem      /* 12px */
+--font-size-sm: 0.875rem     /* 14px */
+--font-size-base: 1rem       /* 16px */
+--font-size-lg: 1.125rem     /* 18px */
+--font-size-xl: 1.25rem      /* 20px */
+--font-size-2xl: 1.5rem      /* 24px */
+--font-size-3xl: 2rem        /* 32px */
+--font-size-4xl: 2.5rem      /* 40px */
+--font-size-5xl: 3rem        /* 48px */
+--font-size-hero: clamp(3rem, 8vw, 6rem)
+--font-size-hero-sub: clamp(1.5rem, 4vw, 2.5rem)
+
+/* Font Weights */
+--font-weight-ultralight: 100
+--font-weight-light: 300
+--font-weight-normal: 400
+--font-weight-semibold: 600
+--font-weight-bold: 700
+--font-weight-black: 900
+
+/* Line Heights */
+--line-height-tight: 1.2
+--line-height-normal: 1.5
+--line-height-relaxed: 1.6
+--line-height-loose: 1.8
+```
+
+#### Spacing
+```css
+--spacing-xs: 0.25rem    /* 4px */
+--spacing-sm: 0.5rem     /* 8px */
+--spacing-md: 0.75rem    /* 12px */
+--spacing-base: 1rem     /* 16px */
+--spacing-lg: 1.5rem     /* 24px */
+--spacing-xl: 2rem       /* 32px */
+--spacing-2xl: 3rem      /* 48px */
+--spacing-3xl: 4rem      /* 64px */
+--spacing-4xl: 5rem      /* 80px */
+```
+
+#### Layout
+```css
+--max-width-container: 1200px
+--max-width-content: 800px
+```
+
+#### Border Radius
+```css
+--radius-sm: 0.25rem     /* 4px */
+--radius-base: 0.5rem    /* 8px */
+--radius-md: 0.75rem     /* 12px */
+--radius-lg: 1rem        /* 16px */
+--radius-xl: 1.5rem      /* 24px */
+--radius-2xl: 2rem       /* 32px */
+--radius-full: 9999px    /* Circle */
+```
+
+#### Transitions & Animations
+```css
+--transition-fast: 0.2s ease
+--transition-base: 0.3s ease
+--transition-slow: 0.8s ease
+--transition-material: 0.3s cubic-bezier(0.4, 0, 0.2, 1)
+```
+
+#### Z-index Layers
+```css
+--z-background: 0
+--z-content: 1
+--z-overlay: 10
+--z-modal: 100
+--z-fixed: 1000
+```
+
+#### Effects
+```css
+--blur-sm: blur(4px)
+--blur-base: blur(10px)
+--blur-lg: blur(20px)
+```
+
+### Theme System
+
+The design system supports light and dark themes through the `data-theme` attribute on the document root.
+
+#### Theme Colors
+
+Colors automatically adapt based on the active theme:
+
+```css
+/* Example color variables */
+--color-background         /* Main background color */
+--color-background-secondary    /* Secondary backgrounds */
+--color-text-primary       /* Primary text color */
+--color-text-secondary     /* Secondary text color */
+--color-accent            /* Primary accent color */
+--color-accent-light      /* Light variant of accent */
+--color-border            /* Border colors */
+--shadow-base             /* Standard shadow */
+```
+
+#### Theme Switching
+
+Theme is controlled by the `ThemeToggle.svelte` component which:
+1. Persists theme preference in localStorage
+2. Respects system preference (`prefers-color-scheme`)
+3. Applies theme via `data-theme` attribute
+
+```javascript
+// Set theme programmatically
+document.documentElement.setAttribute('data-theme', 'dark')
+// Remove for light theme (default)
+document.documentElement.removeAttribute('data-theme')
+```
+
+### Usage Guidelines
+
+#### Using Design Tokens
+
+Always use CSS variables instead of hardcoded values:
+
+```css
+/* ❌ Don't do this */
+.component {
+  padding: 16px;
+  font-size: 14px;
+  color: #000011;
+}
+
+/* ✅ Do this */
+.component {
+  padding: var(--spacing-base);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+}
+```
+
+#### Responsive Design
+
+The design system includes responsive adjustments:
+- Font sizes scale down on mobile
+- Spacing adjusts for smaller screens
+- Container padding adapts to viewport
+
+#### Component Styling
+
+1. **Always use design tokens** for consistency
+2. **Leverage CSS variables** for theme-aware styling
+3. **Follow spacing scale** for margins and padding
+4. **Use semantic color names** (e.g., `--color-accent` not `--color-blue`)
+
+#### Shadow System
+
+Shadows adapt to theme context:
+```css
+--shadow-sm     /* Subtle shadows */
+--shadow-base   /* Standard elevation */
+--shadow-md     /* Medium elevation */
+--shadow-lg     /* High elevation */
+--shadow-xl     /* Maximum elevation */
+--shadow-glow   /* Glow effects */
+```
+
+### Animations
+
+Pre-defined animations are available globally:
+- `fadeIn` - Simple opacity fade
+- `fadeInUp` - Fade with upward motion
+- `glow` - Pulsing glow effect
+- `twinkle` - Star twinkle effect
+- `blink` - Cursor blink
+
+### Best Practices
+
+1. **Never hardcode colors** - Always use color variables
+2. **Follow the spacing scale** - Don't use arbitrary spacing values
+3. **Use semantic naming** - Choose variables based on purpose, not appearance
+4. **Maintain consistency** - Use the same tokens for similar purposes
+5. **Test both themes** - Ensure components look good in light and dark modes
+
 ## Internationalization (i18n) Guidelines
 
 ### Overview

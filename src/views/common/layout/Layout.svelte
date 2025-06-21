@@ -40,7 +40,7 @@
   .main__container {
     overflow: hidden;
     position: relative;
-    background: #000011;
+    background: var(--color-background);
     min-height: 100vh;
   }
 
@@ -50,14 +50,14 @@
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 0;
+    z-index: var(--z-background);
     pointer-events: none;
   }
 
   .star {
     position: absolute;
-    background: white;
-    border-radius: 50%;
+    background: var(--color-text-primary);
+    border-radius: var(--radius-full);
     animation: twinkle linear infinite;
     opacity: 0;
   }
@@ -81,24 +81,24 @@
 
   .main__header {
     position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 1000;
-    backdrop-filter: blur(10px);
-    background: rgba(0, 0, 20, 0.5);
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid rgba(102, 136, 255, 0.2);
+    top: var(--spacing-lg);
+    right: var(--spacing-lg);
+    z-index: var(--z-fixed);
+    backdrop-filter: var(--blur-base);
+    background: var(--color-background-overlay);
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-base);
+    border: 1px solid var(--color-border-accent);
   }
 
   .main__content {
     position: relative;
-    z-index: 1;
+    z-index: var(--z-content);
   }
 
   :global(body) {
-    background: #000011;
-    color: #ffffff;
+    background: var(--color-background);
+    color: var(--color-text-primary);
     margin: 0;
     padding: 0;
   }

@@ -62,79 +62,78 @@
     align-items: center;
     justify-content: center;
     position: relative;
-    padding: 2rem;
-    background: #000011;
-    background: radial-gradient(ellipse at center, #000033 0%, #000011 50%, #000000 100%);
+    padding: var(--spacing-xl);
+    background: var(--color-background);
   }
 
   .hero-content {
     z-index: 1;
     text-align: center;
-    max-width: 800px;
+    max-width: var(--max-width-content);
     animation: fadeInUp 1s ease-out;
     position: relative;
     left: 300px;
   }
 
   .hero-title {
-    margin-bottom: 1rem;
+    margin-bottom: var(--spacing-base);
   }
 
   .name {
     display: block;
-    font-size: clamp(3rem, 8vw, 6rem);
-    font-weight: 900;
+    font-size: var(--font-size-hero);
+    font-weight: var(--font-weight-black);
     letter-spacing: -0.02em;
-    background: linear-gradient(135deg, #00d4ff 0%, #6688ff 50%, #aa88ff 100%);
+    background: var(--color-accent-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    margin-bottom: 0.5rem;
-    text-shadow: 0 0 40px rgba(102, 136, 255, 0.5);
+    margin-bottom: var(--spacing-sm);
+    text-shadow: var(--shadow-text);
     animation: glow 3s ease-in-out infinite alternate;
   }
 
   .role {
     display: block;
-    font-size: clamp(1.5rem, 4vw, 2.5rem);
-    font-weight: 300;
-    color: #88aaff;
-    text-shadow: 0 0 20px rgba(136, 170, 255, 0.5);
+    font-size: var(--font-size-hero-sub);
+    font-weight: var(--font-weight-light);
+    color: var(--color-accent-light);
+    text-shadow: var(--shadow-text);
   }
 
   .hero-subtitle {
-    font-size: 1.25rem;
-    color: #6688ff;
-    margin-bottom: 2rem;
+    font-size: var(--font-size-xl);
+    color: var(--color-accent);
+    margin-bottom: var(--spacing-xl);
     opacity: 0.8;
   }
 
   .hero-links {
     display: flex;
-    gap: 1rem;
+    gap: var(--spacing-base);
     justify-content: center;
   }
 
   .github-link {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    background: rgba(102, 136, 255, 0.1);
-    color: #00d4ff;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: var(--color-border-accent);
+    color: var(--color-accent);
     text-decoration: none;
-    border: 1px solid rgba(0, 212, 255, 0.3);
-    border-radius: 0.5rem;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
+    border: 1px solid var(--color-border-accent);
+    border-radius: var(--radius-base);
+    transition: all var(--transition-base);
+    backdrop-filter: var(--blur-base);
   }
 
   .github-link:hover {
     transform: translateY(-2px);
-    background: rgba(0, 212, 255, 0.2);
-    border-color: #00d4ff;
-    box-shadow: 0 4px 20px rgba(0, 212, 255, 0.4), 0 0 40px rgba(0, 212, 255, 0.2);
-    color: white;
+    background: var(--color-border-accent);
+    border-color: var(--color-accent);
+    box-shadow: var(--shadow-lg), var(--shadow-glow);
+    color: var(--color-text-primary);
   }
 
   .hero-visual {

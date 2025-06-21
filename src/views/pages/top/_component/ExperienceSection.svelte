@@ -24,26 +24,26 @@
 
 <style>
   .experience-section {
-    padding: 5rem 0;
+    padding: var(--spacing-4xl) 0;
     background: transparent;
   }
 
   .container {
-    max-width: 1200px;
+    max-width: var(--max-width-container);
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 0 var(--spacing-xl);
   }
 
   .section-title {
-    font-size: 3rem;
+    font-size: var(--font-size-5xl);
     text-align: center;
-    margin-bottom: 3rem;
-    color: #ffffff;
+    margin-bottom: var(--spacing-2xl);
+    color: var(--color-text-primary);
   }
 
   .timeline {
     position: relative;
-    padding-left: 2rem;
+    padding-left: var(--spacing-xl);
   }
 
   .timeline::before {
@@ -53,12 +53,12 @@
     top: 0;
     bottom: 0;
     width: 2px;
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--color-border-light);
   }
 
   .timeline-item {
     position: relative;
-    padding-bottom: 3rem;
+    padding-bottom: var(--spacing-2xl);
   }
 
   .timeline-item:last-child {
@@ -67,61 +67,61 @@
 
   .timeline-marker {
     position: absolute;
-    left: -2rem;
+    left: calc(-1 * var(--spacing-xl));
     top: 0;
     width: 12px;
     height: 12px;
-    background: #8b9cff;
-    border-radius: 50%;
-    box-shadow: 0 0 0 4px rgba(0, 0, 17, 0.8), 0 0 0 6px rgba(139, 156, 255, 0.3);
+    background: var(--color-accent-light);
+    border-radius: var(--radius-full);
+    box-shadow: 0 0 0 4px var(--color-background), 0 0 0 6px var(--color-border-accent);
   }
 
   .timeline-content {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 2rem;
-    border-radius: 1rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
+    background: var(--color-border-light);
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-base);
+    border: 1px solid var(--color-border-light);
+    backdrop-filter: var(--blur-base);
   }
 
   .timeline-content h3 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    color: #ffffff;
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--spacing-base);
+    color: var(--color-text-primary);
   }
 
   .job-details {
     display: flex;
-    gap: 2rem;
-    margin-bottom: 1.5rem;
+    gap: var(--spacing-xl);
+    margin-bottom: var(--spacing-lg);
     flex-wrap: wrap;
   }
 
   .period {
-    font-size: 0.875rem;
-    color: #a0a0a0;
-    font-weight: 600;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    font-weight: var(--font-weight-semibold);
   }
 
   .position {
-    font-size: 0.875rem;
-    color: #8b9cff;
-    font-weight: 600;
+    font-size: var(--font-size-sm);
+    color: var(--color-accent-light);
+    font-weight: var(--font-weight-semibold);
   }
 
   .description {
-    color: #d0d0d0;
-    line-height: 1.6;
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-relaxed);
   }
 
   @media (max-width: 768px) {
     .timeline {
-      padding-left: 1rem;
+      padding-left: var(--spacing-base);
     }
 
     .timeline-marker {
-      left: -1rem;
+      left: calc(-1 * var(--spacing-base));
     }
   }
 </style>

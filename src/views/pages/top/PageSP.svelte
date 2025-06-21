@@ -20,7 +20,7 @@
   }
 
   :global(.page-container-sp .hero-section) {
-    padding: 1rem;
+    padding: var(--spacing-base);
   }
 
   :global(.page-container-sp .name) {
@@ -32,11 +32,11 @@
   }
 
   :global(.page-container-sp .hero-subtitle) {
-    font-size: 1rem;
+    font-size: var(--font-size-base);
   }
 
   :global(.page-container-sp .section-title) {
-    font-size: 2rem;
+    font-size: var(--font-size-3xl);
   }
 
   :global(.page-container-sp .profile-grid),
@@ -47,21 +47,21 @@
   }
 
   :global(.page-container-sp .container) {
-    padding: 0 1rem;
+    padding: 0 var(--spacing-base);
   }
 
   :global(.page-container-sp .profile-section),
   :global(.page-container-sp .skills-section),
   :global(.page-container-sp .experience-section) {
-    padding: 3rem 0;
+    padding: var(--spacing-2xl) 0;
   }
 
   :global(.page-container-sp .experience-number) {
-    font-size: 3rem;
+    font-size: var(--font-size-5xl);
   }
 
   :global(.page-container-sp .experience-text) {
-    font-size: 1.25rem;
+    font-size: var(--font-size-xl);
   }
 
   :global(.page-container-sp .shape-1) {

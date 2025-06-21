@@ -84,59 +84,59 @@
 
 <style>
   .profile-section {
-    padding: 5rem 0;
+    padding: var(--spacing-4xl) 0;
     background: transparent;
   }
 
   .container {
-    max-width: 1200px;
+    max-width: var(--max-width-container);
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 0 var(--spacing-xl);
   }
 
   .section-title {
-    font-size: 3rem;
+    font-size: var(--font-size-5xl);
     text-align: center;
-    margin-bottom: 3rem;
-    color: #ffffff;
+    margin-bottom: var(--spacing-2xl);
+    color: var(--color-text-primary);
   }
 
   .profile-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-bottom: 4rem;
+    gap: var(--spacing-xl);
+    margin-bottom: var(--spacing-3xl);
   }
 
   .profile-card {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 2rem;
-    border-radius: 1rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
+    background: var(--color-border-light);
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-base);
+    border: 1px solid var(--color-border-light);
+    backdrop-filter: var(--blur-base);
   }
 
   .profile-card h3 {
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
-    color: #8b9cff;
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--spacing-lg);
+    color: var(--color-accent-light);
   }
 
   .info-list {
     display: grid;
-    gap: 1rem;
+    gap: var(--spacing-base);
   }
 
   .info-list dt {
-    font-weight: 600;
-    color: #a0a0a0;
-    margin-bottom: 0.25rem;
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-xs);
   }
 
   .info-list dd {
     margin: 0;
-    color: #ffffff;
+    color: var(--color-text-primary);
   }
 
   .timeline {
@@ -145,8 +145,8 @@
   }
 
   .timeline li {
-    padding: 0.75rem 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: var(--spacing-md) 0;
+    border-bottom: 1px solid var(--color-border-light);
   }
 
   .timeline li:last-child {
@@ -156,13 +156,13 @@
   .timeline .date,
   .cert-list .date {
     display: block;
-    font-size: 0.875rem;
-    color: #a0a0a0;
-    margin-bottom: 0.25rem;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-xs);
   }
 
   .timeline .content {
-    color: #ffffff;
+    color: var(--color-text-primary);
   }
 
   .cert-list {
@@ -171,46 +171,46 @@
   }
 
   .cert-list li {
-    padding: 0.5rem 0;
+    padding: var(--spacing-sm) 0;
     display: flex;
     flex-direction: column;
-    color: #ffffff;
+    color: var(--color-text-primary);
   }
 
   .about-section {
-    margin-top: 4rem;
+    margin-top: var(--spacing-3xl);
   }
 
   .about-section h3 {
-    font-size: 2rem;
+    font-size: var(--font-size-3xl);
     text-align: center;
-    margin-bottom: 2rem;
-    color: #ffffff;
+    margin-bottom: var(--spacing-xl);
+    color: var(--color-text-primary);
   }
 
   .about-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
+    gap: var(--spacing-xl);
   }
 
   .about-card {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 2rem;
-    border-radius: 1rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
+    background: var(--color-border-light);
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-base);
+    border: 1px solid var(--color-border-light);
+    backdrop-filter: var(--blur-base);
   }
 
   .about-card h4 {
-    font-size: 1.25rem;
-    margin-bottom: 1rem;
-    color: #a77bc4;
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--spacing-base);
+    color: var(--color-accent-light);
   }
 
   .about-card p {
-    color: #d0d0d0;
-    line-height: 1.6;
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-relaxed);
   }
 </style>

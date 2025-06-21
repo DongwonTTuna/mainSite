@@ -161,14 +161,14 @@
 
   function getLineColor(type: LogLine['type']) {
     switch(type) {
-      case 'command': return '#00d4ff'
-      case 'success': return '#00ff88'
-      case 'error': return '#ff4466'
-      case 'warning': return '#ffaa00'
-      case 'info': return '#88aaff'
-      case 'system': return '#6688ff'
-      case 'vim': return '#dddddd'
-      case 'log': default: return '#aaccff'
+      case 'command': return 'var(--color-terminal-blue)'
+      case 'success': return 'var(--color-terminal-green)'
+      case 'error': return 'var(--color-terminal-red)'
+      case 'warning': return 'var(--color-terminal-yellow)'
+      case 'info': return 'var(--color-accent-light)'
+      case 'system': return 'var(--color-accent)'
+      case 'vim': return 'var(--color-text-primary)'
+      case 'log': default: return 'var(--color-accent-light)'
     }
   }
 
@@ -488,64 +488,64 @@
     width: 95%;
     max-width: 1200px;
     height: 600px;
-    background: rgba(0, 0, 20, 0.98);
-    border: 1px solid rgba(102, 136, 255, 0.3);
-    border-radius: 12px;
+    background: var(--color-terminal-bg);
+    border: 1px solid var(--color-border-accent);
+    border-radius: var(--radius-md);
     overflow: hidden;
     box-shadow: 
-      0 30px 100px rgba(0, 0, 0, 0.9), 
-      0 0 120px rgba(102, 136, 255, 0.3),
-      inset 0 0 60px rgba(0, 212, 255, 0.05);
-    backdrop-filter: blur(20px);
+      var(--shadow-xl), 
+      var(--shadow-glow),
+      inset 0 0 60px var(--color-border-accent);
+    backdrop-filter: var(--blur-lg);
     transform-style: preserve-3d;
   }
 
   .terminal-header {
-    background: rgba(0, 0, 40, 0.9);
-    padding: 8px 12px;
+    background: var(--color-background-secondary);
+    padding: var(--spacing-sm) var(--spacing-md);
     display: flex;
     align-items: center;
-    border-bottom: 1px solid rgba(102, 136, 255, 0.2);
+    border-bottom: 1px solid var(--color-border-accent);
   }
 
   .terminal-buttons {
     display: flex;
-    gap: 8px;
-    margin-right: 16px;
+    gap: var(--spacing-sm);
+    margin-right: var(--spacing-base);
   }
 
   .terminal-button {
     width: 12px;
     height: 12px;
-    border-radius: 50%;
+    border-radius: var(--radius-full);
     display: block;
   }
 
   .terminal-button.close {
-    background: #ff5f56;
+    background: var(--color-terminal-red);
   }
 
   .terminal-button.minimize {
-    background: #ffbd2e;
+    background: var(--color-terminal-yellow);
   }
 
   .terminal-button.maximize {
-    background: #27c93f;
+    background: var(--color-terminal-green);
   }
 
   .terminal-title {
-    font-size: 13px;
-    color: #88aaff;
-    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', monospace;
+    font-size: var(--font-size-sm);
+    color: var(--color-accent-light);
+    font-family: var(--font-family-mono);
   }
 
   .terminal-body {
-    padding: 20px 24px;
+    padding: var(--spacing-lg) var(--spacing-xl);
     height: calc(100% - 40px);
     overflow-y: auto;
-    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', monospace;
-    font-size: 14px;
-    line-height: 1.7;
+    font-family: var(--font-family-mono);
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-relaxed);
     padding-bottom: 50px; /* Space for vim status line */
     position: relative;
   }
@@ -555,23 +555,23 @@
   }
 
   .terminal-body::-webkit-scrollbar-track {
-    background: rgba(0, 0, 40, 0.5);
+    background: var(--color-background-secondary);
   }
 
   .terminal-body::-webkit-scrollbar-thumb {
-    background: rgba(102, 136, 255, 0.3);
-    border-radius: 4px;
+    background: var(--color-border-accent);
+    border-radius: var(--radius-sm);
   }
 
   .terminal-body::-webkit-scrollbar-thumb:hover {
-    background: rgba(102, 136, 255, 0.5);
+    background: var(--color-accent);
   }
 
   .terminal-line {
-    margin-bottom: 4px;
+    margin-bottom: var(--spacing-xs);
     white-space: pre-wrap;
     text-shadow: 0 0 5px currentColor;
-    animation: fadeIn 0.3s ease-out;
+    animation: fadeIn var(--transition-base);
   }
 
   .cursor {
@@ -589,30 +589,30 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background: rgba(0, 0, 40, 0.95);
-    padding: 8px 24px;
-    border-top: 1px solid rgba(102, 136, 255, 0.3);
-    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', monospace;
-    font-size: 14px;
+    background: var(--color-background-secondary);
+    padding: var(--spacing-sm) var(--spacing-xl);
+    border-top: 1px solid var(--color-border-accent);
+    font-family: var(--font-family-mono);
+    font-size: var(--font-size-sm);
     display: flex;
     align-items: center;
   }
 
   .vim-mode {
-    color: #ffaa00;
-    font-weight: bold;
-    text-shadow: 0 0 10px rgba(255, 170, 0, 0.8);
-    margin-right: 20px;
+    color: var(--color-terminal-yellow);
+    font-weight: var(--font-weight-bold);
+    text-shadow: var(--shadow-text);
+    margin-right: var(--spacing-lg);
   }
   
   .vim-filename {
-    color: #88aaff;
+    color: var(--color-accent-light);
     flex: 1;
     text-align: center;
   }
   
   .vim-position {
-    color: #6688ff;
+    color: var(--color-accent);
     margin-left: auto;
   }
   
@@ -620,7 +620,7 @@
   .vim-cursor-block {
     width: 8px;
     height: 18px;
-    background: rgba(255, 255, 255, 0.7);
+    background: var(--color-text-primary);
     animation: blink 1s infinite;
     pointer-events: none;
   }
@@ -630,21 +630,21 @@
     bottom: 30px;
     left: 0;
     right: 0;
-    padding: 0 24px;
-    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', monospace;
-    font-size: 14px;
-    color: #00d4ff;
+    padding: 0 var(--spacing-xl);
+    font-family: var(--font-family-mono);
+    font-size: var(--font-size-sm);
+    color: var(--color-terminal-blue);
   }
   
   .terminal-line.vim-tilde {
-    color: #4466ff;
+    color: var(--color-accent);
     opacity: 0.8;
   }
 
   .vim-command {
-    background: rgba(0, 212, 255, 0.1);
-    padding: 2px 4px;
-    border-radius: 3px;
+    background: var(--color-border-accent);
+    padding: 2px var(--spacing-xs);
+    border-radius: var(--radius-sm);
   }
   
   @keyframes blink {
