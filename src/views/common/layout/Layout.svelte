@@ -85,10 +85,11 @@
     right: var(--spacing-lg);
     z-index: var(--z-fixed);
     backdrop-filter: var(--blur-base);
-    background: var(--color-background-overlay);
-    padding: var(--spacing-sm);
-    border-radius: var(--radius-base);
-    border: 1px solid var(--color-border-accent);
+    background: var(--color-surface-elevated);
+    padding: var(--spacing-sm) var(--spacing-base);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-base);
   }
 
   .main__content {

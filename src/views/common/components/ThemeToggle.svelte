@@ -62,6 +62,7 @@
     box-shadow: var(--shadow-base);
     transition: all var(--transition-base);
     z-index: var(--z-fixed);
+    border: 1px solid var(--color-border);
   }
 
   .theme-toggle:hover {
