@@ -1,7 +1,6 @@
 <script lang="ts">
   import MainTitlePC from "./_component/MainTitlePC.svelte"
   import DongwonTTunaImage from "./_component/DongwonTTunaImage.svelte"
-  import TopCategory from "$views/pages/top/_component/TopCategory.svelte"
 </script>
 
 <div class="dongwonttuna__detail">
@@ -10,7 +9,6 @@
     <DongwonTTunaImage isMobile={false} />
   </div>
 </div>
-<TopCategory />
 
 <style>
   .dongwonttuna__detail {
