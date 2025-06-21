@@ -37,7 +37,7 @@
   <div class="hero-content" bind:this={heroContent} 
        style="transform: perspective(1000px) rotateY({mouseX * 5}deg) rotateX({-mouseY * 5}deg)">
     <h1 class="hero-title">
-      <span class="name">LEE DONGWON</span>
+      <span class="name">DONGWON LEE</span>
       <span class="role">{m.hero_role()}</span>
     </h1>
     <p class="hero-subtitle">{m.hero_subtitle()}</p>
