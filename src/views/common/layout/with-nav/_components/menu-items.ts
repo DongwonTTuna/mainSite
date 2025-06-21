@@ -1,4 +1,4 @@
-import { browser } from '$app/environment';
+import { browser } from "$app/environment"
 
 /**
  * Get menu items
@@ -6,31 +6,31 @@ import { browser } from '$app/environment';
  * @warning This function will return an empty array on SSR.
  */
 export const getMenuItems = () => {
-	if (browser !== true) {
-		return [];
-	}
+  if (browser !== true) {
+    return []
+  }
 
-	const menuItems = [
-		{
-			label: 'Home',
-			href: '/'
-		},
-		{
-			label: 'About',
-			href: '/about'
-		},
-		{
-			label: 'Contact',
-			href: '/contact'
-		},
-		{
-			label: 'Product',
-			href: '/product'
-		}
-	];
+  const menuItems = [
+    {
+      label: "Home",
+      href: "/"
+    },
+    {
+      label: "About",
+      href: "/about"
+    },
+    {
+      label: "Contact",
+      href: "/contact"
+    },
+    {
+      label: "Product",
+      href: "/product"
+    }
+  ]
 
-	const url = new URL(window.location.href);
-	const path = url.pathname;
+  const url = new URL(window.location.href)
+  const path = url.pathname
 
-	return menuItems.filter((i) => path !== i.href);
-};
+  return menuItems.filter((i) => path !== i.href)
+}

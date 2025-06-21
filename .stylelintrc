@@ -1,22 +1,10 @@
 {
-  "ignoreFiles": [
-    "node_modules/**/*",
-    ".svelte-kit/**/*",
-    "static/**/*"
-  ],
-  "plugins": [
-    "stylelint-no-unsupported-browser-features"
-  ],
+  "ignoreFiles": ["node_modules/**/*", ".svelte-kit/**/*", "static/**/*"],
+  "plugins": ["stylelint-no-unsupported-browser-features"],
   "rules": {
     "plugin/no-unsupported-browser-features": [
       true,
-      {
-        "ignore": [
-          "css-nesting"
-        ],
-        "ignorePartialSupport": true,
-        "severity": "error"
-      }
+      { "ignore": ["css-nesting"], "ignorePartialSupport": true, "severity": "error" }
     ]
   }
 }

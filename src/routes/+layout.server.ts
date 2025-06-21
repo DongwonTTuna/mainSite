@@ -1,11 +1,11 @@
-import type { LayoutServerLoad } from './$types';
+import type { LayoutServerLoad } from "./$types"
 
 type Output = {
-	isMobile: boolean
+  isMobile: boolean
 }
 
 export const load: LayoutServerLoad<Output> = async ({ locals }) => {
- return {
-	 isMobile: locals.isMobile
- }
+  return {
+    isMobile: locals.isMobile
+  }
 }
