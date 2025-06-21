@@ -15,7 +15,7 @@ export default ts.config(
 	...svelte.configs['flat/recommended'],
 	prettier,
 	...svelte.configs['flat/prettier'],
-	...compat.configs.recommended,
+	compat.configs['flat/recommended'],
 	{
 		languageOptions: {
 			globals: {
