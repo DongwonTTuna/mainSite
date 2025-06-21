@@ -13,6 +13,7 @@ const config = {
     adapter: adapter(),
     alias: {
       $i18n: "src/lib/i18n/runtime",
+      "$i18n/*": "src/lib/i18n/runtime/*",
       $views: "src/views"
     },
     files: {

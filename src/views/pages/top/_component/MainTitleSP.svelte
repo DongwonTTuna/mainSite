@@ -1,5 +1,9 @@
+<script lang="ts">
+  import { m } from '$lib/i18n'
+</script>
+
 <h1 class="main__title">
-  <p class="hello">Welcome here! I am</p>
+  <p class="hello">{m.welcome_message()}</p>
   <a class="github__link" href="https://github.com/dongwonttuna" target="_blank" rel="noopener noreferrer">
     @DongwonTTuna
   </a>

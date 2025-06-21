@@ -2,17 +2,6 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Build/Lint/Test Commands
-
-- Build: `pnpm build` (vite build)
-- Dev: `pnpm dev` (vite dev)
-- Lint: `pnpm lint` (prettier --check . && eslint .)
-- Format: `pnpm format` (prettier --write .)
-- Type check: `pnpm check` (svelte-kit sync && svelte-check)
-- E2E tests: `pnpm test:e2e` (playwright test)
-- Unit tests: `pnpm test:unit` (vitest)
-- Single unit test: `pnpm test:unit -- -t "test name"`
-
 ## Code Style Guidelines
 
 - **Formatting**: 120 char width, 2-space indent, no semi, single quotes, no trailing commas
@@ -48,17 +37,34 @@ Personal profile and resume information is available in [PROFILE.md](./PROFILE.m
 3. **Component organization**: \_components, \_images, \_types folders within each feature
 4. **API routes**: Located in src/routes/api for server-side functionality
 
+## Internationalization (i18n) Guidelines
+
+### Overview
+
+This project uses **Paraglide JS v2** (`@inlang/paraglide-js`) for type-safe internationalization. Currently, only English (en) is configured, but the infrastructure is ready for additional languages.
+
+### Language Switching
+
+The runtime supports multiple strategies for locale detection:
+1. Cookie (`PARAGLIDE_LOCALE`)
+2. Global variable
+3. Base locale fallback (en)
+
+LocaleChange: setLocale(locale)
+Use Language: import { m } from '$lib/i18n'
+
+### Current Status
+
+- **Supported Languages**: English (en), Korean (ko), Japanese (ja)
+- **Translation Coverage**: Minimal (only test message exists)
+- **URL Pattern**: Supports localized URLs (e.g., `/en/path`)
+- **Middleware**: `handleParaglide` configured but currently pass-through
+
 ## MCP (Model Context Protocol) Usage Guidelines
 
 ### Overview
 
 MCP is an open protocol that enables Claude to securely connect to external tools and data sources through standardized server connections.
-
-### Configuration
-
-- **Server Setup**: Add MCP servers via CLI using transport methods (stdio, SSE, HTTP)
-- **Scopes**: Configure servers at local (project-specific), project (team-shared), or user (personal) level
-- **Authentication**: Supports OAuth 2.0 for secure remote server connections
 
 ### Available MCP Tools in This Session
 

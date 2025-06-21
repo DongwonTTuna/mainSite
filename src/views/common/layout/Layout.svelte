@@ -1,11 +1,14 @@
 <script lang="ts">
-  import { page } from '$app/stores'
   import Circle from "./lib/Circle.svelte"
+  import LanguageSwitcher from "../components/LanguageSwitcher.svelte"
   
   export let isMobile: boolean
 </script>
 
 <main class="main__container">
+  <header class="main__header">
+    <LanguageSwitcher />
+  </header>
   {#if !isMobile}
     <Circle />
   {/if}
@@ -18,6 +21,14 @@
   .main__container {
     height: 100dvh;
     overflow: hidden;
+    position: relative;
+  }
+
+  .main__header {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
   }
 
   .main__content {
