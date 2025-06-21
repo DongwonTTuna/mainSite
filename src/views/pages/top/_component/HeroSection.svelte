@@ -1,7 +1,7 @@
 <script lang="ts">
   import { m } from '$lib/i18n'
-  import GlobeNetwork from './GlobeNetwork.svelte'
   import { onMount } from 'svelte'
+  import TerminalAnimation from './TerminalAnimation.svelte'
 
   let heroContent: HTMLDivElement
   let mouseX = 0
@@ -33,7 +33,7 @@
   })
 </script>
 
-<section class="hero-section" on:mousemove={handleMouseMove}>
+<section class="hero-section" role="main" on:mousemove={handleMouseMove}>
   <div class="hero-content" bind:this={heroContent} 
        style="transform: perspective(1000px) rotateY({mouseX * 5}deg) rotateX({-mouseY * 5}deg)">
     <h1 class="hero-title">
@@ -51,7 +51,7 @@
     </div>
   </div>
   <div class="hero-visual">
-    <GlobeNetwork />
+    <TerminalAnimation />
   </div>
 </section>
 
@@ -72,6 +72,8 @@
     text-align: center;
     max-width: 800px;
     animation: fadeInUp 1s ease-out;
+    position: relative;
+    left: 300px;
   }
 
   .hero-title {
@@ -137,18 +139,18 @@
 
   .hero-visual {
     position: absolute;
-    top: 20%;
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 100%;
-    height: 500px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     overflow: hidden;
     z-index: 0;
     pointer-events: none;
-  }
-  
-  .hero-visual :global(.globe-container) {
-    pointer-events: auto;
+    opacity: 0.5;
   }
 
   @keyframes fadeInUp {
