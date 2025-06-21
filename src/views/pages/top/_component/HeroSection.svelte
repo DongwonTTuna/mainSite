@@ -130,15 +130,15 @@
 
   .github-link:hover {
     transform: translateY(-2px);
-    background: var(--color-border-accent);
+    background: var(--color-accent);
     border-color: var(--color-accent);
     box-shadow: var(--shadow-lg), var(--shadow-glow);
-    color: var(--color-text-primary);
+    color: var(--color-text-on-accent);
   }
 
   .hero-visual {
     position: absolute;
-    top: 40%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 100%;
