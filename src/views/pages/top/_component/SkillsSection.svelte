@@ -70,7 +70,7 @@
 <style>
   .skills-section {
     padding: 5rem 0;
-    background: white;
+    background: transparent;
   }
 
   .container {
@@ -83,7 +83,7 @@
     font-size: 3rem;
     text-align: center;
     margin-bottom: 3rem;
-    color: #333;
+    color: #ffffff;
   }
 
   .experience-banner {
@@ -93,6 +93,7 @@
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     border-radius: 1rem;
     color: white;
+    box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
   }
 
   .experience-number {
@@ -116,15 +117,17 @@
   }
 
   .skill-category {
-    background: #f8f9fa;
+    background: rgba(255, 255, 255, 0.05);
     padding: 2rem;
     border-radius: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
   }
 
   .skill-category h3 {
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
-    color: #667eea;
+    color: #8b9cff;
   }
 
   .skill-tags {
@@ -136,18 +139,19 @@
   .skill-tag {
     display: inline-block;
     padding: 0.5rem 1rem;
-    background: white;
-    border: 2px solid #e0e0e0;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.2);
     border-radius: 2rem;
     font-size: 0.875rem;
-    color: #333;
+    color: #ffffff;
     transition: all 0.2s;
   }
 
   .skill-tag:hover {
-    border-color: #667eea;
-    color: #667eea;
+    border-color: #8b9cff;
+    color: #8b9cff;
     transform: translateY(-2px);
+    background: rgba(139, 156, 255, 0.1);
   }
 
   .projects-section {
@@ -158,7 +162,7 @@
     font-size: 2rem;
     text-align: center;
     margin-bottom: 2rem;
-    color: #333;
+    color: #ffffff;
   }
 
   .projects-grid {
@@ -168,15 +172,17 @@
   }
 
   .project-card {
-    background: #f8f9fa;
+    background: rgba(255, 255, 255, 0.05);
     padding: 2rem;
     border-radius: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
   }
 
   .project-card h4 {
     font-size: 1.25rem;
     margin-bottom: 1rem;
-    color: #764ba2;
+    color: #a77bc4;
   }
 
   .project-card ul {
@@ -186,7 +192,7 @@
 
   .project-card li {
     padding: 0.5rem 0;
-    color: #666;
+    color: #d0d0d0;
     position: relative;
     padding-left: 1.5rem;
   }
@@ -195,6 +201,6 @@
     content: '▸';
     position: absolute;
     left: 0;
-    color: #667eea;
+    color: #8b9cff;
   }
 </style>

@@ -85,7 +85,7 @@
 <style>
   .profile-section {
     padding: 5rem 0;
-    background: #f8f9fa;
+    background: transparent;
   }
 
   .container {
@@ -98,7 +98,7 @@
     font-size: 3rem;
     text-align: center;
     margin-bottom: 3rem;
-    color: #333;
+    color: #ffffff;
   }
 
   .profile-grid {
@@ -109,16 +109,18 @@
   }
 
   .profile-card {
-    background: white;
+    background: rgba(255, 255, 255, 0.05);
     padding: 2rem;
     border-radius: 1rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
   }
 
   .profile-card h3 {
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
-    color: #667eea;
+    color: #8b9cff;
   }
 
   .info-list {
@@ -128,13 +130,13 @@
 
   .info-list dt {
     font-weight: 600;
-    color: #666;
+    color: #a0a0a0;
     margin-bottom: 0.25rem;
   }
 
   .info-list dd {
     margin: 0;
-    color: #333;
+    color: #ffffff;
   }
 
   .timeline {
@@ -144,7 +146,7 @@
 
   .timeline li {
     padding: 0.75rem 0;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
 
   .timeline li:last-child {
@@ -155,12 +157,12 @@
   .cert-list .date {
     display: block;
     font-size: 0.875rem;
-    color: #888;
+    color: #a0a0a0;
     margin-bottom: 0.25rem;
   }
 
   .timeline .content {
-    color: #333;
+    color: #ffffff;
   }
 
   .cert-list {
@@ -172,6 +174,7 @@
     padding: 0.5rem 0;
     display: flex;
     flex-direction: column;
+    color: #ffffff;
   }
 
   .about-section {
@@ -182,7 +185,7 @@
     font-size: 2rem;
     text-align: center;
     margin-bottom: 2rem;
-    color: #333;
+    color: #ffffff;
   }
 
   .about-grid {
@@ -192,20 +195,22 @@
   }
 
   .about-card {
-    background: white;
+    background: rgba(255, 255, 255, 0.05);
     padding: 2rem;
     border-radius: 1rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
   }
 
   .about-card h4 {
     font-size: 1.25rem;
     margin-bottom: 1rem;
-    color: #764ba2;
+    color: #a77bc4;
   }
 
   .about-card p {
-    color: #666;
+    color: #d0d0d0;
     line-height: 1.6;
   }
 </style>

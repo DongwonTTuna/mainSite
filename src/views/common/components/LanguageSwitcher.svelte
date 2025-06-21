@@ -79,31 +79,37 @@
     align-items: center;
     gap: 8px;
     padding: 8px 12px;
-    background: var(--bg-secondary, #f5f5f5);
-    border: 1px solid var(--border-color, #e0e0e0);
+    background: rgba(0, 0, 20, 0.5);
+    border: 1px solid rgba(102, 136, 255, 0.3);
     border-radius: 8px;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
     font-size: 14px;
+    backdrop-filter: blur(10px);
+    color: #88aaff;
   }
 
   .language-button:hover {
-    background: var(--bg-hover, #ebebeb);
-    border-color: var(--border-hover, #d0d0d0);
+    background: rgba(102, 136, 255, 0.1);
+    border-color: rgba(0, 212, 255, 0.5);
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+    color: #00d4ff;
   }
 
   .flag {
     font-size: 18px;
     line-height: 1;
+    filter: brightness(1.2);
   }
 
   .name {
     font-weight: 500;
-    color: var(--text-primary, #333);
+    color: currentColor;
   }
 
   .chevron {
     transition: transform 0.2s ease;
+    color: currentColor;
   }
 
   .chevron.open {
@@ -115,12 +121,13 @@
     top: calc(100% + 4px);
     right: 0;
     min-width: 150px;
-    background: var(--bg-primary, #fff);
-    border: 1px solid var(--border-color, #e0e0e0);
+    background: rgba(0, 0, 20, 0.9);
+    border: 1px solid rgba(102, 136, 255, 0.3);
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 40px rgba(102, 136, 255, 0.2);
     overflow: hidden;
     z-index: 1000;
+    backdrop-filter: blur(20px);
   }
 
   .language-option {
@@ -132,18 +139,20 @@
     background: none;
     border: none;
     cursor: pointer;
-    transition: background 0.2s ease;
+    transition: all 0.2s ease;
     font-size: 14px;
     text-align: left;
+    color: #88aaff;
   }
 
   .language-option:hover {
-    background: var(--bg-hover, #f5f5f5);
+    background: rgba(0, 212, 255, 0.1);
+    color: #00d4ff;
   }
 
   .language-option.active {
-    background: var(--bg-active, #e8f0ff);
-    color: var(--text-active, #1976d2);
+    background: rgba(102, 136, 255, 0.2);
+    color: #00d4ff;
   }
 
   .language-option.active .name {

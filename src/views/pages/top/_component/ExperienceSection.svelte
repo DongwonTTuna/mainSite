@@ -25,7 +25,7 @@
 <style>
   .experience-section {
     padding: 5rem 0;
-    background: #f8f9fa;
+    background: transparent;
   }
 
   .container {
@@ -38,7 +38,7 @@
     font-size: 3rem;
     text-align: center;
     margin-bottom: 3rem;
-    color: #333;
+    color: #ffffff;
   }
 
   .timeline {
@@ -53,7 +53,7 @@
     top: 0;
     bottom: 0;
     width: 2px;
-    background: #e0e0e0;
+    background: rgba(255, 255, 255, 0.2);
   }
 
   .timeline-item {
@@ -71,22 +71,24 @@
     top: 0;
     width: 12px;
     height: 12px;
-    background: #667eea;
+    background: #8b9cff;
     border-radius: 50%;
-    box-shadow: 0 0 0 4px white, 0 0 0 6px #e0e0e0;
+    box-shadow: 0 0 0 4px rgba(0, 0, 17, 0.8), 0 0 0 6px rgba(139, 156, 255, 0.3);
   }
 
   .timeline-content {
-    background: white;
+    background: rgba(255, 255, 255, 0.05);
     padding: 2rem;
     border-radius: 1rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
   }
 
   .timeline-content h3 {
     font-size: 1.5rem;
     margin-bottom: 1rem;
-    color: #333;
+    color: #ffffff;
   }
 
   .job-details {
@@ -98,18 +100,18 @@
 
   .period {
     font-size: 0.875rem;
-    color: #888;
+    color: #a0a0a0;
     font-weight: 600;
   }
 
   .position {
     font-size: 0.875rem;
-    color: #667eea;
+    color: #8b9cff;
     font-weight: 600;
   }
 
   .description {
-    color: #666;
+    color: #d0d0d0;
     line-height: 1.6;
   }
 
