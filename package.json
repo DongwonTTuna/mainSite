@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "lint-staged": "lint-staged --allow-empty",
-    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch --fail-on-warnings",
     "format": "prettier --write .",
     "lint": "prettier --check . && eslint .",
     "test:e2e": "playwright test",

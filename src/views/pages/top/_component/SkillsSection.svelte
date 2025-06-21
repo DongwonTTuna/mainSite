@@ -13,7 +13,7 @@
     <h2 class="section-title">{m.technical_skills()}</h2>
     
     <div class="experience-banner">
-      <span class="experience-number">10</span>
+      <span class="experience-number">2</span>
       <span class="experience-text">{m.years_of_experience()}</span>
     </div>
 

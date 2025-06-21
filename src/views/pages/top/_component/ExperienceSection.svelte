@@ -12,56 +12,10 @@
         <div class="timeline-content">
           <h3>Nextbeat Inc.</h3>
           <div class="job-details">
-            <span class="period">2024.04 - {m.present()}</span>
+            <span class="period">2023.05 - {m.present()}</span>
             <span class="position">{m.engineer()}</span>
           </div>
           <p class="description">{m.nextbeat_desc()}</p>
-        </div>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-marker"></div>
-        <div class="timeline-content">
-          <h3>FamilyMart Co., Ltd.</h3>
-          <div class="job-details">
-            <span class="period">2022.03 - 2022.12</span>
-            <span class="position">{m.part_time()}</span>
-          </div>
-          <div class="responsibilities">
-            <h4>{m.responsibilities()}</h4>
-            <ul>
-              <li>{m.product_stocking()}</li>
-              <li>{m.cash_register()}</li>
-              <li>{m.customer_service()}</li>
-            </ul>
-          </div>
-          <div class="achievement">
-            <h4>{m.achievement()}</h4>
-            <p>{m.familymart_achievement()}</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-marker"></div>
-        <div class="timeline-content">
-          <h3>Niku no Hanamasa Co., Ltd.</h3>
-          <div class="job-details">
-            <span class="period">2021.02 - 2022.02</span>
-            <span class="position">{m.part_time()}</span>
-          </div>
-          <div class="responsibilities">
-            <h4>{m.responsibilities()}</h4>
-            <ul>
-              <li>{m.product_stocking()}</li>
-              <li>{m.meat_preparation()}</li>
-              <li>{m.customer_service()}</li>
-            </ul>
-          </div>
-          <div class="achievement">
-            <h4>{m.achievement()}</h4>
-            <p>{m.hanamasa_achievement()}</p>
-          </div>
         </div>
       </div>
     </div>
@@ -155,42 +109,6 @@
   }
 
   .description {
-    color: #666;
-    line-height: 1.6;
-  }
-
-  .responsibilities,
-  .achievement {
-    margin-top: 1.5rem;
-  }
-
-  .responsibilities h4,
-  .achievement h4 {
-    font-size: 1rem;
-    color: #764ba2;
-    margin-bottom: 0.75rem;
-  }
-
-  .responsibilities ul {
-    list-style: none;
-    padding: 0;
-  }
-
-  .responsibilities li {
-    padding: 0.25rem 0;
-    color: #666;
-    position: relative;
-    padding-left: 1.5rem;
-  }
-
-  .responsibilities li::before {
-    content: '•';
-    position: absolute;
-    left: 0;
-    color: #667eea;
-  }
-
-  .achievement p {
     color: #666;
     line-height: 1.6;
   }

@@ -16,7 +16,7 @@
 
 ### Nextbeat Inc.
 
-**Period**: April 2024 - Present  
+**Period**: April 2023.5 - Present  
 **Position**: Engineer
 
 ### FamilyMart Co., Ltd.
@@ -47,7 +47,7 @@
 
 ### Programming Experience
 
-- **Years of Experience**: 10 years
+- **Years of Experience**: 2 years
 - **Frontend**: HTML, CSS, JavaScript, React, Next.js, TailwindCSS
 - **Backend**: Python, Django, Java, JavaFX
 - **Others**: API Development, System Design
