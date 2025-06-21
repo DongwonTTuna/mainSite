@@ -109,23 +109,61 @@
   }
 
   .profile-card {
-    background: var(--color-border-light);
+    background: var(--color-surface-card);
     padding: var(--spacing-xl);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-base);
-    border: 1px solid var(--color-border-light);
+    border: 1px solid var(--color-border);
     backdrop-filter: var(--blur-base);
+    transition: all var(--transition-base);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .profile-card::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: var(--color-accent);
+    opacity: 0.1;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+  }
+  
+  .profile-card:hover::before {
+    width: 300%;
+    height: 300%;
+  }
+  
+  .profile-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: var(--shadow-xl);
+    border-color: var(--color-accent);
+  }
+  
+  .profile-card:active {
+    transform: translateY(-2px) scale(1.01);
+    transition: all 0.1s;
   }
 
   .profile-card h3 {
     font-size: var(--font-size-2xl);
     margin-bottom: var(--spacing-lg);
     color: var(--color-accent-light);
+    position: relative;
+    z-index: 1;
   }
 
   .info-list {
     display: grid;
     gap: var(--spacing-base);
+    position: relative;
+    z-index: 1;
   }
 
   .info-list dt {
@@ -142,6 +180,8 @@
   .timeline {
     list-style: none;
     padding: 0;
+    position: relative;
+    z-index: 1;
   }
 
   .timeline li {
@@ -168,6 +208,8 @@
   .cert-list {
     list-style: none;
     padding: 0;
+    position: relative;
+    z-index: 1;
   }
 
   .cert-list li {
@@ -195,22 +237,61 @@
   }
 
   .about-card {
-    background: var(--color-border-light);
+    background: var(--color-surface-card);
     padding: var(--spacing-xl);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-base);
-    border: 1px solid var(--color-border-light);
+    border: 1px solid var(--color-border);
     backdrop-filter: var(--blur-base);
+    transition: all var(--transition-base);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .about-card::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: var(--color-accent);
+    opacity: 0.1;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+    z-index: 0;
+  }
+  
+  .about-card:hover::before {
+    width: 300%;
+    height: 300%;
+  }
+  
+  .about-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: var(--shadow-xl);
+    border-color: var(--color-accent);
+  }
+  
+  .about-card:active {
+    transform: translateY(-2px) scale(1.01);
+    transition: all 0.1s;
   }
 
   .about-card h4 {
     font-size: var(--font-size-xl);
     margin-bottom: var(--spacing-base);
     color: var(--color-accent-light);
+    position: relative;
+    z-index: 1;
   }
 
   .about-card p {
     color: var(--color-text-secondary);
     line-height: var(--line-height-relaxed);
+    position: relative;
+    z-index: 1;
   }
 </style>

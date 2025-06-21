@@ -447,7 +447,7 @@
     {/each}
     {#if isTyping && vimState.mode === 'closed'}
       <div class="terminal-line" style="color: {getLineColor('command')}">
-        <span class="prompt">$ </span>{currentText}<span class="cursor" class:visible={cursorVisible}>_</span>
+        <span class="prompt">$</span>{` ${currentText}`}<span class="cursor" class:visible={cursorVisible}>_</span>
       </div>
     {/if}
     {#if vimState.mode === 'normal' && vimState.content.length === 0}

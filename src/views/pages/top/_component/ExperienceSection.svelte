@@ -77,12 +77,19 @@
   }
 
   .timeline-content {
-    background: var(--color-border-light);
+    background: var(--color-surface-card);
     padding: var(--spacing-xl);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-base);
-    border: 1px solid var(--color-border-light);
-    backdrop-filter: var(--blur-base);
+    border: 1px solid var(--color-border);
+    backdrop-filter: var(--blur-sm);
+    transition: all var(--transition-base);
+  }
+  
+  .timeline-content:hover {
+    transform: translateX(4px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-border-accent);
   }
 
   .timeline-content h3 {
