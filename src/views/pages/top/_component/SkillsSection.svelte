@@ -2,9 +2,9 @@
   import { m } from '$lib/i18n'
 
   const skills = {
-    frontend: ['HTML', 'CSS', 'JavaScript', 'React', 'Next.js', 'TailwindCSS', 'SvelteKit'],
-    backend: ['Python', 'Django', 'Java', 'JavaFX', 'Node.js'],
-    others: ['API Development', 'System Design', 'Git', 'Docker']
+    frontend: ['TypeScript', 'React', 'Next.js', 'TailwindCSS', 'Svelte', 'SvelteKit'],
+    backend: ['Node.js', 'NestJS', 'Java', 'ElasticSearch'],
+    others: ['AWS', 'API Development', 'System Design', 'Git', 'Docker', 'Claude Code']
   }
 </script>
 
