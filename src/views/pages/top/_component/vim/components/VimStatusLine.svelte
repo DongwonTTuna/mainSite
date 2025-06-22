@@ -55,13 +55,16 @@
     justify-content: space-between;
     align-items: center;
     padding: 4px 12px;
-    background-color: rgba(0, 0, 17, 0.8);
+    background-color: rgba(0, 0, 17, 0.9);
     border-top: 1px solid var(--color-border);
     font-family: var(--font-family-mono);
     font-size: var(--font-size-sm);
     color: var(--color-text-secondary);
-    backdrop-filter: blur(10px);
     min-height: 28px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
   }
 
   .status-left {

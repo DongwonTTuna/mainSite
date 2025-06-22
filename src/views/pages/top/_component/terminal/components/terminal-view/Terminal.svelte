@@ -1,20 +1,69 @@
 <script lang="ts">
+  import { onMount } from "svelte"
   import TerminalHeader from "./components/TerminalHeader.svelte"
   import TerminalView from "./components/TerminalView.svelte"
+  import VimEditor from "../../../vim/VimEditor.svelte"
   import { runTerminalAnimation } from "./services/terminal-animation"
+  import { terminalStore } from "./stores/terminal.store"
+  import { vimStore } from "../../../vim/stores/vim.store"
 
   export let title = "Terminal - api-service"
+
+  let vimRef: { typeContent: (lines: string[]) => void } | null = null
+  let vimFilename = ""
+  let vimContent: string[] = []
+  let currentMode: "terminal" | "vim" = "terminal"
+
+  // Subscribe to terminal store to detect vim commands
+  $: if ($terminalStore.lastCommand?.startsWith("vim ")) {
+    const parts = $terminalStore.lastCommand.split(" ")
+    const filename = parts[1]
+    openVimMode(filename)
+  }
+
+  function openVimMode(filename: string) {
+    currentMode = "vim"
+    vimFilename = filename
+    vimContent = []
+    vimStore.openVim(filename)
+  }
+
+  function closeVimMode() {
+    currentMode = "terminal"
+    vimStore.closeVim()
+    // Continue terminal animation after vim closes
+    terminalStore.resumeAnimation()
+  }
 
   export function runAnimation() {
     runTerminalAnimation()
   }
 
+  onMount(() => {
+    // Make terminal accessible for vim animation
+    ;(window as any).__terminalWrapper = {
+      typeVimContent: (content: string[]) => {
+        if (vimRef && currentMode === "vim") {
+          vimRef.typeContent(content)
+        }
+      }
+    }
+  })
 </script>
 
 <div class="terminal-container" style="transform: perspective(1200px) rotateX(-5deg) rotateY(10deg);">
   <TerminalHeader {title} />
   <div class="terminal-content">
-    <TerminalView />
+    {#if currentMode === "terminal"}
+      <TerminalView />
+    {:else if currentMode === "vim"}
+      <VimEditor 
+        bind:this={vimRef} 
+        filename={vimFilename} 
+        initialContent={vimContent} 
+        onExit={closeVimMode} 
+      />
+    {/if}
   </div>
 </div>
 

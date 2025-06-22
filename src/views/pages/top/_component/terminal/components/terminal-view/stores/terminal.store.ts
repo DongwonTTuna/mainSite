@@ -93,6 +93,10 @@ function createTerminalStore() {
 
     resumeAnimation() {
       update((state) => ({ ...state, isAnimating: true }))
+      // Import dynamically to avoid circular dependency
+      import("../services/terminal-animation").then(({ resumeAnimation }) => {
+        resumeAnimation()
+      })
     },
 
     completeAnimation() {

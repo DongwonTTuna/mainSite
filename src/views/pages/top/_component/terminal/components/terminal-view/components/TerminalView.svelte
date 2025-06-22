@@ -35,12 +35,6 @@
 </script>
 
 <div class="terminal-view" bind:this={terminalBody}>
-  {#if $terminalStore.displayedLines.length === 0}
-    <div class="terminal-line" style="color: {getLineColor('info')}">
-      Waiting for terminal to start...
-    </div>
-  {/if}
-  
   {#each $terminalStore.displayedLines as line (line.id)}
     <div
       class="terminal-line {line.type === 'log' ||

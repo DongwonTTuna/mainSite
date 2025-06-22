@@ -1,23 +1,23 @@
 <script lang="ts">
   import { onMount } from "svelte"
-  import TerminalWrapper from "../TerminalWrapper.svelte"
+  import Terminal from "./components/terminal-view/Terminal.svelte"
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let terminalWrapperRef: any
+  let terminalRef: any
 
   onMount(() => {
-    // Terminal wrapper handles all animation logic now
+    // Terminal handles all animation logic now
     // Give components time to fully mount
     setTimeout(() => {
-      if (terminalWrapperRef && terminalWrapperRef.runAnimation) {
-        terminalWrapperRef.runAnimation()
+      if (terminalRef && terminalRef.runAnimation) {
+        terminalRef.runAnimation()
       }
     }, 100)
   })
 </script>
 
 <div class="terminal-wrapper">
-  <TerminalWrapper bind:this={terminalWrapperRef} />
+  <Terminal bind:this={terminalRef} />
 </div>
 
 <style>

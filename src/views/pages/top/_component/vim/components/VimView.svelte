@@ -48,12 +48,16 @@
       backgroundColor: "rgba(255, 203, 107, 0.3)"
     },
     ".cm-vim-panel": {
-      backgroundColor: "transparent",
+      backgroundColor: "rgba(0, 0, 17, 0.9)",
       borderTop: "1px solid var(--color-border)",
       color: "var(--color-text-primary)",
       padding: "4px 8px",
       fontFamily: "var(--font-family-mono)",
-      fontSize: "var(--font-size-sm)"
+      fontSize: "var(--font-size-sm)",
+      position: "absolute",
+      bottom: "28px",
+      left: 0,
+      right: 0
     },
     ".cm-vim-panel input": {
       backgroundColor: "transparent",
@@ -125,11 +129,14 @@
         view?.dispatch({
           changes: { from: view.state.selection.main.head, insert: "\n" }
         })
-      } else if (char.startsWith(":")) {
-        // Execute vim command directly through the editor
-        view?.dispatch({
-          changes: { from: view.state.selection.main.head, insert: char }
-        })
+      } else if (char === ":") {
+        // Enter command mode by simulating key press
+        const event = new KeyboardEvent("keydown", { key: ":", code: "Colon" })
+        view?.contentDOM.dispatchEvent(event)
+      } else if (char === "\u001b") {
+        // ESC key to exit insert mode
+        const event = new KeyboardEvent("keydown", { key: "Escape", code: "Escape" })
+        view?.contentDOM.dispatchEvent(event)
       } else {
         view?.dispatch({
           changes: { from: view.state.selection.main.head, insert: char }
@@ -223,11 +230,9 @@
   }
 
   .vim-editor :global(.cm-vim-panel) {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(0, 0, 17, 0.9);
-    backdrop-filter: blur(10px);
+    position: fixed !important;
+    bottom: auto !important;
+    top: auto !important;
+    margin-top: -1px;
   }
 </style>
