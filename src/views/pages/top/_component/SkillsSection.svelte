@@ -1,17 +1,17 @@
 <script lang="ts">
-  import { m } from '$lib/i18n'
+  import { m } from "$lib/i18n"
 
   const skills = {
-    frontend: ['TypeScript', 'React', 'Next.js', 'TailwindCSS', 'Svelte', 'SvelteKit'],
-    backend: ['Node.js', 'NestJS', 'Java', 'ElasticSearch'],
-    others: ['AWS', 'API Development', 'System Design', 'Git', 'Docker', 'Claude Code']
+    frontend: ["TypeScript", "React", "Next.js", "TailwindCSS", "Svelte", "SvelteKit"],
+    backend: ["Node.js", "NestJS", "Java", "ElasticSearch"],
+    others: ["AWS", "API Development", "System Design", "Git", "Docker", "Claude Code"]
   }
 </script>
 
 <section class="skills-section">
   <div class="container">
     <h2 class="section-title">{m.technical_skills()}</h2>
-    
+
     <div class="experience-banner">
       <span class="experience-number">2</span>
       <span class="experience-text">{m.years_of_experience()}</span>
@@ -21,7 +21,7 @@
       <div class="skill-category">
         <h3>Frontend</h3>
         <div class="skill-tags">
-          {#each skills.frontend as skill}
+          {#each skills.frontend as skill (skill)}
             <span class="skill-tag">{skill}</span>
           {/each}
         </div>
@@ -30,7 +30,7 @@
       <div class="skill-category">
         <h3>Backend</h3>
         <div class="skill-tags">
-          {#each skills.backend as skill}
+          {#each skills.backend as skill (skill)}
             <span class="skill-tag">{skill}</span>
           {/each}
         </div>
@@ -39,7 +39,7 @@
       <div class="skill-category">
         <h3>{m.others()}</h3>
         <div class="skill-tags">
-          {#each skills.others as skill}
+          {#each skills.others as skill (skill)}
             <span class="skill-tag">{skill}</span>
           {/each}
         </div>
@@ -97,15 +97,15 @@
     position: relative;
     overflow: hidden;
   }
-  
+
   .experience-banner::before {
-    content: '';
+    content: "";
     position: absolute;
     top: -50%;
     left: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
     animation: float 6s ease-in-out infinite;
   }
 
@@ -147,9 +147,9 @@
     position: relative;
     overflow: hidden;
   }
-  
+
   .skill-category::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 50%;
     left: 50%;
@@ -159,20 +159,22 @@
     background: var(--color-accent);
     opacity: 0.1;
     transform: translate(-50%, -50%);
-    transition: width 0.6s, height 0.6s;
+    transition:
+      width 0.6s,
+      height 0.6s;
   }
-  
+
   .skill-category:hover::before {
     width: 300%;
     height: 300%;
   }
-  
+
   .skill-category:hover {
     transform: translateY(-6px) scale(1.02);
     box-shadow: var(--shadow-xl);
     border-color: var(--color-accent);
   }
-  
+
   .skill-category:active {
     transform: translateY(-2px) scale(1.01);
     transition: all 0.1s;
@@ -241,9 +243,9 @@
     position: relative;
     overflow: hidden;
   }
-  
+
   .project-card::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 50%;
     left: 50%;
@@ -253,20 +255,22 @@
     background: var(--color-accent);
     opacity: 0.1;
     transform: translate(-50%, -50%);
-    transition: width 0.6s, height 0.6s;
+    transition:
+      width 0.6s,
+      height 0.6s;
   }
-  
+
   .project-card:hover::before {
     width: 300%;
     height: 300%;
   }
-  
+
   .project-card:hover {
     transform: translateY(-6px) scale(1.02);
     box-shadow: var(--shadow-xl);
     border-color: var(--color-accent);
   }
-  
+
   .project-card:active {
     transform: translateY(-2px) scale(1.01);
     transition: all 0.1s;
@@ -295,7 +299,7 @@
   }
 
   .project-card li::before {
-    content: '▸';
+    content: "▸";
     position: absolute;
     left: 0;
     color: var(--color-accent-light);

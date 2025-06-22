@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { onMount } from 'svelte'
-  import ProfileSection from './_component/ProfileSection.svelte'
-  import HeroSection from './_component/HeroSection.svelte'
-  import SkillsSection from './_component/SkillsSection.svelte'
-  import ExperienceSection from './_component/ExperienceSection.svelte'
+  import { onMount } from "svelte"
+  import ProfileSection from "./_component/ProfileSection.svelte"
+  import HeroSection from "./_component/HeroSection.svelte"
+  import SkillsSection from "./_component/SkillsSection.svelte"
+  import ExperienceSection from "./_component/ExperienceSection.svelte"
 
   let sections: HTMLElement[] = []
 
@@ -12,14 +12,14 @@
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('visible')
+            entry.target.classList.add("visible")
           }
         })
       },
       { threshold: 0.1 }
     )
 
-    sections.forEach(section => {
+    sections.forEach((section) => {
       if (section) observer.observe(section)
     })
 
@@ -53,7 +53,7 @@
     transform: translateY(0);
     transition: all var(--transition-slow);
   }
-  
+
   /* Optional: Add animation on scroll if you want to keep it
   .section-wrapper:not(.visible) {
     opacity: 0;
@@ -70,5 +70,4 @@
     margin: var(--spacing-xl) auto;
     max-width: var(--max-width-container);
   }
-
 </style>

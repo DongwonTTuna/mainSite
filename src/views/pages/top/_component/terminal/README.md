@@ -41,7 +41,7 @@ terminal/
 
 ```svelte
 <script>
-  import TerminalAnimation from './terminal/TerminalAnimation.svelte'
+  import TerminalAnimation from "./terminal/TerminalAnimation.svelte"
 </script>
 
 <TerminalAnimation />
@@ -52,20 +52,22 @@ terminal/
 ### Adding New Commands
 
 1. Add to `terminal-sequences.ts`:
+
 ```typescript
 export const terminalSequences: LogLine[] = [
   // ... existing sequences
-  { id: 200, text: 'your-command', type: 'command', delay: 500 }
+  { id: 200, text: "your-command", type: "command", delay: 500 }
 ]
 ```
 
 ### Extending VIM Commands
 
 1. Add to `vim-engine.ts`:
+
 ```typescript
 this.registerCommand({
-  key: 'your-key',
-  modes: ['normal'],
+  key: "your-key",
+  modes: ["normal"],
   action: (state) => ({
     // State changes
   })
@@ -75,6 +77,7 @@ this.registerCommand({
 ### Styling
 
 All components use CSS variables from the global design system:
+
 - `--color-terminal-*` for colors
 - `--spacing-*` for spacing
 - `--font-*` for typography

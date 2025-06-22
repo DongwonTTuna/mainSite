@@ -4,15 +4,15 @@ export const index = runtime
 export const m = messages
 
 export function detectAndSetBrowserLocale(): void {
-  if (typeof window === 'undefined') return
+  if (typeof window === "undefined") return
 
-  const cookieName = 'PARAGLIDE_LOCALE'
+  const cookieName = "PARAGLIDE_LOCALE"
   const hasCookie = document.cookie.includes(cookieName)
 
   if (!hasCookie && navigator?.languages?.length) {
-    const languages = navigator.languages.map(lang => ({
+    const languages = navigator.languages.map((lang) => ({
       fullTag: lang.toLowerCase(),
-      baseTag: lang.split('-')[0]?.toLowerCase()
+      baseTag: lang.split("-")[0]?.toLowerCase()
     }))
 
     for (const lang of languages) {

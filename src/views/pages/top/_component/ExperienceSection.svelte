@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { m } from '$lib/i18n'
+  import { m } from "$lib/i18n"
 </script>
 
 <section class="experience-section">
   <div class="container">
     <h2 class="section-title">{m.work_experience()}</h2>
-    
+
     <div class="timeline">
       <div class="timeline-item">
         <div class="timeline-marker"></div>
@@ -48,7 +48,7 @@
   }
 
   .timeline::before {
-    content: '';
+    content: "";
     position: absolute;
     left: 0;
     top: 0;
@@ -74,7 +74,9 @@
     height: 12px;
     background: var(--color-accent-light);
     border-radius: var(--radius-full);
-    box-shadow: 0 0 0 4px var(--color-background), 0 0 0 6px var(--color-border-accent);
+    box-shadow:
+      0 0 0 4px var(--color-background),
+      0 0 0 6px var(--color-border-accent);
   }
 
   .timeline-content {
@@ -87,7 +89,7 @@
     transition: all var(--transition-base);
     position: relative;
   }
-  
+
   .timeline-content:hover {
     transform: translateX(4px);
     box-shadow: var(--shadow-md);
@@ -147,7 +149,7 @@
     .timeline-marker {
       left: calc(-1 * var(--spacing-lg));
     }
-    
+
     .timeline-content {
       margin-left: var(--spacing-base);
     }

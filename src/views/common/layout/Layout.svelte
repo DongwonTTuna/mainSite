@@ -1,11 +1,11 @@
 <script lang="ts">
   import LanguageSwitcher from "../components/LanguageSwitcher.svelte"
-  import { onMount } from 'svelte'
+  import { onMount } from "svelte"
 
   export let isMobile: boolean
-  
-  let stars: Array<{x: number, y: number, size: number, speed: number}> = []
-  
+
+  let stars: Array<{ x: number; y: number; size: number; speed: number }> = []
+
   onMount(() => {
     // Create background stars
     for (let i = 0; i < 100; i++) {
@@ -21,10 +21,11 @@
 
 <main class="main__container">
   <div class="stars-bg">
-    {#each stars as star}
-      <div 
-        class="star" 
-        style="left: {star.x}%; top: {star.y}%; width: {star.size}px; height: {star.size}px; animation-duration: {20 / star.speed}s"
+    {#each stars as star, index (index)}
+      <div
+        class="star"
+        style="left: {star.x}%; top: {star.y}%; width: {star.size}px; height: {star.size}px; animation-duration: {20 /
+          star.speed}s"
       ></div>
     {/each}
   </div>

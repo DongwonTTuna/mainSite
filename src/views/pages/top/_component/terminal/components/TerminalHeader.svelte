@@ -1,5 +1,5 @@
 <script lang="ts">
-  export let title = 'Terminal'
+  export let title = "Terminal"
 </script>
 
 <div class="terminal-header">

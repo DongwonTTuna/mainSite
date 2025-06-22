@@ -14,6 +14,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **Comments**: Use JSDoc style for function and component documentation
   - 꼭 필요한 경우에만 주석을 작성하고, 코드가 명확하게 이해될 수 있도록 작성합니다.
   - 최대한 코드로 의도를 표현하고, 주석은 코드로만 의도를 전달할 수 없을 때 작성합니다.
+- **Lint Error**: Lint Error을 무시하는 것은 어떠한 경우에도 하지 않습니다.
+  - Lint Error이 발생하는 이유를 파악하고, 해당 문제를 해결합니다.
+  - Lint Error을 무시하는 것은 코드 품질을 저하시킬 수 있습니다.
 
 ## Architecture Overview
 
@@ -47,90 +50,58 @@ This project implements a comprehensive design system using CSS custom propertie
 ### Design Tokens
 
 #### Typography
+
 ```css
---font-family-primary: "Noto Sans JP", sans-serif
---font-family-mono: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', monospace
-
-/* Font Sizes */
---font-size-xs: 0.75rem      /* 12px */
---font-size-sm: 0.875rem     /* 14px */
---font-size-base: 1rem       /* 16px */
---font-size-lg: 1.125rem     /* 18px */
---font-size-xl: 1.25rem      /* 20px */
---font-size-2xl: 1.5rem      /* 24px */
---font-size-3xl: 2rem        /* 32px */
---font-size-4xl: 2.5rem      /* 40px */
---font-size-5xl: 3rem        /* 48px */
---font-size-hero: clamp(3rem, 8vw, 6rem)
---font-size-hero-sub: clamp(1.5rem, 4vw, 2.5rem)
-
-/* Font Weights */
---font-weight-ultralight: 100
---font-weight-light: 300
---font-weight-normal: 400
---font-weight-semibold: 600
---font-weight-bold: 700
---font-weight-black: 900
-
-/* Line Heights */
---line-height-tight: 1.2
---line-height-normal: 1.5
---line-height-relaxed: 1.6
---line-height-loose: 1.8
+--font-family-primary:
+  "Noto Sans JP", sans-serif --font-family-mono: "SF Mono", "Monaco", "Inconsolata", "Fira Code",
+  monospace /* Font Sizes */ --font-size-xs: 0.75rem /* 12px */ --font-size-sm: 0.875rem /* 14px */
+    --font-size-base: 1rem /* 16px */ --font-size-lg: 1.125rem /* 18px */ --font-size-xl: 1.25rem /* 20px */
+    --font-size-2xl: 1.5rem /* 24px */ --font-size-3xl: 2rem /* 32px */ --font-size-4xl: 2.5rem /* 40px */
+    --font-size-5xl: 3rem /* 48px */ --font-size-hero: clamp(3rem, 8vw, 6rem)
+    --font-size-hero-sub: clamp(1.5rem, 4vw, 2.5rem) /* Font Weights */ --font-weight-ultralight: 100
+    --font-weight-light: 300 --font-weight-normal: 400 --font-weight-semibold: 600 --font-weight-bold: 700
+    --font-weight-black: 900 /* Line Heights */ --line-height-tight: 1.2 --line-height-normal: 1.5
+    --line-height-relaxed: 1.6 --line-height-loose: 1.8;
 ```
 
 #### Spacing
+
 ```css
---spacing-xs: 0.25rem    /* 4px */
---spacing-sm: 0.5rem     /* 8px */
---spacing-md: 0.75rem    /* 12px */
---spacing-base: 1rem     /* 16px */
---spacing-lg: 1.5rem     /* 24px */
---spacing-xl: 2rem       /* 32px */
---spacing-2xl: 3rem      /* 48px */
---spacing-3xl: 4rem      /* 64px */
---spacing-4xl: 5rem      /* 80px */
+--spacing-xs: 0.25rem /* 4px */ --spacing-sm: 0.5rem /* 8px */ --spacing-md: 0.75rem /* 12px */ --spacing-base: 1rem
+  /* 16px */ --spacing-lg: 1.5rem /* 24px */ --spacing-xl: 2rem /* 32px */ --spacing-2xl: 3rem /* 48px */
+  --spacing-3xl: 4rem /* 64px */ --spacing-4xl: 5rem /* 80px */;
 ```
 
 #### Layout
+
 ```css
---max-width-container: 1200px
---max-width-content: 800px
+--max-width-container: 1200px --max-width-content: 800px;
 ```
 
 #### Border Radius
+
 ```css
---radius-sm: 0.25rem     /* 4px */
---radius-base: 0.5rem    /* 8px */
---radius-md: 0.75rem     /* 12px */
---radius-lg: 1rem        /* 16px */
---radius-xl: 1.5rem      /* 24px */
---radius-2xl: 2rem       /* 32px */
---radius-full: 9999px    /* Circle */
+--radius-sm: 0.25rem /* 4px */ --radius-base: 0.5rem /* 8px */ --radius-md: 0.75rem /* 12px */ --radius-lg: 1rem
+  /* 16px */ --radius-xl: 1.5rem /* 24px */ --radius-2xl: 2rem /* 32px */ --radius-full: 9999px /* Circle */;
 ```
 
 #### Transitions & Animations
+
 ```css
---transition-fast: 0.2s ease
---transition-base: 0.3s ease
---transition-slow: 0.8s ease
---transition-material: 0.3s cubic-bezier(0.4, 0, 0.2, 1)
+--transition-fast: 0.2s ease --transition-base: 0.3s ease --transition-slow: 0.8s ease --transition-material: 0.3s
+  cubic-bezier(0.4, 0, 0.2, 1);
 ```
 
 #### Z-index Layers
+
 ```css
---z-background: 0
---z-content: 1
---z-overlay: 10
---z-modal: 100
---z-fixed: 1000
+--z-background: 0 --z-content: 1 --z-overlay: 10 --z-modal: 100 --z-fixed: 1000;
 ```
 
 #### Effects
+
 ```css
---blur-sm: blur(4px)
---blur-base: blur(10px)
---blur-lg: blur(20px)
+--blur-sm: blur(4px) --blur-base: blur(10px) --blur-lg: blur(20px);
 ```
 
 ### Color System
@@ -176,6 +147,7 @@ Always use CSS variables instead of hardcoded values:
 #### Responsive Design
 
 The design system includes responsive adjustments:
+
 - Font sizes scale down on mobile
 - Spacing adjusts for smaller screens
 - Container padding adapts to viewport
@@ -190,6 +162,7 @@ The design system includes responsive adjustments:
 #### Shadow System
 
 Shadows adapt to theme context:
+
 ```css
 --shadow-sm     /* Subtle shadows */
 --shadow-base   /* Standard elevation */
@@ -202,6 +175,7 @@ Shadows adapt to theme context:
 ### Animations
 
 Pre-defined animations are available globally:
+
 - `fadeIn` - Simple opacity fade
 - `fadeInUp` - Fade with upward motion
 - `glow` - Pulsing glow effect

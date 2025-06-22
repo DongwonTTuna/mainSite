@@ -20,6 +20,7 @@
 **Position**: Full Stack Engineer
 
 **Responsibilities**:
+
 - Developed and maintained web applications using React/Next.js and Python/Django
 - Implemented RESTful APIs and integrated third-party services
 - Optimized application performance resulting in 40% faster load times
@@ -27,6 +28,7 @@
 - Conducted code reviews and mentored junior developers
 
 **Key Achievements**:
+
 - Led the frontend refactoring project that improved user engagement by 25%
 - Implemented automated testing, increasing code coverage from 30% to 75%
 - Developed a real-time notification system handling 10K+ concurrent users
@@ -75,7 +77,6 @@
   - Tech Stack: Next.js, TypeScript, Redux, Django REST Framework
   - Reduced page load time by 40% through code splitting and lazy loading
   - Implemented responsive design supporting mobile/tablet/desktop
-  
 - **Real-time Analytics Dashboard** (2023)
   - Tech Stack: React, WebSocket, D3.js, PostgreSQL
   - Visualized complex data for 50+ business metrics
@@ -84,11 +85,13 @@
 #### Personal & Academic Projects
 
 - **BiodenKR Corporate Website** (July 2024)
+
   - Tech Stack: Next.js, TypeScript, Framer Motion
   - Delivered fully responsive site with SEO optimization
   - Achieved 95+ Lighthouse performance score
 
 - **Restaurant Recommendation Map Application** (2023)
+
   - Tech Stack: React Native, Google Maps API, Firebase
   - Built location-based restaurant discovery app with personalized recommendations
   - Integrated real-time reviews and ratings system

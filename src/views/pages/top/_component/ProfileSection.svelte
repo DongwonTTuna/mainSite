@@ -1,21 +1,21 @@
 <script lang="ts">
-  import { m } from '$lib/i18n'
+  import { m } from "$lib/i18n"
 </script>
 
 <section class="profile-section">
   <div class="container">
     <h2 class="section-title">{m.profile_title()}</h2>
-    
+
     <div class="profile-grid">
       <div class="profile-card">
         <h3>{m.basic_info()}</h3>
         <dl class="info-list">
           <dt>{m.birth_date()}</dt>
           <dd>1999.08.14 (25)</dd>
-          
+
           <dt>{m.nationality()}</dt>
           <dd>{m.korean()}</dd>
-          
+
           <dt>{m.location()}</dt>
           <dd>Takasaki, Gunma, Japan</dd>
         </dl>
@@ -120,9 +120,9 @@
     position: relative;
     overflow: hidden;
   }
-  
+
   .profile-card::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 50%;
     left: 50%;
@@ -132,20 +132,22 @@
     background: var(--color-accent);
     opacity: 0.1;
     transform: translate(-50%, -50%);
-    transition: width 0.6s, height 0.6s;
+    transition:
+      width 0.6s,
+      height 0.6s;
   }
-  
+
   .profile-card:hover::before {
     width: 300%;
     height: 300%;
   }
-  
+
   .profile-card:hover {
     transform: translateY(-6px) scale(1.02);
     box-shadow: var(--shadow-xl);
     border-color: var(--color-accent);
   }
-  
+
   .profile-card:active {
     transform: translateY(-2px) scale(1.01);
     transition: all 0.1s;
@@ -248,9 +250,9 @@
     position: relative;
     overflow: hidden;
   }
-  
+
   .about-card::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 50%;
     left: 50%;
@@ -260,21 +262,23 @@
     background: var(--color-accent);
     opacity: 0.1;
     transform: translate(-50%, -50%);
-    transition: width 0.6s, height 0.6s;
+    transition:
+      width 0.6s,
+      height 0.6s;
     z-index: 0;
   }
-  
+
   .about-card:hover::before {
     width: 300%;
     height: 300%;
   }
-  
+
   .about-card:hover {
     transform: translateY(-6px) scale(1.02);
     box-shadow: var(--shadow-xl);
     border-color: var(--color-accent);
   }
-  
+
   .about-card:active {
     transform: translateY(-2px) scale(1.01);
     transition: all 0.1s;

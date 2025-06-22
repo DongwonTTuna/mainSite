@@ -32,5 +32,8 @@ export default ts.config(
         parser: ts.parser
       }
     }
+  },
+  {
+    ignores: ["src/lib/i18n/generated/**"]
   }
 )

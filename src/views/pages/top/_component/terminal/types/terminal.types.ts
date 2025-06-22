@@ -5,30 +5,22 @@ export interface LogLine {
   delay: number
 }
 
-export type LogType = 
-  | 'command' 
-  | 'info' 
-  | 'success' 
-  | 'error' 
-  | 'log' 
-  | 'warning' 
-  | 'system' 
-  | 'vim'
+export type LogType = "command" | "info" | "success" | "error" | "log" | "warning" | "system" | "vim"
 
 export interface TerminalState {
   displayedLines: LogLine[]
   currentIndex: number
   isTyping: boolean
   currentText: string
-  mode: 'terminal' | 'vim'
+  mode: "terminal" | "vim"
 }
 
 export interface VimMode {
-  type: 'closed' | 'normal' | 'insert' | 'visual' | 'command'
+  type: "closed" | "normal" | "insert" | "visual" | "command"
 }
 
 export interface VimState {
-  mode: VimMode['type']
+  mode: VimMode["type"]
   filename: string
   content: string[]
   cursorRow: number
@@ -53,7 +45,7 @@ export interface TypingOptions {
 
 export interface TerminalConfig {
   visibleLines: number
-  scrollBehavior: 'smooth' | 'auto'
+  scrollBehavior: "smooth" | "auto"
   perspective: {
     rotationX: number
     rotationY: number
@@ -64,11 +56,11 @@ export interface TerminalConfig {
 export interface VimCommand {
   key: string
   action: (state: VimState) => Partial<VimState>
-  modes: VimMode['type'][]
+  modes: VimMode["type"][]
 }
 
 export interface AnimationQueueItem {
-  type: 'line' | 'command' | 'vim-key' | 'delay'
-  data: any
+  type: "line" | "command" | "vim-key" | "delay"
+  data: LogLine | { text: string; currentText?: string } | { key: string; delay?: number } | number
   duration?: number
 }

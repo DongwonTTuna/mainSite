@@ -1,8 +1,8 @@
-import type { TypingOptions } from '../types/terminal.types'
+import type { TypingOptions } from "../types/terminal.types"
 
 export class TypingAnimator {
   private currentAnimation: { cancel: () => void } | null = null
-  
+
   animate(
     text: string,
     onUpdate: (currentText: string) => void,
@@ -14,12 +14,12 @@ export class TypingAnimator {
   ): Promise<void> {
     // Cancel any existing animation
     this.cancel()
-    
+
     return new Promise((resolve) => {
       let cancelled = false
       let charIndex = 0
-      let currentText = ''
-      
+      let currentText = ""
+
       const typeNextChar = () => {
         if (cancelled || charIndex >= text.length) {
           if (!cancelled && options.callback) {
@@ -28,24 +28,24 @@ export class TypingAnimator {
           resolve()
           return
         }
-        
+
         currentText += text[charIndex]
         onUpdate(currentText)
         charIndex++
-        
+
         // Calculate delay based on character type
         const char = text[charIndex - 1]
         let delay: number
-        
-        if (char === ' ') {
+
+        if (char === " ") {
           delay = options.spaceDelay + Math.random() * 20
         } else {
           delay = options.minDelay + Math.random() * (options.maxDelay - options.minDelay)
         }
-        
+
         setTimeout(typeNextChar, delay)
       }
-      
+
       // Store cancel function
       this.currentAnimation = {
         cancel: () => {
@@ -53,19 +53,19 @@ export class TypingAnimator {
           resolve()
         }
       }
-      
+
       // Start typing
       typeNextChar()
     })
   }
-  
+
   cancel(): void {
     if (this.currentAnimation) {
       this.currentAnimation.cancel()
       this.currentAnimation = null
     }
   }
-  
+
   async typeInstant(text: string, onUpdate: (currentText: string) => void): Promise<void> {
     onUpdate(text)
   }
