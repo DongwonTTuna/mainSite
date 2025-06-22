@@ -185,10 +185,10 @@
 
   @keyframes glow {
     from {
-      filter: brightness(1) drop-shadow(0 0 20px rgba(102, 136, 255, 0.5));
+      filter: brightness(1) drop-shadow(0 0 20px rgba(245, 158, 11, 0.5));
     }
     to {
-      filter: brightness(1.1) drop-shadow(0 0 30px rgba(0, 212, 255, 0.7));
+      filter: brightness(1.1) drop-shadow(0 0 30px rgba(251, 146, 60, 0.7));
     }
   }
 </style>

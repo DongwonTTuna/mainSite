@@ -165,10 +165,10 @@
       case 'success': return 'var(--color-terminal-green)'
       case 'error': return 'var(--color-terminal-red)'
       case 'warning': return 'var(--color-terminal-yellow)'
-      case 'info': return 'var(--color-accent-light)'
-      case 'system': return 'var(--color-accent)'
-      case 'vim': return 'var(--color-text-primary)'
-      case 'log': default: return 'var(--color-accent-light)'
+      case 'info': return 'var(--color-terminal-yellow)'
+      case 'system': return 'var(--color-terminal-text)'
+      case 'vim': return 'var(--color-terminal-text)'
+      case 'log': default: return 'var(--color-terminal-text)'
     }
   }
 
@@ -489,23 +489,23 @@
     max-width: 1200px;
     height: 600px;
     background: var(--color-terminal-bg);
-    border: 1px solid var(--color-border-accent);
+    border: 1px solid rgba(251, 146, 60, 0.4);
     border-radius: var(--radius-md);
     overflow: hidden;
     box-shadow: 
-      var(--shadow-xl), 
-      var(--shadow-glow),
-      inset 0 0 60px var(--color-border-accent);
+      0 20px 50px rgba(251, 146, 60, 0.15),
+      0 0 40px rgba(251, 146, 60, 0.2),
+      inset 0 0 80px rgba(251, 146, 60, 0.1);
     backdrop-filter: var(--blur-lg);
     transform-style: preserve-3d;
   }
 
   .terminal-header {
-    background: var(--color-background-secondary);
+    background: rgba(254, 215, 170, 0.5);
     padding: var(--spacing-sm) var(--spacing-md);
     display: flex;
     align-items: center;
-    border-bottom: 1px solid var(--color-border-accent);
+    border-bottom: 1px solid rgba(251, 146, 60, 0.3);
   }
 
   .terminal-buttons {
@@ -535,8 +535,9 @@
 
   .terminal-title {
     font-size: var(--font-size-sm);
-    color: var(--color-accent-light);
+    color: var(--color-terminal-blue);
     font-family: var(--font-family-mono);
+    font-weight: var(--font-weight-ultralight);
   }
 
   .terminal-body {
@@ -545,9 +546,11 @@
     overflow-y: auto;
     font-family: var(--font-family-mono);
     font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-ultralight);
     line-height: var(--line-height-relaxed);
     padding-bottom: 50px; /* Space for vim status line */
     position: relative;
+    color: var(--color-terminal-text);
   }
 
   .terminal-body::-webkit-scrollbar {
@@ -555,23 +558,25 @@
   }
 
   .terminal-body::-webkit-scrollbar-track {
-    background: var(--color-background-secondary);
+    background: rgba(254, 215, 170, 0.2);
   }
 
   .terminal-body::-webkit-scrollbar-thumb {
-    background: var(--color-border-accent);
+    background: rgba(251, 146, 60, 0.5);
     border-radius: var(--radius-sm);
   }
 
   .terminal-body::-webkit-scrollbar-thumb:hover {
-    background: var(--color-accent);
+    background: rgba(251, 146, 60, 0.8);
   }
 
   .terminal-line {
     margin-bottom: var(--spacing-xs);
     white-space: pre-wrap;
-    text-shadow: 0 0 5px currentColor;
+    text-shadow: 0 0 3px currentColor;
     animation: fadeIn var(--transition-base);
+    font-weight: var(--font-weight-ultralight);
+    letter-spacing: 0.02em;
   }
 
   .cursor {
@@ -589,38 +594,41 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background: var(--color-background-secondary);
+    background: rgba(254, 215, 170, 0.5);
     padding: var(--spacing-sm) var(--spacing-xl);
-    border-top: 1px solid var(--color-border-accent);
+    border-top: 1px solid rgba(251, 146, 60, 0.3);
     font-family: var(--font-family-mono);
     font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-ultralight);
     display: flex;
     align-items: center;
   }
 
   .vim-mode {
-    color: var(--color-terminal-yellow);
-    font-weight: var(--font-weight-bold);
-    text-shadow: var(--shadow-text);
+    color: var(--color-terminal-blue);
+    font-weight: var(--font-weight-semibold);
+    text-shadow: 0 0 10px rgba(251, 146, 60, 0.5);
     margin-right: var(--spacing-lg);
   }
   
   .vim-filename {
-    color: var(--color-accent-light);
+    color: var(--color-terminal-yellow);
     flex: 1;
     text-align: center;
+    font-weight: var(--font-weight-ultralight);
   }
   
   .vim-position {
-    color: var(--color-accent);
+    color: var(--color-terminal-blue);
     margin-left: auto;
+    font-weight: var(--font-weight-ultralight);
   }
   
   
   .vim-cursor-block {
     width: 8px;
     height: 18px;
-    background: var(--color-text-primary);
+    background: var(--color-terminal-blue);
     animation: blink 1s infinite;
     pointer-events: none;
   }
@@ -645,6 +653,11 @@
     background: var(--color-border-accent);
     padding: 2px var(--spacing-xs);
     border-radius: var(--radius-sm);
+  }
+  
+  .prompt {
+    color: var(--color-terminal-blue);
+    font-weight: var(--font-weight-light);
   }
   
   @keyframes blink {

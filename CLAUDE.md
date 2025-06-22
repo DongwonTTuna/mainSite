@@ -133,13 +133,11 @@ This project implements a comprehensive design system using CSS custom propertie
 --blur-lg: blur(20px)
 ```
 
-### Theme System
+### Color System
 
-The design system supports light and dark themes through the `data-theme` attribute on the document root.
+The design system uses a warm orange/yellow color palette optimized for readability and visual appeal.
 
-#### Theme Colors
-
-Colors automatically adapt based on the active theme:
+#### Color Variables
 
 ```css
 /* Example color variables */
@@ -151,20 +149,6 @@ Colors automatically adapt based on the active theme:
 --color-accent-light      /* Light variant of accent */
 --color-border            /* Border colors */
 --shadow-base             /* Standard shadow */
-```
-
-#### Theme Switching
-
-Theme is controlled by the `ThemeToggle.svelte` component which:
-1. Persists theme preference in localStorage
-2. Respects system preference (`prefers-color-scheme`)
-3. Applies theme via `data-theme` attribute
-
-```javascript
-// Set theme programmatically
-document.documentElement.setAttribute('data-theme', 'dark')
-// Remove for light theme (default)
-document.documentElement.removeAttribute('data-theme')
 ```
 
 ### Usage Guidelines
@@ -230,7 +214,6 @@ Pre-defined animations are available globally:
 2. **Follow the spacing scale** - Don't use arbitrary spacing values
 3. **Use semantic naming** - Choose variables based on purpose, not appearance
 4. **Maintain consistency** - Use the same tokens for similar purposes
-5. **Test both themes** - Ensure components look good in light and dark modes
 
 ## Internationalization (i18n) Guidelines
 

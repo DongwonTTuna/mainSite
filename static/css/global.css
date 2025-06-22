@@ -78,7 +78,7 @@
   --breakpoint-lg: 1024px;
   --breakpoint-xl: 1280px;
   
-  /* Light Theme Colors - Warm Orange/Yellow Palette */
+  /* Colors - Warm Orange/Yellow Palette */
   --color-background: #fffef9;
   --color-background-secondary: #fff8e7;
   --color-background-overlay: rgba(255, 254, 249, 0.95);
@@ -93,19 +93,19 @@
   --color-accent-light: #fbbf24;
   --color-accent-dark: #d97706;
   --color-accent-gradient: linear-gradient(135deg, #f59e0b 0%, #dc2626 100%);
-  --color-terminal-bg: rgba(255, 251, 240, 0.98);
-  --color-terminal-text: #292524;
-  --color-terminal-green: #65a30d;
+  --color-terminal-bg: rgba(255, 237, 213, 0.98);
+  --color-terminal-text: #7c2d12;
+  --color-terminal-green: #16a34a;
   --color-terminal-blue: #ea580c;
   --color-terminal-red: #dc2626;
   --color-terminal-cyan: #0891b2;
   --color-terminal-yellow: #f59e0b;
-  --color-terminal-purple: #c026d3;
+  --color-terminal-purple: #9333ea;
   --color-border: #fde7cc;
   --color-border-light: rgba(245, 158, 11, 0.08);
   --color-border-accent: rgba(245, 158, 11, 0.25);
   
-  /* Light Theme Shadows - Warm and Soft */
+  /* Shadows - Warm and Soft */
   --shadow-sm: 0 1px 2px rgba(245, 158, 11, 0.06);
   --shadow-base: 0 2px 8px rgba(245, 158, 11, 0.08);
   --shadow-md: 0 4px 16px rgba(245, 158, 11, 0.1);
@@ -113,44 +113,6 @@
   --shadow-xl: 0 16px 48px rgba(245, 158, 11, 0.15);
   --shadow-glow: 0 0 24px rgba(245, 158, 11, 0.25);
   --shadow-text: 0 0 16px rgba(245, 158, 11, 0.3);
-}
-
-[data-theme="dark"] {
-  /* Dark Theme Colors - Warm Dark Palette */
-  --color-background: #1a1410;
-  --color-background-secondary: #231b14;
-  --color-background-overlay: rgba(26, 20, 16, 0.95);
-  --color-surface: #2a221a;
-  --color-surface-elevated: #332820;
-  --color-surface-card: rgba(42, 34, 26, 0.6);
-  --color-text-primary: #fef3e2;
-  --color-text-secondary: #d4b896;
-  --color-text-muted: #a68b5b;
-  --color-text-on-accent: #ffffff;
-  --color-accent: #fbbf24;
-  --color-accent-light: #fcd34d;
-  --color-accent-dark: #f59e0b;
-  --color-accent-gradient: linear-gradient(135deg, #fbbf24 0%, #f97316 100%);
-  --color-terminal-bg: rgba(42, 34, 26, 0.98);
-  --color-terminal-text: #fed7aa;
-  --color-terminal-green: #84cc16;
-  --color-terminal-blue: #fb923c;
-  --color-terminal-red: #f87171;
-  --color-terminal-cyan: #22d3ee;
-  --color-terminal-yellow: #fbbf24;
-  --color-terminal-purple: #e879f9;
-  --color-border: #44362a;
-  --color-border-light: rgba(251, 191, 36, 0.08);
-  --color-border-accent: rgba(251, 191, 36, 0.25);
-  
-  /* Dark Theme Shadows - Warm Glow */
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
-  --shadow-base: 0 2px 8px rgba(0, 0, 0, 0.35);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.45);
-  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.5);
-  --shadow-glow: 0 0 32px rgba(251, 191, 36, 0.3);
-  --shadow-text: 0 0 20px rgba(251, 191, 36, 0.4);
 }
 
 /* Base Styles */
