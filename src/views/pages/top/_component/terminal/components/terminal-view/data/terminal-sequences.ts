@@ -2,7 +2,7 @@ import type { LogLine } from "../types/terminal.types"
 
 export const terminalSequences: LogLine[] = [
   // Project initialization
-  { id: 1, text: "npm init -y", type: "command", delay: 0 },
+  { id: 1, text: "npm init -y", type: "command", delay: 500 },
   { id: 2, text: "Wrote to /home/dev/project/package.json:", type: "info", delay: 300 },
   { id: 3, text: "{", type: "log", delay: 100 },
   { id: 4, text: '  "name": "api-service",', type: "log", delay: 50 },

@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { onMount } from "svelte"
-  import { terminalTransform, terminalStore } from "./stores/terminal.store"
   import TerminalHeader from "./components/TerminalHeader.svelte"
   import TerminalView from "./components/TerminalView.svelte"
   import { runTerminalAnimation } from "./services/terminal-animation"
@@ -13,7 +11,7 @@
 
 </script>
 
-<div class="terminal-container">
+<div class="terminal-container" style="transform: perspective(1200px) rotateX(-5deg) rotateY(10deg);">
   <TerminalHeader {title} />
   <div class="terminal-content">
     <TerminalView />
