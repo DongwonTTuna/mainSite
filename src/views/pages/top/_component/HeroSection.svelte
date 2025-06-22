@@ -83,15 +83,16 @@
     .hero-content {
       left: 0;
       padding: var(--spacing-lg);
-      background: var(--color-background-overlay);
-      border: 1px solid var(--color-border-accent);
+      background: rgba(255, 254, 249, 0.4);
+      border: 1px solid rgba(245, 158, 11, 0.3);
       border-radius: var(--radius-lg);
-      backdrop-filter: var(--blur-lg);
-      box-shadow: var(--shadow-lg);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: 0 8px 32px rgba(245, 158, 11, 0.1);
     }
 
     .hero-visual {
-      opacity: 0.2;
+      opacity: 0.6;
     }
   }
 
