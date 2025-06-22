@@ -12,44 +12,61 @@
   let isAnimating = true
   
   function handleAnimationUpdate(item: AnimationQueueItem) {
+    if (item.type === 'command') {
+      const { currentText } = item.data
+      terminalStore.updateTyping(true, currentText)
+      
+      // If typing is complete
+      if (currentText === item.data.text) {
+        setTimeout(() => {
+          terminalStore.updateTyping(false)
+          terminalStore.addLine({
+            ...item.data,
+            text: `$ ${item.data.text}`
+          })
+          
+          // Check for vim command after typing is complete
+          if (item.data.text.startsWith('vim ')) {
+            const filename = item.data.text.substring(4)
+            setTimeout(() => {
+              terminalStore.setMode('vim')
+              vimStore.open(filename)
+              
+              // Handle special vim setup for jwt.strategy.ts
+              if (filename.includes('jwt.strategy.ts')) {
+                setTimeout(() => {
+                  vimStore.processCommandKey(':')
+                  setTimeout(() => {
+                    vimStore.processCommandKey('s')
+                    vimStore.processCommandKey('e')
+                    vimStore.processCommandKey('t')
+                    vimStore.processCommandKey(' ')
+                    vimStore.processCommandKey('n')
+                    vimStore.processCommandKey('u')
+                    vimStore.processCommandKey('m')
+                    vimStore.processCommandKey('b')
+                    vimStore.processCommandKey('e')
+                    vimStore.processCommandKey('r')
+                    vimStore.processCommandKey('Enter')
+                    setTimeout(() => {
+                      vimStore.setMode('insert')
+                    }, 300)
+                  }, 200)
+                }, 500)
+              } else {
+                setTimeout(() => {
+                  vimStore.setMode('insert')
+                }, 500)
+              }
+            }, 300)
+          }
+        }, 100)
+      }
+      return
+    }
+    
     if (item.type === 'line') {
       const line = item.data as LogLine
-      
-      // Check for vim commands
-      if (line.text.startsWith('vim ')) {
-        const filename = line.text.substring(4)
-        terminalStore.addLine({ ...line, text: `$ ${line.text}` })
-        terminalStore.setMode('vim')
-        vimStore.open(filename)
-        
-        // Handle special vim setup for jwt.strategy.ts
-        if (filename.includes('jwt.strategy.ts')) {
-          setTimeout(() => {
-            vimStore.processCommandKey(':')
-            setTimeout(() => {
-              vimStore.processCommandKey('s')
-              vimStore.processCommandKey('e')
-              vimStore.processCommandKey('t')
-              vimStore.processCommandKey(' ')
-              vimStore.processCommandKey('n')
-              vimStore.processCommandKey('u')
-              vimStore.processCommandKey('m')
-              vimStore.processCommandKey('b')
-              vimStore.processCommandKey('e')
-              vimStore.processCommandKey('r')
-              vimStore.processCommandKey('Enter')
-              setTimeout(() => {
-                vimStore.setMode('insert')
-              }, 300)
-            }, 200)
-          }, 500)
-        } else {
-          setTimeout(() => {
-            vimStore.setMode('insert')
-          }, 500)
-        }
-        return
-      }
       
       // Handle vim content
       if (line.type === 'vim') {
@@ -79,7 +96,14 @@
                   setTimeout(() => {
                     vimStore.processCommandKey('Enter')
                     setTimeout(() => {
-                      const saveMessage = `'${vimStore.subscribe(s => s.filename)}' written`
+                      // Get filename from store
+                      let filename = ''
+                      const unsubscribe = vimStore.subscribe(state => {
+                        filename = state.filename
+                      })
+                      unsubscribe()
+                      
+                      const saveMessage = `'${filename}' written`
                       terminalStore.addLine({
                         id: Date.now(),
                         text: saveMessage,
@@ -98,38 +122,31 @@
         }
         
         // Add content line to vim
-        if (vimStore.subscribe) {
-          const unsubscribe = vimStore.subscribe(state => {
-            if (state.mode === 'insert') {
-              const currentRow = state.cursorRow
-              vimStore.updateLine(currentRow, line.text)
-              vimStore.addLine('')
-              vimStore.setCursor(currentRow + 1, 0)
-            }
-            unsubscribe()
-          })
+        let currentState: any = null
+        const unsubscribe = vimStore.subscribe(state => {
+          currentState = state
+        })
+        unsubscribe()
+        
+        if (currentState && currentState.mode === 'insert') {
+          if (line.text === '') {
+            // Empty line - just add new line
+            vimStore.addLine('')
+            vimStore.setCursor(currentState.cursorRow + 1, 0)
+          } else {
+            // Add text to current line and create new line
+            vimStore.updateLine(currentState.cursorRow, line.text)
+            vimStore.addLine('')
+            vimStore.setCursor(currentState.cursorRow + 1, 0)
+          }
         }
-      } else {
+      } else if (line.type !== 'vim') {
         // Regular terminal line
         terminalStore.addLine(line)
       }
       
       // Trim lines if too many
       terminalStore.trimLines(20)
-    } else if (item.type === 'command') {
-      const { currentText } = item.data
-      terminalStore.updateTyping(true, currentText)
-      
-      // If typing is complete
-      if (currentText === item.data.text) {
-        setTimeout(() => {
-          terminalStore.updateTyping(false)
-          terminalStore.addLine({
-            ...item.data,
-            text: `$ ${item.data.text}`
-          })
-        }, 100)
-      }
     }
   }
   
