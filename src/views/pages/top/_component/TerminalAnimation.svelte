@@ -9,12 +9,19 @@
   }
 
   interface VimState {
-    mode: 'closed' | 'normal' | 'insert' | 'command'
+    mode: 'closed' | 'normal' | 'insert' | 'visual' | 'command'
     filename: string
     content: string[]
     cursorRow: number
     cursorCol: number
     viewportStart: number  // First visible line in vim
+    savedContent: string[]  // Content before editing for ESC
+    commandBuffer: string
+    visualStart?: { row: number; col: number }
+    visualEnd?: { row: number; col: number }
+    yankBuffer: string[]
+    lastCommand: string
+    marks: { [key: string]: { row: number; col: number } }
   }
 
   let rotationX = -15
@@ -77,6 +84,7 @@
     { id: 66, text: '', type: 'vim', delay: 50 },
     { id: 67, text: '  async validateUser(username: string, pass: string) {', type: 'vim', delay: 100 },
     { id: 68, text: '    // Mock user validation logic', type: 'vim', delay: 80 },
+    { id: 681, text: ':vim-cmd:o', type: 'vim', delay: 200 },
     { id: 69, text: '    const user = { id: 1, username, password: await bcrypt.hash(pass, 10) };', type: 'vim', delay: 120 },
     { id: 70, text: '    return user;', type: 'vim', delay: 80 },
     { id: 71, text: '  }', type: 'vim', delay: 60 },
@@ -92,6 +100,7 @@
     { id: 81, text: '\'src/auth/auth.service.ts\' written', type: 'system', delay: 100 },
     
     { id: 82, text: 'vim src/auth/jwt.strategy.ts', type: 'command', delay: 400 },
+    { id: 83, text: ':set number', type: 'vim', delay: 300 },
     { id: 84, text: 'import { ExtractJwt, Strategy } from \'passport-jwt\';', type: 'vim', delay: 100 },
     { id: 85, text: 'import { PassportStrategy } from \'@nestjs/passport\';', type: 'vim', delay: 80 },
     { id: 86, text: 'import { Injectable } from \'@nestjs/common\';', type: 'vim', delay: 80 },
@@ -156,7 +165,12 @@
     content: [],
     cursorRow: 0,
     cursorCol: 0,
-    viewportStart: 0
+    viewportStart: 0,
+    savedContent: [],
+    commandBuffer: '',
+    yankBuffer: [],
+    lastCommand: '',
+    marks: {}
   }
 
   function getLineColor(type: LogLine['type']) {
@@ -207,6 +221,7 @@
   function renderVimScreen() {
     const newDisplayedLines = []
     const visibleLines = 18
+    const showLineNumbers = vimState.filename.includes('jwt.strategy.ts')
     
     // Update viewport if cursor moves out of view
     if (vimState.cursorRow < vimState.viewportStart) {
@@ -220,29 +235,67 @@
       const lineIndex = vimState.viewportStart + i
       
       if (lineIndex < vimState.content.length) {
-        const line = vimState.content[lineIndex]
-        if (lineIndex === vimState.cursorRow && vimState.mode === 'insert') {
-          // Show line with cursor
-          const beforeCursor = line.substring(0, vimState.cursorCol)
-          const afterCursor = line.substring(vimState.cursorCol)
-          newDisplayedLines.push({
-            id: 800000 + i,
-            text: beforeCursor + '█' + afterCursor,
-            type: 'vim' as const,
-            delay: 0
-          })
-        } else {
-          newDisplayedLines.push({
-            id: 800000 + i,
-            text: line,
-            type: 'vim' as const,
-            delay: 0
-          })
+        let line = vimState.content[lineIndex]
+        let displayLine = line
+        let linePrefix = showLineNumbers ? `<span class="vim-line-number">${String(lineIndex + 1).padStart(3, ' ')}</span> ` : ''
+        
+        // Visual mode highlighting
+        if (vimState.mode === 'visual' && vimState.visualStart && vimState.visualEnd) {
+          const startRow = Math.min(vimState.visualStart.row, vimState.visualEnd.row)
+          const endRow = Math.max(vimState.visualStart.row, vimState.visualEnd.row)
+          const startCol = vimState.visualStart.row < vimState.visualEnd.row ? vimState.visualStart.col : vimState.visualEnd.col
+          const endCol = vimState.visualStart.row < vimState.visualEnd.row ? vimState.visualEnd.col : vimState.visualStart.col
+          
+          if (lineIndex >= startRow && lineIndex <= endRow) {
+            // Apply visual selection highlighting
+            if (lineIndex === startRow && lineIndex === endRow) {
+              displayLine = line.substring(0, startCol) + 
+                          '<span class="vim-visual">' + line.substring(startCol, endCol + 1) + '</span>' +
+                          line.substring(endCol + 1)
+            } else if (lineIndex === startRow) {
+              displayLine = line.substring(0, startCol) + 
+                          '<span class="vim-visual">' + line.substring(startCol) + '</span>'
+            } else if (lineIndex === endRow) {
+              displayLine = '<span class="vim-visual">' + line.substring(0, endCol + 1) + '</span>' +
+                          line.substring(endCol + 1)
+            } else {
+              displayLine = '<span class="vim-visual">' + line + '</span>'
+            }
+          }
         }
+        
+        // Show cursor
+        if (lineIndex === vimState.cursorRow) {
+          // Parse out line number prefix if present
+          let actualLine = displayLine
+          let prefix = ''
+          if (displayLine.includes('</span> ')) {
+            const parts = displayLine.split('</span> ')
+            prefix = parts[0] + '</span> '
+            actualLine = parts[1] || ''
+          }
+          
+          const beforeCursor = actualLine.substring(0, vimState.cursorCol)
+          const cursorChar = actualLine[vimState.cursorCol] || ' '
+          const afterCursor = actualLine.substring(vimState.cursorCol + 1)
+          
+          if (vimState.mode === 'insert') {
+            displayLine = prefix + beforeCursor + '█' + afterCursor
+          } else if (vimState.mode === 'normal' || vimState.mode === 'visual') {
+            displayLine = prefix + beforeCursor + '<span class="vim-cursor-block">' + cursorChar + '</span>' + afterCursor
+          }
+        }
+        
+        newDisplayedLines.push({
+          id: 800000 + lineIndex,
+          text: linePrefix + displayLine,
+          type: 'vim' as const,
+          delay: 0
+        })
       } else {
         // Show ~ for empty lines
         newDisplayedLines.push({
-          id: 900000 + i,
+          id: 900000 + lineIndex + vimState.viewportStart * 1000,
           text: '~',
           type: 'vim' as const,
           delay: 0
@@ -275,10 +328,15 @@
         vimState.cursorRow = 0
         vimState.cursorCol = 0
         vimState.viewportStart = 0
+        vimState.savedContent = []
+        vimState.commandBuffer = ''
+        vimState.yankBuffer = []
+        vimState.lastCommand = ''
+        vimState.marks = {}
         
         // Type vim command first
         typeWriter(line.text, () => {
-          savedLines = [...displayedLines, { ...line, text: currentText }]
+          savedLines = [...displayedLines, { ...line, text: '$ ' + currentText }]
           
           // Clear screen and enter vim
           setTimeout(() => {
@@ -292,18 +350,65 @@
             
             currentIndex++
             
-            // Simulate 'i' key press after a delay
-            setTimeout(() => {
-              vimState.mode = 'insert'
-              processNextLine()
-            }, 500)
+            // Check if this is the second vim file (jwt.strategy.ts)
+            if (vimState.filename.includes('jwt.strategy.ts')) {
+              // Simulate :set number command first
+              setTimeout(() => {
+                vimState.mode = 'command'
+                vimState.commandBuffer = ':'
+                renderVimScreen()
+                setTimeout(() => {
+                  vimState.commandBuffer = ':set number'
+                  renderVimScreen()
+                  setTimeout(() => {
+                    vimState.mode = 'normal'
+                    vimState.commandBuffer = ''
+                    renderVimScreen()
+                    currentIndex++
+                    // Then press 'i' to enter insert mode
+                    setTimeout(() => {
+                      vimState.mode = 'insert'
+                      vimState.savedContent = [...vimState.content]
+                      processNextLine()
+                    }, 300)
+                  }, 300)
+                }, 200)
+              }, 500)
+            } else {
+              // Normal vim entry - just press 'i'
+              setTimeout(() => {
+                vimState.mode = 'insert'
+                vimState.savedContent = [...vimState.content]
+                processNextLine()
+              }, 500)
+            }
           }, 300)
         })
         return
       }
       
       // Handle vim mode content
-      if (vimState.mode === 'insert' && line.type === 'vim') {
+      if ((vimState.mode === 'insert' || vimState.mode === 'command') && line.type === 'vim') {
+        if (line.text === ':set number') {
+          // Skip this line as it's handled in vim entry
+          currentIndex++
+          processNextLine()
+          return
+        }
+        if (line.text.startsWith(':vim-cmd:')) {
+          // Handle special vim commands
+          const cmd = line.text.substring(9)
+          if (cmd === 'o') {
+            // Add new line below and enter insert mode
+            vimState.content.splice(vimState.cursorRow + 1, 0, '')
+            vimState.cursorRow++
+            vimState.cursorCol = 0
+            renderVimScreen()
+          }
+          currentIndex++
+          processNextLine()
+          return
+        }
         if (line.text === ':wq') {
           // Keep INSERT mode visible while transitioning
           renderVimScreen() // Keep current display with INSERT
@@ -321,7 +426,13 @@
                   delay: 0
                 }]
                 setTimeout(() => {
-                  // Exit vim
+                  // Exit vim and append save message to savedLines
+                  savedLines = [...savedLines, {
+                    id: 999999,
+                    text: `"${vimState.filename}" written`,
+                    type: 'system' as const,
+                    delay: 0
+                  }]
                   vimState.mode = 'closed'
                   displayedLines = savedLines
                   currentIndex++
@@ -341,6 +452,13 @@
             vimState.content.push('')
             vimState.cursorRow = vimState.content.length - 1
             vimState.cursorCol = 0
+            
+            // Ensure viewport follows cursor
+            const visibleLines = 18
+            if (vimState.cursorRow >= vimState.viewportStart + visibleLines) {
+              vimState.viewportStart = vimState.cursorRow - visibleLines + 1
+            }
+            
             renderVimScreen()
             
             // Type character by character with real-time update
@@ -365,6 +483,15 @@
           } else {
             // Empty line
             vimState.content.push('')
+            vimState.cursorRow = vimState.content.length - 1
+            vimState.cursorCol = 0
+            
+            // Ensure viewport follows cursor
+            const visibleLines = 18
+            if (vimState.cursorRow >= vimState.viewportStart + visibleLines) {
+              vimState.viewportStart = vimState.cursorRow - visibleLines + 1
+            }
+            
             renderVimScreen()
             currentIndex++
             processNextLine()
@@ -441,21 +568,18 @@
         {#if line.text.startsWith(':wq') && line.type === 'vim'}
           <span class="vim-command">{line.text}</span>
         {:else}
-          {line.text}
+          {@html line.text}
         {/if}
       </div>
     {/each}
     {#if isTyping && vimState.mode === 'closed'}
       <div class="terminal-line" style="color: {getLineColor('command')}">
-        <span class="prompt">$</span>{` ${currentText}`}<span class="cursor" class:visible={cursorVisible}>_</span>
+        <span class="prompt">$</span>{` ${currentText}`}<span class="cursor">_</span>
       </div>
     {/if}
-    {#if vimState.mode === 'normal' && vimState.content.length === 0}
-      <div class="vim-cursor-block" style="position: absolute; top: 20px; left: 24px;"></div>
-    {/if}
-    {#if isTyping && vimState.mode === 'command'}
+    {#if vimState.mode === 'command' && vimState.commandBuffer}
       <div class="vim-command-line">
-        {currentText}<span class="cursor" class:visible={cursorVisible}>_</span>
+        {vimState.commandBuffer}<span class="cursor">_</span>
       </div>
     {/if}
   </div>
@@ -463,10 +587,11 @@
     <div class="vim-status-line">
       <span class="vim-mode">
         {#if vimState.mode === 'insert'}-- INSERT --{/if}
+        {#if vimState.mode === 'visual'}-- VISUAL --{/if}
         {#if vimState.mode === 'normal'}&nbsp;{/if}
         {#if vimState.mode === 'command'}&nbsp;{/if}
       </span>
-      <span class="vim-filename">{vimState.filename}</span>
+      <span class="vim-filename">{vimState.filename}{vimState.content.length > 0 && vimState.savedContent.join('\n') !== vimState.content.join('\n') ? ' [+]' : ''}</span>
       <span class="vim-position">{vimState.cursorRow + 1},{vimState.cursorCol + 1}</span>
     </div>
   {/if}
@@ -551,6 +676,7 @@
     padding-bottom: 50px; /* Space for vim status line */
     position: relative;
     color: var(--color-terminal-text);
+    scroll-behavior: smooth;
   }
 
   .terminal-body::-webkit-scrollbar {
@@ -584,12 +710,7 @@
 
   .cursor {
     display: inline-block;
-    animation: none;
-    opacity: 0;
-  }
-
-  .cursor.visible {
-    opacity: 1;
+    animation: blink 1s infinite;
   }
 
   .vim-status-line {
@@ -628,12 +749,21 @@
   }
   
   
-  .vim-cursor-block {
-    width: 8px;
-    height: 18px;
+  .terminal-line :global(.vim-cursor-block) {
     background: var(--color-terminal-blue);
-    animation: blink 1s infinite;
-    pointer-events: none;
+    color: var(--color-terminal-bg);
+    font-weight: var(--font-weight-semibold);
+  }
+  
+  .terminal-line :global(.vim-visual) {
+    background: rgba(251, 146, 60, 0.3);
+    color: var(--color-terminal-text);
+  }
+  
+  .terminal-line :global(.vim-line-number) {
+    color: var(--color-terminal-yellow);
+    opacity: 0.6;
+    margin-right: var(--spacing-sm);
   }
   
   .vim-command-line {
@@ -650,6 +780,7 @@
   .terminal-line.vim-tilde {
     color: var(--color-accent);
     opacity: 0.8;
+    transition: none;
   }
 
   .vim-command {
@@ -664,8 +795,8 @@
   }
   
   @keyframes blink {
-    0%, 50% { opacity: 1; }
-    51%, 100% { opacity: 0; }
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
   }
 
   @keyframes fadeIn {
