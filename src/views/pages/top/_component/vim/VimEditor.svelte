@@ -6,7 +6,6 @@
   import { terminalStore } from "$views/pages/top/_component/terminal/components/terminal-view/stores/terminal.store"
 
   export let filename: string
-  export let initialContent: string[] = []
   export let onExit: () => void
 
   let vimViewRef: VimView | null = null
@@ -31,8 +30,8 @@
   }
 
   onMount(() => {
-    const content = initialContent.join("\n")
-    vimStore.openVim(filename, content)
+    // Start with empty content for typing animation
+    vimStore.openVim(filename, "")
   })
 </script>
 

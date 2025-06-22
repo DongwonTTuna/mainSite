@@ -2,12 +2,9 @@ import { terminalStore } from "../stores/terminal.store"
 import { terminalSequences } from "../data/terminal-sequences"
 import { typeCommand } from "./typing-animator"
 import { executeCommand } from "./command-executor"
-import { get } from "svelte/store"
 
 let animationTimeout: ReturnType<typeof setTimeout> | null = null
 let currentIndex = 0
-let isInVimMode = false
-let vimContentLines: string[] = []
 
 export async function runTerminalAnimation() {
   if (currentIndex >= terminalSequences.length) {
@@ -23,8 +20,6 @@ export async function runTerminalAnimation() {
     await new Promise((resolve) => setTimeout(resolve, 300))
     executeCommand(sequence.text)
     currentIndex++
-    isInVimMode = true
-    vimContentLines = []
 
     // Store the index so we can resume after vim closes
     terminalStore.setAnimationIndex(currentIndex)
@@ -82,30 +77,39 @@ function collectVimContent() {
 
 function triggerVimTyping(contentLines: string[]) {
   // Get the terminal wrapper to trigger vim typing
-  const terminalWrapper = (window as any).__terminalWrapper
+  const terminalWrapper = (
+    window as unknown as { __terminalWrapper?: { typeVimContent: (sequence: string[]) => void } }
+  ).__terminalWrapper
   if (terminalWrapper && terminalWrapper.typeVimContent) {
-    // Build the typing sequence
+    // Build the typing sequence with special commands
     const typingSequence: string[] = []
 
-    // Start with 'i' to enter insert mode
-    typingSequence.push("i")
+    // Start with insert mode command
+    typingSequence.push("INSERT_MODE")
 
-    // Add all content with newlines
+    // Add all content with proper newlines
     contentLines.forEach((line, index) => {
-      typingSequence.push(...line.split(""))
+      // Split line into individual characters
+      const chars = line.split("")
+      typingSequence.push(...chars)
+
+      // Add newline after each line except the last
       if (index < contentLines.length - 1) {
-        typingSequence.push("\n")
+        typingSequence.push("NEWLINE")
       }
     })
 
-    // Exit insert mode and save
-    typingSequence.push("\u001b") // ESC key
-    typingSequence.push(":")
-    typingSequence.push("w")
-    typingSequence.push("q")
-    typingSequence.push("\n")
+    // Exit insert mode
+    typingSequence.push("ESCAPE")
 
-    terminalWrapper.typeVimContent(typingSequence)
+    // Enter command mode and save/quit
+    typingSequence.push("COMMAND_MODE")
+    typingSequence.push("SAVE_QUIT")
+
+    // Start typing animation
+    setTimeout(() => {
+      terminalWrapper.typeVimContent(typingSequence)
+    }, 300)
   }
 }
 
@@ -120,7 +124,6 @@ export function resumeAnimation(index?: number) {
   if (index !== undefined) {
     currentIndex = index
   }
-  isInVimMode = false
 
   // Add a delay before resuming to show the save message
   setTimeout(() => {

@@ -3,7 +3,6 @@
   import TerminalHeader from "./components/TerminalHeader.svelte"
   import TerminalView from "./components/TerminalView.svelte"
   import VimEditor from "../../../vim/VimEditor.svelte"
-  import { runTerminalAnimation } from "./services/terminal-animation"
   import { terminalStore } from "./stores/terminal.store"
   import { vimStore } from "../../../vim/stores/vim.store"
 
@@ -11,7 +10,6 @@
 
   let vimRef: { typeContent: (lines: string[]) => void } | null = null
   let vimFilename = ""
-  let vimContent: string[] = []
   let currentMode: "terminal" | "vim" = "terminal"
 
   // Subscribe to terminal store to detect vim commands
@@ -24,8 +22,14 @@
   function openVimMode(filename: string) {
     currentMode = "vim"
     vimFilename = filename
-    vimContent = []
     vimStore.openVim(filename)
+
+    // VIM component needs time to mount before typing can start
+    setTimeout(() => {
+      if ((window as unknown as { __terminalWrapper?: object }).__terminalWrapper) {
+        // Terminal animation service will trigger typing
+      }
+    }, 100)
   }
 
   function closeVimMode() {
@@ -35,13 +39,9 @@
     terminalStore.resumeAnimation()
   }
 
-  export function runAnimation() {
-    runTerminalAnimation()
-  }
-
   onMount(() => {
     // Make terminal accessible for vim animation
-    ;(window as any).__terminalWrapper = {
+    ;(window as unknown as { __terminalWrapper?: object }).__terminalWrapper = {
       typeVimContent: (content: string[]) => {
         if (vimRef && currentMode === "vim") {
           vimRef.typeContent(content)
@@ -57,12 +57,7 @@
     {#if currentMode === "terminal"}
       <TerminalView />
     {:else if currentMode === "vim"}
-      <VimEditor 
-        bind:this={vimRef} 
-        filename={vimFilename} 
-        initialContent={vimContent} 
-        onExit={closeVimMode} 
-      />
+      <VimEditor bind:this={vimRef} filename={vimFilename} onExit={closeVimMode} />
     {/if}
   </div>
 </div>
