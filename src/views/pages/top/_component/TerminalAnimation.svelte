@@ -437,7 +437,7 @@
   </div>
   <div class="terminal-body" bind:this={terminalBody}>
     {#each displayedLines as line (line.id)}
-      <div class="terminal-line {line.text === '~' ? 'vim-tilde' : ''}" style="color: {line.text === '~' ? '' : getLineColor(line.type)}">
+      <div class="terminal-line {line.text === '~' ? 'vim-tilde' : ''} {line.type === 'log' || line.type === 'info' || line.type === 'system' || line.type === 'success' ? 'log-line' : ''}" style="color: {line.text === '~' ? '' : getLineColor(line.type)}">
         {#if line.text.startsWith(':wq') && line.type === 'vim'}
           <span class="vim-command">{line.text}</span>
         {:else}
@@ -574,9 +574,12 @@
     margin-bottom: var(--spacing-xs);
     white-space: pre-wrap;
     text-shadow: 0 0 3px currentColor;
-    animation: fadeIn var(--transition-base);
     font-weight: var(--font-weight-ultralight);
     letter-spacing: 0.02em;
+  }
+  
+  .terminal-line.log-line {
+    animation: fadeIn var(--transition-base);
   }
 
   .cursor {
