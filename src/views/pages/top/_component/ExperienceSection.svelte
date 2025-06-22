@@ -10,6 +10,7 @@
       <div class="timeline-item">
         <div class="timeline-marker"></div>
         <div class="timeline-content">
+          <div class="present-badge">{m.present()}</div>
           <h3>Nextbeat Inc.</h3>
           <div class="job-details">
             <span class="period">2023.05 - {m.present()}</span>
@@ -84,6 +85,7 @@
     border: 1px solid var(--color-border);
     backdrop-filter: var(--blur-sm);
     transition: all var(--transition-base);
+    position: relative;
   }
   
   .timeline-content:hover {
@@ -122,13 +124,32 @@
     line-height: var(--line-height-relaxed);
   }
 
+  .present-badge {
+    position: absolute;
+    top: var(--spacing-base);
+    left: var(--spacing-base);
+    background: var(--color-accent);
+    color: var(--color-text-on-accent);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    box-shadow: var(--shadow-sm);
+  }
+
   @media (max-width: 768px) {
     .timeline {
-      padding-left: var(--spacing-base);
+      padding-left: var(--spacing-lg);
     }
 
     .timeline-marker {
-      left: calc(-1 * var(--spacing-base));
+      left: calc(-1 * var(--spacing-lg));
+    }
+    
+    .timeline-content {
+      margin-left: var(--spacing-base);
     }
   }
 </style>
