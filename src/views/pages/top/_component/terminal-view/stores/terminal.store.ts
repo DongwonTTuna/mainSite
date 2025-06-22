@@ -1,5 +1,16 @@
 import { writable, derived } from "svelte/store"
-import type { TerminalState, LogLine, TerminalConfig } from "../types/terminal.types"
+import type { LogLine, TerminalConfig } from "../types/terminal.types"
+
+interface TerminalState {
+  displayedLines: LogLine[]
+  currentIndex: number
+  isTyping: boolean
+  currentText: string
+  mode: "terminal" | "vim"
+  lastCommand?: string
+  animationIndex: number
+  isAnimating: boolean
+}
 
 function createTerminalStore() {
   const initialState: TerminalState = {
@@ -7,7 +18,10 @@ function createTerminalStore() {
     currentIndex: 0,
     isTyping: false,
     currentText: "",
-    mode: "terminal"
+    mode: "terminal",
+    lastCommand: undefined,
+    animationIndex: 0,
+    isAnimating: false
   }
 
   const { subscribe, set, update } = writable<TerminalState>(initialState)
@@ -54,6 +68,35 @@ function createTerminalStore() {
 
     reset() {
       set(initialState)
+    },
+
+    executeCommand(command: string) {
+      const trimmedCommand = command.trim()
+      const commandLine: LogLine = {
+        id: Date.now(),
+        text: trimmedCommand,
+        type: "command",
+        delay: 0
+      }
+      update((state) => ({
+        ...state,
+        displayedLines: [...state.displayedLines, commandLine],
+        lastCommand: trimmedCommand
+      }))
+
+      return trimmedCommand
+    },
+
+    setAnimationIndex(index: number) {
+      update((state) => ({ ...state, animationIndex: index }))
+    },
+
+    resumeAnimation() {
+      update((state) => ({ ...state, isAnimating: true }))
+    },
+
+    completeAnimation() {
+      update((state) => ({ ...state, isAnimating: false }))
     }
   }
 }

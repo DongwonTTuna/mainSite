@@ -1,6 +1,14 @@
 import type { LogLine, AnimationQueueItem } from "../types/terminal.types"
 import { TypingAnimator } from "./typing-animator"
 
+// Export executeCommand function for terminal-animation.ts
+export function executeCommand(command: string): void {
+  // Import terminalStore dynamically to avoid circular dependency
+  import("../stores/terminal.store").then(({ terminalStore }) => {
+    terminalStore.executeCommand(command)
+  })
+}
+
 export class CommandExecutor {
   private queue: AnimationQueueItem[] = []
   private isExecuting = false

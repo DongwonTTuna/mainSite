@@ -37,7 +37,7 @@
 <style>
   .terminal-container {
     width: 95%;
-    max-width: 800px;
+    max-width: 1200px;
     height: 600px;
     background: var(--color-terminal-bg);
     border: 1px solid rgba(251, 146, 60, 0.4);

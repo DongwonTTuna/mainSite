@@ -1,5 +1,18 @@
 import type { TypingOptions } from "../types/terminal.types"
 
+// Export typeCommand function for terminal-animation.ts
+export async function typeCommand(text: string): Promise<void> {
+  const animator = new TypingAnimator()
+  const { terminalStore } = await import("../stores/terminal.store")
+
+  return animator.animate(text, (currentText) => terminalStore.updateTyping(true, currentText), {
+    minDelay: 30,
+    maxDelay: 60,
+    spaceDelay: 10,
+    callback: () => terminalStore.updateTyping(false)
+  })
+}
+
 export class TypingAnimator {
   private currentAnimation: { cancel: () => void } | null = null
 

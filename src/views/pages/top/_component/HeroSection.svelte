@@ -1,7 +1,7 @@
 <script lang="ts">
   import { m } from "$lib/i18n"
   import { onMount } from "svelte"
-  import TerminalAnimation from "./TerminalAnimation.svelte"
+  import TerminalAnimation from "./terminal/TerminalAnimation.svelte"
 
   let heroContent: HTMLDivElement
   let mouseX = 0

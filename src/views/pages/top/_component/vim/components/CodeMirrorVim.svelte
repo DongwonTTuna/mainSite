@@ -185,6 +185,14 @@
     position: relative;
   }
 
+  :global(.codemirror-wrapper) {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
   :global(.cm-vim-message) {
     position: absolute;
     bottom: 30px;

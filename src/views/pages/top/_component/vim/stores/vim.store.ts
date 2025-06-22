@@ -1,6 +1,21 @@
 import { writable, derived } from "svelte/store"
-import type { VimState } from "../types/terminal.types"
+import type { VimMode, VimStatusLine } from "../types/vim.types"
 import { VimEngine } from "../services/vim-engine"
+
+interface VimState {
+  mode: VimMode
+  filename: string
+  content: string[]
+  cursorRow: number
+  cursorCol: number
+  viewportStart: number
+  savedContent: string[]
+  commandBuffer: string
+  yankBuffer: string[]
+  lastCommand: string
+  marks: Record<string, { row: number; col: number }>
+  showLineNumbers: boolean
+}
 
 function createVimStore() {
   const engine = new VimEngine()
@@ -25,7 +40,7 @@ function createVimStore() {
   return {
     subscribe,
 
-    open(filename: string) {
+    openVim(filename: string) {
       update(() => ({
         ...initialState,
         mode: "normal",
@@ -35,7 +50,7 @@ function createVimStore() {
       }))
     },
 
-    close() {
+    closeVim() {
       set(initialState)
     },
 
@@ -67,7 +82,7 @@ function createVimStore() {
       }))
     },
 
-    setMode(mode: VimState["mode"]) {
+    setMode(mode: VimMode) {
       update((state) => ({
         ...state,
         mode
@@ -119,7 +134,7 @@ function createVimStore() {
 export const vimStore = createVimStore()
 
 // Derived stores
-export const vimStatusLine = derived(vimStore, ($vim) => {
+export const vimStatusLine = derived<typeof vimStore, VimStatusLine | null>(vimStore, ($vim) => {
   if ($vim.mode === "closed") return null
 
   const modified = $vim.content.join("\n") !== $vim.savedContent.join("\n")

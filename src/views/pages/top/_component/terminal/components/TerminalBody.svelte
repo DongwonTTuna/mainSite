@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { terminalStore, currentCommand } from "../stores/terminal.store"
-  import { vimStore } from "../stores/vim.store"
-  import CodeMirrorVim from "./CodeMirrorVim.svelte"
-  import type { LogLine } from "../types/terminal.types"
+  import { terminalStore, currentCommand } from "../../terminal-view/stores/terminal.store"
+  import { vimStore } from "../../vim/stores/vim.store"
+  import CodeMirrorVim from "../../vim/components/CodeMirrorVim.svelte"
+  import type { LogLine } from "../../terminal-view/types/terminal.types"
 
   export let vimEditorRef: { typeContent: (lines: string[]) => void } | null = null
 

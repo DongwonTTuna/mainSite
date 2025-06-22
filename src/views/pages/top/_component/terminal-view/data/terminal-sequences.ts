@@ -69,7 +69,6 @@ export const terminalSequences: LogLine[] = [
   { id: 66, text: "", type: "vim", delay: 50 },
   { id: 67, text: "  async validateUser(username: string, pass: string) {", type: "vim", delay: 100 },
   { id: 68, text: "    // Mock user validation logic", type: "vim", delay: 80 },
-  { id: 681, text: ":vim-cmd:o", type: "vim", delay: 200 },
   {
     id: 69,
     text: "    const user = { id: 1, username, password: await bcrypt.hash(pass, 10) };",

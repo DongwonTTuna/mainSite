@@ -1,4 +1,21 @@
-import type { VimState, VimCommand } from "../types/terminal.types"
+import type { VimCommand } from "../types/vim.types"
+
+interface VimState {
+  mode: "normal" | "insert" | "visual" | "command" | "closed"
+  filename: string
+  content: string[]
+  cursorRow: number
+  cursorCol: number
+  viewportStart: number
+  savedContent: string[]
+  commandBuffer: string
+  yankBuffer: string[]
+  lastCommand: string
+  marks: Record<string, { row: number; col: number }>
+  showLineNumbers: boolean
+  visualStart?: { row: number; col: number }
+  visualEnd?: { row: number; col: number }
+}
 
 export class VimEngine {
   private commands: Map<string, VimCommand> = new Map()
@@ -12,7 +29,7 @@ export class VimEngine {
     this.registerCommand({
       key: "i",
       modes: ["normal"],
-      action: (state) => ({
+      action: (state: VimState) => ({
         mode: "insert",
         savedContent: [...state.content]
       })
@@ -21,7 +38,7 @@ export class VimEngine {
     this.registerCommand({
       key: "a",
       modes: ["normal"],
-      action: (state) => ({
+      action: (state: VimState) => ({
         mode: "insert",
         cursorCol: Math.min(state.cursorCol + 1, state.content[state.cursorRow]?.length || 0),
         savedContent: [...state.content]
@@ -31,7 +48,7 @@ export class VimEngine {
     this.registerCommand({
       key: "o",
       modes: ["normal"],
-      action: (state) => {
+      action: (state: VimState) => {
         const newContent = [...state.content]
         newContent.splice(state.cursorRow + 1, 0, "")
         return {
@@ -47,7 +64,7 @@ export class VimEngine {
     this.registerCommand({
       key: "dd",
       modes: ["normal"],
-      action: (state) => {
+      action: (state: VimState) => {
         const newContent = [...state.content]
         const deletedLine = newContent.splice(state.cursorRow, 1)
         return {
@@ -62,7 +79,7 @@ export class VimEngine {
     this.registerCommand({
       key: "yy",
       modes: ["normal"],
-      action: (state) => ({
+      action: (state: VimState) => ({
         yankBuffer: [state.content[state.cursorRow] || ""]
       })
     })
@@ -70,7 +87,7 @@ export class VimEngine {
     this.registerCommand({
       key: "p",
       modes: ["normal"],
-      action: (state) => {
+      action: (state: VimState) => {
         if (state.yankBuffer.length === 0) return {}
         const newContent = [...state.content]
         newContent.splice(state.cursorRow + 1, 0, ...state.yankBuffer)
@@ -85,7 +102,7 @@ export class VimEngine {
     this.registerCommand({
       key: "h",
       modes: ["normal", "visual"],
-      action: (state) => ({
+      action: (state: VimState) => ({
         cursorCol: Math.max(0, state.cursorCol - 1)
       })
     })
@@ -93,7 +110,7 @@ export class VimEngine {
     this.registerCommand({
       key: "j",
       modes: ["normal", "visual"],
-      action: (state) => ({
+      action: (state: VimState) => ({
         cursorRow: Math.min(state.content.length - 1, state.cursorRow + 1),
         cursorCol: Math.min(
           state.cursorCol,
@@ -105,7 +122,7 @@ export class VimEngine {
     this.registerCommand({
       key: "k",
       modes: ["normal", "visual"],
-      action: (state) => ({
+      action: (state: VimState) => ({
         cursorRow: Math.max(0, state.cursorRow - 1),
         cursorCol: Math.min(state.cursorCol, state.content[Math.max(0, state.cursorRow - 1)]?.length || 0)
       })
@@ -114,7 +131,7 @@ export class VimEngine {
     this.registerCommand({
       key: "l",
       modes: ["normal", "visual"],
-      action: (state) => ({
+      action: (state: VimState) => ({
         cursorCol: Math.min(state.content[state.cursorRow]?.length || 0, state.cursorCol + 1)
       })
     })
@@ -123,7 +140,7 @@ export class VimEngine {
     this.registerCommand({
       key: "v",
       modes: ["normal"],
-      action: (state) => ({
+      action: (state: VimState) => ({
         mode: "visual",
         visualStart: { row: state.cursorRow, col: state.cursorCol },
         visualEnd: { row: state.cursorRow, col: state.cursorCol }
