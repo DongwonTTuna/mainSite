@@ -7,9 +7,12 @@
 
   onMount(() => {
     // Terminal wrapper handles all animation logic now
-    if (terminalWrapperRef && terminalWrapperRef.runAnimation) {
-      terminalWrapperRef.runAnimation()
-    }
+    // Give components time to fully mount
+    setTimeout(() => {
+      if (terminalWrapperRef && terminalWrapperRef.runAnimation) {
+        terminalWrapperRef.runAnimation()
+      }
+    }, 100)
   })
 </script>
 
@@ -22,6 +25,7 @@
     position: relative;
     width: 100%;
     height: 100%;
+    min-height: 600px;
     display: flex;
     align-items: center;
     justify-content: center;

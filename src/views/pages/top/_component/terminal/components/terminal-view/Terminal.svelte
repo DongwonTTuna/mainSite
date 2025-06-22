@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { terminalTransform } from "./stores/terminal.store"
+  import { onMount } from "svelte"
+  import { terminalTransform, terminalStore } from "./stores/terminal.store"
   import TerminalHeader from "./components/TerminalHeader.svelte"
   import TerminalView from "./components/TerminalView.svelte"
   import { runTerminalAnimation } from "./services/terminal-animation"
@@ -9,9 +10,10 @@
   export function runAnimation() {
     runTerminalAnimation()
   }
+
 </script>
 
-<div class="terminal-container" style="transform: {$terminalTransform};">
+<div class="terminal-container">
   <TerminalHeader {title} />
   <div class="terminal-content">
     <TerminalView />

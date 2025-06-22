@@ -14,16 +14,19 @@ export async function runTerminalAnimation() {
 
   const sequence = terminalSequences[currentIndex]
 
-  // Handle vim commands specially - they will trigger mode switch
+  // Skip vim commands since vim mode was removed
   if (sequence.type === "command" && sequence.text.startsWith("vim ")) {
+    // Just show the command and skip vim mode
     await typeCommand(sequence.text)
     await new Promise((resolve) => setTimeout(resolve, 300))
     executeCommand(sequence.text)
     currentIndex++
-
-    // Store the index so we can resume after vim closes
-    terminalStore.setAnimationIndex(currentIndex)
-    return // Stop animation, will resume when vim closes
+    
+    // Skip to the next non-vim sequence
+    animationTimeout = setTimeout(() => {
+      runTerminalAnimation()
+    }, 500)
+    return
   }
 
   // Regular terminal animation

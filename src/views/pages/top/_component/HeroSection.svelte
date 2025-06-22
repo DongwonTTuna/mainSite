@@ -171,17 +171,17 @@
   .hero-visual {
     position: absolute;
     top: 50%;
-    left: 50%;
+    left: 40%;
     transform: translate(-50%, -50%);
     width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
+    overflow: visible;
     z-index: 0;
     pointer-events: none;
-    opacity: 0.5;
+    opacity: 0.8;
   }
 
   @keyframes fadeInUp {

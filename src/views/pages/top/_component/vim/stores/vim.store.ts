@@ -1,52 +1,37 @@
 import { writable, derived } from "svelte/store"
-import type { VimMode, VimStatusLine } from "../types/vim.types"
-import { VimEngine } from "../services/vim-engine"
+import type { VimState, VimMode } from "../types/vim.types"
 
-interface VimState {
-  mode: VimMode
-  filename: string
-  content: string[]
-  cursorRow: number
-  cursorCol: number
-  viewportStart: number
-  savedContent: string[]
-  commandBuffer: string
-  yankBuffer: string[]
-  lastCommand: string
-  marks: Record<string, { row: number; col: number }>
-  showLineNumbers: boolean
+const initialState: VimState = {
+  mode: "normal",
+  filename: "",
+  content: "",
+  cursor: { line: 0, column: 0 },
+  savedContent: "",
+  isModified: false,
+  statusMessage: "",
+  commandBuffer: "",
+  searchTerm: "",
+  history: { undo: [], redo: [] }
 }
 
 function createVimStore() {
-  const engine = new VimEngine()
-
-  const initialState: VimState = {
-    mode: "closed",
-    filename: "",
-    content: [],
-    cursorRow: 0,
-    cursorCol: 0,
-    viewportStart: 0,
-    savedContent: [],
-    commandBuffer: "",
-    yankBuffer: [],
-    lastCommand: "",
-    marks: {},
-    showLineNumbers: false
-  }
-
   const { subscribe, set, update } = writable<VimState>(initialState)
 
   return {
     subscribe,
 
-    openVim(filename: string) {
-      update(() => ({
-        ...initialState,
-        mode: "normal",
+    openVim(filename: string, content = "") {
+      update((state) => ({
+        ...state,
         filename,
-        content: [], // Start with empty content
-        showLineNumbers: filename.includes("jwt.strategy.ts")
+        content,
+        savedContent: content,
+        isModified: false,
+        mode: "normal",
+        cursor: { line: 0, column: 0 },
+        statusMessage: `"${filename}" ${content ? "[New File]" : ""}`,
+        commandBuffer: "",
+        history: { undo: [], redo: [] }
       }))
     },
 
@@ -54,160 +39,118 @@ function createVimStore() {
       set(initialState)
     },
 
-    executeCommand(key: string) {
-      update((state) => {
-        const changes = engine.executeCommand(key, state)
-        return changes ? { ...state, ...changes } : state
-      })
-    },
-
-    processInsertKey(key: string) {
-      update((state) => {
-        const changes = engine.processInsertModeKey(key, state)
-        return { ...state, ...changes }
-      })
-    },
-
-    processCommandKey(key: string) {
-      update((state) => {
-        const changes = engine.processCommandModeKey(key, state)
-        return { ...state, ...changes }
-      })
-    },
-
-    updateViewport(visibleLines: number) {
-      update((state) => ({
-        ...state,
-        viewportStart: engine.updateViewport(state, visibleLines)
-      }))
-    },
-
     setMode(mode: VimMode) {
-      update((state) => ({
-        ...state,
-        mode
-      }))
-    },
-
-    setContent(content: string[]) {
-      update((state) => ({
-        ...state,
-        content
-      }))
-    },
-
-    addLine(text: string, row?: number) {
       update((state) => {
-        const newContent = [...state.content]
-        const insertRow = row ?? state.cursorRow + 1
-        newContent.splice(insertRow, 0, text)
+        let statusMessage = state.statusMessage
+        if (mode === "insert") {
+          statusMessage = "-- INSERT --"
+        } else if (mode === "visual") {
+          statusMessage = "-- VISUAL --"
+        } else if (mode === "replace") {
+          statusMessage = "-- REPLACE --"
+        } else if (mode === "command") {
+          statusMessage = ":"
+        } else {
+          statusMessage = ""
+        }
+
+        return { ...state, mode, statusMessage }
+      })
+    },
+
+    setContent(content: string) {
+      update((state) => ({
+        ...state,
+        content,
+        isModified: content !== state.savedContent
+      }))
+    },
+
+    setCursor(line: number, column: number) {
+      update((state) => ({
+        ...state,
+        cursor: { line, column }
+      }))
+    },
+
+    setCommandBuffer(buffer: string) {
+      update((state) => ({
+        ...state,
+        commandBuffer: buffer,
+        statusMessage: state.mode === "command" ? `:${buffer}` : state.statusMessage
+      }))
+    },
+
+    setStatusMessage(message: string) {
+      update((state) => ({
+        ...state,
+        statusMessage: message
+      }))
+    },
+
+    saveFile() {
+      update((state) => ({
+        ...state,
+        savedContent: state.content,
+        isModified: false,
+        statusMessage: `"${state.filename}" written`
+      }))
+    },
+
+    addToHistory(content: string) {
+      update((state) => ({
+        ...state,
+        history: {
+          undo: [...state.history.undo, content],
+          redo: []
+        }
+      }))
+    },
+
+    undo() {
+      update((state) => {
+        if (state.history.undo.length === 0) return state
+
+        const previousContent = state.history.undo[state.history.undo.length - 1]
+        const newUndo = state.history.undo.slice(0, -1)
+
         return {
           ...state,
-          content: newContent
+          content: previousContent,
+          history: {
+            undo: newUndo,
+            redo: [state.content, ...state.history.redo]
+          },
+          isModified: previousContent !== state.savedContent
         }
       })
     },
 
-    updateLine(row: number, text: string) {
+    redo() {
       update((state) => {
-        const newContent = [...state.content]
-        if (row < newContent.length) {
-          newContent[row] = text
-        }
+        if (state.history.redo.length === 0) return state
+
+        const nextContent = state.history.redo[0]
+        const newRedo = state.history.redo.slice(1)
+
         return {
           ...state,
-          content: newContent
+          content: nextContent,
+          history: {
+            undo: [...state.history.undo, state.content],
+            redo: newRedo
+          },
+          isModified: nextContent !== state.savedContent
         }
       })
-    },
-
-    setCursor(row: number, col: number) {
-      update((state) => ({
-        ...state,
-        cursorRow: Math.max(0, Math.min(row, state.content.length - 1)),
-        cursorCol: Math.max(0, col)
-      }))
     }
   }
 }
 
 export const vimStore = createVimStore()
 
-// Derived stores
-export const vimStatusLine = derived<typeof vimStore, VimStatusLine | null>(vimStore, ($vim) => {
-  if ($vim.mode === "closed") return null
-
-  const modified = $vim.content.join("\n") !== $vim.savedContent.join("\n")
-  const filename = $vim.filename + (modified ? " [+]" : "")
-  const position = `${$vim.cursorRow + 1},${$vim.cursorCol + 1}`
-
-  let modeText = ""
-  switch ($vim.mode) {
-    case "insert":
-      modeText = "-- INSERT --"
-      break
-    case "visual":
-      modeText = "-- VISUAL --"
-      break
-    case "command":
-      modeText = $vim.commandBuffer
-      break
-    default:
-      modeText = ""
-  }
-
-  return {
-    mode: modeText,
-    filename,
-    position
-  }
-})
-
-export const vimLines = derived(vimStore, ($vim) => {
-  if ($vim.mode === "closed") return []
-
-  const visibleLines = 18 // This should come from config
-  const lines = []
-
-  // If no content yet, show cursor on first line
-  if ($vim.content.length === 0 && $vim.mode === "insert") {
-    lines.push({
-      number: 1,
-      content: "",
-      isCursor: true,
-      cursorCol: 0
-    })
-    // Fill rest with tildes
-    for (let i = 1; i < visibleLines; i++) {
-      lines.push({
-        number: -1,
-        content: "~",
-        isCursor: false,
-        cursorCol: 0
-      })
-    }
-  } else {
-    // Normal content display
-    for (let i = 0; i < visibleLines; i++) {
-      const lineIndex = $vim.viewportStart + i
-
-      if (lineIndex < $vim.content.length) {
-        lines.push({
-          number: lineIndex + 1,
-          content: $vim.content[lineIndex],
-          isCursor: lineIndex === $vim.cursorRow,
-          cursorCol: $vim.cursorCol
-        })
-      } else {
-        lines.push({
-          number: -1,
-          content: "~",
-          isCursor: false,
-          cursorCol: 0
-        })
-      }
-    }
-  }
-
-  return lines
-})
+export const vimMode = derived(vimStore, ($vim) => $vim.mode)
+export const vimContent = derived(vimStore, ($vim) => $vim.content)
+export const vimCursor = derived(vimStore, ($vim) => $vim.cursor)
+export const vimStatusMessage = derived(vimStore, ($vim) => $vim.statusMessage)
+export const vimIsModified = derived(vimStore, ($vim) => $vim.isModified)

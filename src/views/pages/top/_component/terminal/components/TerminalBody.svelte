@@ -1,10 +1,9 @@
 <script lang="ts">
-  import { terminalStore, currentCommand } from "../../terminal-view/stores/terminal.store"
-  import { vimStore } from "../../vim/stores/vim.store"
-  import CodeMirrorVim from "../../vim/components/CodeMirrorVim.svelte"
-  import type { LogLine } from "../../terminal-view/types/terminal.types"
-
-  export let vimEditorRef: { typeContent: (lines: string[]) => void } | null = null
+  import {
+    terminalStore,
+    currentCommand
+  } from "$views/pages/top/_component/terminal/components/terminal-view/stores/terminal.store"
+  import type { LogLine } from "$views/pages/top/_component/terminal/components/terminal-view/types/terminal.types"
 
   let terminalBody: HTMLDivElement
 
@@ -22,8 +21,6 @@
         return "var(--color-terminal-yellow)"
       case "system":
         return "var(--color-terminal-text)"
-      case "vim":
-        return "var(--color-terminal-text)"
       case "log":
       default:
         return "var(--color-terminal-text)"
@@ -31,57 +28,40 @@
   }
 
   // Auto scroll handling
-  $: if (terminalBody) {
-    if ($terminalStore.mode === "terminal") {
-      // Scroll to bottom for terminal mode
-      requestAnimationFrame(() => {
-        terminalBody.scrollTop = terminalBody.scrollHeight
-      })
-    } else if ($vimStore.mode !== "closed") {
-      // Keep at top for VIM mode
-      requestAnimationFrame(() => {
-        terminalBody.scrollTop = 0
-      })
-    }
+  $: if (terminalBody && $terminalStore.mode === "terminal") {
+    // Scroll to bottom for terminal mode
+    requestAnimationFrame(() => {
+      terminalBody.scrollTop = terminalBody.scrollHeight
+    })
   }
 </script>
 
 <div class="terminal-body" bind:this={terminalBody}>
-  {#if $vimStore.mode !== "closed"}
-    <CodeMirrorVim
-      bind:this={vimEditorRef}
-      showLineNumbers={$vimStore.showLineNumbers}
-      onExit={() => {
-        // Exit handled by parent
-      }}
-    />
-  {:else}
-    {#each $terminalStore.displayedLines as line (line.id)}
-      <div
-        class="terminal-line {line.type === 'log' ||
-        line.type === 'info' ||
-        line.type === 'system' ||
-        line.type === 'success'
-          ? 'log-line'
-          : ''}"
-        style="color: {getLineColor(line.type)}"
-      >
-        {#if line.text.startsWith("$ ")}
-          {line.text}
-        {:else if line.type === "command"}
-          <span class="prompt">$</span> {line.text}
-        {:else}
-          {line.text}
-        {/if}
-      </div>
-    {/each}
+  {#each $terminalStore.displayedLines as line (line.id)}
+    <div
+      class="terminal-line {line.type === 'log' ||
+      line.type === 'info' ||
+      line.type === 'system' ||
+      line.type === 'success'
+        ? 'log-line'
+        : ''}"
+      style="color: {getLineColor(line.type)}"
+    >
+      {#if line.text.startsWith("$ ")}
+        {line.text}
+      {:else if line.type === "command"}
+        <span class="prompt">$</span> {line.text}
+      {:else}
+        {line.text}
+      {/if}
+    </div>
+  {/each}
 
-    {#if $terminalStore.isTyping}
-      <div class="terminal-line" style="color: {getLineColor('command')}">
-        <span class="prompt">$</span>
-        {$currentCommand}<span class="cursor">_</span>
-      </div>
-    {/if}
+  {#if $terminalStore.isTyping}
+    <div class="terminal-line" style="color: {getLineColor('command')}">
+      <span class="prompt">$</span>
+      {$currentCommand}<span class="cursor">_</span>
+    </div>
   {/if}
 </div>
 

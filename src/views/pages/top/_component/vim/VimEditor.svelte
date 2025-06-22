@@ -1,145 +1,162 @@
 <script lang="ts">
-  import { terminalTransform } from "../terminal-view/stores/terminal.store"
-  import { vimStore, vimStatusLine } from "./stores/vim.store"
+  import { onMount } from "svelte"
   import VimView from "./components/VimView.svelte"
+  import VimStatusLine from "./components/VimStatusLine.svelte"
+  import { vimStore } from "./stores/vim.store"
+  import { terminalStore } from "$views/pages/top/_component/terminal/components/terminal-view/stores/terminal.store"
 
-  export let onExit: () => void = () => {}
+  export let filename: string
+  export let initialContent: string[] = []
+  export let onExit: () => void
 
-  let vimViewRef: { typeContent: (lines: string[]) => void } | null = null
+  let vimViewRef: VimView | null = null
+
+  function handleExit() {
+    vimStore.closeVim()
+
+    terminalStore.addLine({
+      id: Date.now(),
+      type: "log",
+      text: "",
+      delay: 0
+    })
+
+    onExit()
+  }
 
   export function typeContent(lines: string[]) {
     if (vimViewRef) {
       vimViewRef.typeContent(lines)
     }
   }
+
+  onMount(() => {
+    const content = initialContent.join("\n")
+    vimStore.openVim(filename, content)
+
+    if ($terminalStore.animationIndex > 0) {
+      const shouldAutoType = $terminalStore.displayedLines.some(
+        (line) => line.type === "vim" && line.text.includes(filename)
+      )
+
+      if (shouldAutoType && vimViewRef) {
+        setTimeout(() => {
+          const vimSequence = ["i", ...`#!/usr/bin/env node\n\nconsole.log("Hello, VIM!");`.split(""), "\u001b", ":wq"]
+          vimViewRef?.typeContent(vimSequence)
+        }, 500)
+      }
+    }
+  })
 </script>
 
-<div class="vim-container" style="transform: {$terminalTransform};">
+<div class="vim-container">
   <div class="vim-header">
-    <div class="vim-header-controls">
-      <span class="vim-control red"></span>
-      <span class="vim-control yellow"></span>
-      <span class="vim-control green"></span>
+    <div class="vim-title-bar">
+      <div class="window-controls">
+        <button class="control close" on:click={handleExit} aria-label="Close"></button>
+        <button class="control minimize" aria-label="Minimize"></button>
+        <button class="control maximize" aria-label="Maximize"></button>
+      </div>
+      <div class="vim-title">VIM - {filename}</div>
     </div>
-    <span class="vim-title">vim - {$vimStore.filename || "untitled"}</span>
   </div>
 
-  <div class="vim-content">
-    <VimView bind:this={vimViewRef} {onExit} />
+  <div class="vim-body">
+    <VimView bind:this={vimViewRef} onExit={handleExit} autoType={false} />
   </div>
 
-  <!-- VIM Status Line -->
-  {#if $vimStatusLine}
-    <div class="vim-status-line">
-      <span class="vim-mode">{$vimStatusLine.mode}</span>
-      <span class="vim-filename">{$vimStatusLine.filename}</span>
-      <span class="vim-position">{$vimStatusLine.position}</span>
-    </div>
-  {/if}
+  <VimStatusLine />
 </div>
 
 <style>
   .vim-container {
-    width: 95%;
-    max-width: 800px;
-    height: 600px;
-    background: var(--color-terminal-bg);
-    border: 1px solid rgba(251, 146, 60, 0.4);
-    border-radius: var(--radius-md);
-    overflow: hidden;
-    box-shadow:
-      0 20px 50px rgba(251, 146, 60, 0.15),
-      0 0 40px rgba(251, 146, 60, 0.2),
-      inset 0 0 80px rgba(251, 146, 60, 0.1);
-    backdrop-filter: var(--blur-lg);
-    transform-style: preserve-3d;
-    position: relative;
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
+    background-color: rgba(0, 0, 17, 0.9);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
   }
 
   .vim-header {
-    height: 40px;
-    background: rgba(251, 146, 60, 0.05);
-    border-bottom: 1px solid rgba(251, 146, 60, 0.2);
+    background-color: rgba(0, 0, 17, 0.95);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .vim-title-bar {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 0 var(--spacing-lg);
+    padding: 8px 12px;
     position: relative;
   }
 
-  .vim-header-controls {
+  .window-controls {
     display: flex;
-    gap: var(--spacing-xs);
+    gap: 8px;
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
   }
 
-  .vim-control {
+  .control {
     width: 12px;
     height: 12px;
     border-radius: 50%;
-    background: rgba(251, 146, 60, 0.3);
+    border: none;
+    cursor: pointer;
+    transition: all var(--transition-fast);
   }
 
-  .vim-control.red {
-    background: rgba(255, 95, 86, 0.8);
+  .control.close {
+    background-color: #ff5f57;
   }
 
-  .vim-control.yellow {
-    background: rgba(255, 189, 46, 0.8);
+  .control.minimize {
+    background-color: #ffbd2e;
   }
 
-  .vim-control.green {
-    background: rgba(39, 201, 63, 0.8);
+  .control.maximize {
+    background-color: #28ca42;
+  }
+
+  .control:hover {
+    opacity: 0.8;
+    transform: scale(1.1);
   }
 
   .vim-title {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    color: var(--color-terminal-yellow);
-    font-family: var(--font-family-mono), monospace;
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-light);
-    opacity: 0.8;
-  }
-
-  .vim-content {
-    flex: 1;
-    overflow: hidden;
-    position: relative;
-  }
-
-  /* VIM Status Line */
-  .vim-status-line {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 30px;
-    background: rgba(0, 0, 0, 0.3);
-    border-top: 1px solid rgba(251, 146, 60, 0.3);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 var(--spacing-xl);
-    font-family: var(--font-family-mono), monospace;
-    font-size: var(--font-size-sm);
-    color: var(--color-terminal-blue);
-  }
-
-  .vim-mode {
-    font-weight: var(--font-weight-semibold);
-    text-shadow: 0 0 10px rgba(251, 146, 60, 0.5);
-  }
-
-  .vim-filename {
     flex: 1;
     text-align: center;
-    opacity: 0.8;
+    font-family: var(--font-family-mono);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    font-weight: var(--font-weight-semibold);
   }
 
-  .vim-position {
-    opacity: 0.6;
+  .vim-body {
+    flex: 1;
+    overflow: hidden;
+    background-color: rgba(0, 0, 17, 0.8);
+  }
+
+  @media (max-width: 768px) {
+    .vim-container {
+      border-radius: 0;
+      border: none;
+    }
+
+    .window-controls {
+      display: none;
+    }
+
+    .vim-title {
+      text-align: left;
+      padding-left: 0;
+    }
   }
 </style>
