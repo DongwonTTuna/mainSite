@@ -110,14 +110,14 @@ export const LanguageSwitch = component$(() => {
     isOpen.value = !isOpen.value;
   });
 
-  const selectLanguage = $(async (lang: string) => {
+  const selectLanguage = $((lang: string) => {
     const currentPath = location.url.pathname;
     const pathParts = currentPath.split('/');
     pathParts[1] = lang;
     const newPath = pathParts.join('/');
     
-    await navigate(newPath);
-    isOpen.value = false;
+    // 페이지 새로고침으로 언어 변경
+    window.location.href = newPath;
   });
 
   return (

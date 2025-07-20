@@ -1,6 +1,5 @@
 import { component$, useStyles$ } from '@builder.io/qwik';
 import type { DocumentHead, StaticGenerateHandler } from '@builder.io/qwik-city';
-import { useTranslations } from './layout';
 import { inlineTranslate } from 'qwik-speak';
 import { config } from '~/lib/i18n/speak-config';
 import { FirstView } from '~/components/sections/FirstView';
@@ -10,7 +9,6 @@ import { Timeline } from '~/components/timeline/Timeline';
  * Main portfolio page component
  */
 export default component$(() => {
-  const translations = useTranslations();
   const t = inlineTranslate();
   
   useStyles$(`

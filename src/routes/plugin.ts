@@ -39,9 +39,6 @@ export const onRequest: RequestHandler = async ({ locale, url, redirect, request
     }
   }
   
-  // Set Speak context (optional: set the configuration on the server)
-  setSpeakContext(config);
-  
   // Set Qwik locale
   locale(lang || config.defaultLocale.lang);
 };
