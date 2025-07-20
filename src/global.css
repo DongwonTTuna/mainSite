@@ -3,8 +3,8 @@
  * 
  * Import existing styles
  */
-@import '/css/sanitize.css';
-@import '/css/global.css';
+@import '/src/css/sanitize.css';
+@import '/src/css/global.css';
 
 /**
  * CSS Variables
