@@ -1,0 +1,1 @@
+Svelte5 프로젝트야. (only Runes)
