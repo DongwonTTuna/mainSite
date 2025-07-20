@@ -70,11 +70,12 @@ export const TimelineNode = component$<TimelineNodeProps>(({ event, index }) => 
       background-color: white;
       border-radius: 0.5rem;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-      padding: 1rem;
+      padding: 1.25rem 1rem 1rem 1rem;
       width: 16rem;
       transition: all 300ms;
       cursor: pointer;
       border-top: 3px solid;
+      overflow: hidden;
     }
 
     .content-card.top {
@@ -100,6 +101,7 @@ export const TimelineNode = component$<TimelineNodeProps>(({ event, index }) => 
       font-weight: bold;
       color: var(--color-gray-800);
       margin-bottom: 0.5rem;
+      padding-right: 3rem;
     }
 
     .event-title.highlight {
@@ -145,13 +147,16 @@ export const TimelineNode = component$<TimelineNodeProps>(({ event, index }) => 
 
     .category-badge {
       position: absolute;
-      top: -0.5rem;
-      right: -0.5rem;
-      font-size: 0.75rem;
-      padding: 0.125rem 0.5rem;
+      top: 0.5rem;
+      right: 0.5rem;
+      font-size: 0.625rem;
+      padding: 0.125rem 0.375rem;
       color: white;
       border-radius: 9999px;
-      font-weight: 500;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.025em;
+      z-index: 10;
     }
   `);
 
@@ -206,7 +211,7 @@ export const TimelineNode = component$<TimelineNodeProps>(({ event, index }) => 
     <div
       ref={nodeRef}
       class={`timeline-node ${event.position} ${event.highlight ? 'highlight' : ''} ${isHovered.value ? 'hovered' : ''}`}
-      style={`left: ${xPosition}px;`}
+      style={`left: calc(${xPosition}px + 50vw);`}
     >
       {/* Branch line */}
       <div class={`branch-line ${event.position}`} />

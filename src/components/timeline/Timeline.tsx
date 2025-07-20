@@ -31,8 +31,8 @@ export const Timeline = component$(() => {
     .timeline-main-line {
       position: absolute;
       top: 50%;
-      left: 0;
-      right: 0;
+      left: 50vw;
+      width: 4800px;
       height: 4px;
       background-color: black;
       transform: translateY(-50%);
@@ -48,6 +48,7 @@ export const Timeline = component$(() => {
       font-size: 1.5rem;
       font-weight: bold;
       color: var(--color-gray-800);
+      white-space: nowrap;
       margin-top: -3rem;
     }
 
@@ -67,7 +68,7 @@ export const Timeline = component$(() => {
     .month-tick {
       width: 2px;
       height: 1rem;
-      background-color: var(--color-gray-300);
+      background-color: var(--color-gray-800);
     }
 
     .timeline-end-padding {
@@ -235,14 +236,17 @@ export const Timeline = component$(() => {
           {/* Main timeline line */}
           <div class="timeline-main-line" />
 
+          {/* Initial offset for centering */}
+          <div style="width: 50vw; flex-shrink: 0;" />
+          
           {/* Year markers */}
-          {[2022, 2023, 2024, 2025].map((year) => {
+          {[2022, 2023, 2024, 2025, 2026].map((year) => {
             const xPosition = (year - 2022) * 1200;
             return (
               <div
                 key={year}
                 class="year-marker"
-                style={`left: ${xPosition}px;`}
+                style={`left: calc(${xPosition}px + 50vw);`}
               >
                 <div class="year-label">{year}</div>
                 <div class="year-tick" />
@@ -258,7 +262,7 @@ export const Timeline = component$(() => {
               <div
                 key={i}
                 class="month-marker"
-                style={`left: ${xPosition}px;`}
+                style={`left: calc(${xPosition}px + 50vw);`}
               >
                 <div class="month-tick" />
               </div>
