@@ -20,7 +20,8 @@ const loadTranslation$: LoadTranslationFn = server$(async (lang: string, asset: 
   
   try {
     const data = await loader();
-    return data[asset] || data || {};
+    // Return the entire data object since our JSON files already have the structure
+    return data || {};
   } catch (error) {
     console.error(`Error loading translation: ${filePath}`, error);
     return {};
