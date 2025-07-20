@@ -1,15 +1,9 @@
 import { component$, useSignal, useVisibleTask$, useStyles$ } from '@builder.io/qwik';
-import { inlineTranslate } from 'qwik-speak';
-import { useGSAP } from '~/lib/gsap';
+import { personalInfo } from '~/data/personal-info';
+import { SocialLinks } from '~/components/ui/SocialLinks';
+import { ScrollIndicator } from '~/components/ui/ScrollIndicator';
 
 export const FirstView = component$(() => {
-  const t = inlineTranslate();
-  const containerRef = useSignal<HTMLElement>();
-  const titleRef = useSignal<HTMLElement>();
-  const subtitleRef = useSignal<HTMLElement>();
-  const ctaRef = useSignal<HTMLElement>();
-  const gsap = useGSAP();
-
   useStyles$(`
     .first-view {
       position: relative;
@@ -17,251 +11,196 @@ export const FirstView = component$(() => {
       display: flex;
       align-items: center;
       justify-content: center;
+      background-color: var(--color-gray-900);
       overflow: hidden;
-      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     }
 
-    .hero-content {
+    .gradient-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom right, var(--color-gray-900), var(--color-gray-800), #000000);
+      opacity: 0.9;
+    }
+
+    .animated-bg {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+
+    .bg-circle-1 {
+      position: absolute;
+      top: 25%;
+      left: 25%;
+      width: 16rem;
+      height: 16rem;
+      background-color: #3b82f6;
+      border-radius: 50%;
+      mix-blend-mode: screen;
+      filter: blur(96px);
+      opacity: 0.1;
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    .bg-circle-2 {
+      position: absolute;
+      bottom: 25%;
+      right: 25%;
+      width: 24rem;
+      height: 24rem;
+      background-color: #8b5cf6;
+      border-radius: 50%;
+      mix-blend-mode: screen;
+      filter: blur(96px);
+      opacity: 0.1;
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+      animation-delay: 2s;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 0.1;
+      }
+      50% {
+        opacity: 0.05;
+      }
+    }
+
+    .content-wrapper {
       position: relative;
-      z-index: 2;
+      z-index: 10;
       text-align: center;
-      max-width: 800px;
-      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .hero-name {
+      font-size: 3rem;
+      font-weight: bold;
+      color: white;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.025em;
     }
 
     .hero-title {
-      font-size: clamp(2.5rem, 5vw, 4rem);
-      font-weight: 800;
-      margin-bottom: 1rem;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      font-size: 1.25rem;
+      color: #d1d5db;
+      margin-bottom: 3rem;
+      letter-spacing: 0.05em;
     }
 
-    .hero-subtitle {
-      font-size: clamp(1.5rem, 3vw, 2rem);
-      font-weight: 600;
-      margin-bottom: 1.5rem;
-      color: #4a5568;
-      display: inline-flex;
-      align-items: center;
-    }
-
-    .hero-role {
-      min-height: 1.2em;
-    }
-
-    .cursor {
-      animation: blink 1s infinite;
-      margin-left: 2px;
-    }
-
-    @keyframes blink {
-      0%, 50% { opacity: 1; }
-      51%, 100% { opacity: 0; }
-    }
-
-    .hero-description {
-      font-size: clamp(1rem, 2vw, 1.25rem);
-      color: #718096;
-      margin-bottom: 2rem;
-      line-height: 1.6;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 0.75rem 2rem;
-      border-radius: 9999px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      font-size: 1rem;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      box-shadow: 0 4px 15px 0 rgba(118, 75, 162, 0.4);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 7px 20px 0 rgba(118, 75, 162, 0.5);
-    }
-
-    .btn-secondary {
-      background: white;
-      color: #667eea;
-      border: 2px solid #667eea;
-    }
-
-    .btn-secondary:hover {
-      background: #667eea;
-      color: white;
-    }
-
-    /* Background decoration */
-    .hero-decoration {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      overflow: hidden;
-    }
-
-    .decoration-circle {
-      position: absolute;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(50px);
-    }
-
-    .decoration-circle-1 {
-      width: 300px;
-      height: 300px;
-      top: -150px;
-      right: -150px;
-      animation: float 20s infinite ease-in-out;
-    }
-
-    .decoration-circle-2 {
-      width: 400px;
-      height: 400px;
-      bottom: -200px;
-      left: -200px;
-      animation: float 25s infinite ease-in-out reverse;
-    }
-
-    .decoration-circle-3 {
-      width: 200px;
-      height: 200px;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      animation: float 15s infinite ease-in-out;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translate(0, 0) scale(1); }
-      33% { transform: translate(30px, -30px) scale(1.1); }
-      66% { transform: translate(-20px, 20px) scale(0.9); }
-    }
-
-    /* Mobile responsive */
-    @media (max-width: 768px) {
-      .hero-actions {
-        flex-direction: column;
-        align-items: center;
+    /* Responsive styles */
+    @media (min-width: 640px) {
+      .content-wrapper {
+        padding: 0 1.5rem;
       }
 
-      .btn {
-        width: 200px;
-        text-align: center;
+      .hero-name {
+        font-size: 3.75rem;
+      }
+
+      .hero-title {
+        font-size: 1.5rem;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .hero-name {
+        font-size: 4.5rem;
+      }
+
+      .hero-title {
+        font-size: 1.875rem;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .content-wrapper {
+        padding: 0 2rem;
+      }
+
+      .hero-name {
+        font-size: 5rem;
       }
     }
   `);
 
+  const containerRef = useSignal<HTMLElement>();
+  const nameRef = useSignal<HTMLElement>();
+  const titleRef = useSignal<HTMLElement>();
+  const socialRef = useSignal<HTMLElement>();
+  const scrollRef = useSignal<HTMLElement>();
+
   // GSAP animations
-  useVisibleTask$(async ({ track }) => {
-    track(() => containerRef.value);
-    track(() => titleRef.value);
-    track(() => subtitleRef.value);
-    track(() => ctaRef.value);
+  useVisibleTask$(async () => {
+    const { gsap } = await import('gsap');
     
-    if (!containerRef.value || !gsap.value) return;
+    if (!containerRef.value) return;
 
     // Set initial states
-    const elements = [titleRef.value, subtitleRef.value, ctaRef.value].filter(Boolean);
-    gsap.value.set(elements, { opacity: 0, y: 30 });
+    const elements = [
+      nameRef.value, 
+      titleRef.value, 
+      socialRef.value,
+      scrollRef.value
+    ].filter(Boolean);
+    
+    gsap.set(elements, { opacity: 0, y: 30 });
 
-    // Create stagger animation
-    gsap.value.to(elements, {
+    // Create timeline animation
+    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+    tl.to(nameRef.value, {
       opacity: 1,
       y: 0,
       duration: 1,
-      stagger: 0.2,
-      ease: 'power3.out',
-      delay: 0.5
-    });
-
-    // For parallax effect, we need ScrollTrigger
-    const scrollTriggerModule = await import('gsap/ScrollTrigger');
-    const ScrollTrigger = scrollTriggerModule.ScrollTrigger;
-    gsap.value.registerPlugin(ScrollTrigger);
-
-    // Parallax effect on scroll
-    gsap.value.to(containerRef.value, {
-      y: '30%',
-      ease: 'none',
-      scrollTrigger: {
-        trigger: containerRef.value,
-        start: 'top top',
-        end: 'bottom top',
-        scrub: true
-      }
-    });
-  });
-
-  // Get the translated role text outside the task
-  const roleText = t('app.hero.role');
-  
-  // Typing animation for role
-  useVisibleTask$(() => {
-    const roleElement = document.querySelector('.hero-role');
-    if (!roleElement) return;
-
-    let index = 0;
-    const typeWriter = () => {
-      if (index < roleText.length) {
-        roleElement.textContent = roleText.substring(0, index + 1);
-        index++;
-        setTimeout(typeWriter, 100);
-      }
-    };
-
-    setTimeout(typeWriter, 1500);
+      delay: 0.2,
+    })
+    .to(titleRef.value, {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+    }, '-=0.5')
+    .to(socialRef.value, {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+    }, '-=0.4')
+    .to(scrollRef.value, {
+      opacity: 1,
+      y: 0,
+      duration: 1,
+    }, '-=0.2');
   });
 
   return (
     <section ref={containerRef} class="first-view">
-      <div class="container">
-        <div class="hero-content">
-          <h1 ref={titleRef} class="hero-title">
-            {t('app.hero.name')}
-          </h1>
-          
-          <div ref={subtitleRef} class="hero-subtitle">
-            <span class="hero-role"></span>
-            <span class="cursor">|</span>
-          </div>
+      {/* Background gradient overlay */}
+      <div class="gradient-overlay" />
+      
+      {/* Animated background elements */}
+      <div class="animated-bg">
+        <div class="bg-circle-1" />
+        <div class="bg-circle-2" />
+      </div>
 
-          <p ref={subtitleRef} class="hero-description">
-            {t('app.hero.subtitle')}
-          </p>
+      {/* Main content */}
+      <div class="content-wrapper">
+        <h1 ref={nameRef} class="hero-name">
+          {personalInfo.name}
+        </h1>
+        
+        <p ref={titleRef} class="hero-title">
+          {personalInfo.title}
+        </p>
 
-          <div ref={ctaRef} class="hero-actions">
-            <a href="#projects" class="btn btn-primary">
-              {t('app.hero.cta')}
-            </a>
-            <a href="#contact" class="btn btn-secondary">
-              {t('app.contact.title')}
-            </a>
-          </div>
+        <div ref={socialRef}>
+          <SocialLinks variant="center" size="large" />
         </div>
+      </div>
 
-        {/* Background decoration */}
-        <div class="hero-decoration">
-          <div class="decoration-circle decoration-circle-1"></div>
-          <div class="decoration-circle decoration-circle-2"></div>
-          <div class="decoration-circle decoration-circle-3"></div>
-        </div>
+      {/* Scroll indicator */}
+      <div ref={scrollRef}>
+        <ScrollIndicator />
       </div>
     </section>
   );

@@ -1,66 +1,24 @@
-import { component$, useStyles$ } from '@builder.io/qwik';
+import { component$ } from '@builder.io/qwik';
 import type { DocumentHead, StaticGenerateHandler } from '@builder.io/qwik-city';
-import { inlineTranslate } from 'qwik-speak';
 import { config } from '~/lib/i18n/speak-config';
 import { FirstView } from '~/components/sections/FirstView';
 import { Timeline } from '~/components/timeline/Timeline';
+import { ContactSection } from '~/components/sections/ContactSection';
 
 /**
  * Main portfolio page component
  */
 export default component$(() => {
-  const t = inlineTranslate();
-  
-  useStyles$(`
-    .about-section,
-    .contact-section {
-      padding: 5rem 0;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .about-section {
-      background: #ffffff;
-    }
-
-    .contact-section {
-      background: #f8f9fa;
-    }
-
-    section h2 {
-      font-size: 2.5rem;
-      font-weight: 800;
-      text-align: center;
-      margin-bottom: 3rem;
-      color: #2d3748;
-    }
-  `);
-  
   return (
     <>
       {/* Hero Section */}
       <FirstView />
       
-      {/* About Section */}
-      <section id="about" class="about-section">
-        <div class="container">
-          <h2>{t('app.nav.about')}</h2>
-          {/* About content will be added */}
-        </div>
-      </section>
-      
-      {/* Projects Timeline */}
+      {/* Timeline Section */}
       <Timeline />
       
       {/* Contact Section */}
-      <section id="contact" class="contact-section">
-        <div class="container">
-          <h2>{t('app.nav.contact')}</h2>
-          {/* Contact form will be added */}
-        </div>
-      </section>
+      <ContactSection />
     </>
   );
 });

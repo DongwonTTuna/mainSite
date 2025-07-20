@@ -1,8 +1,5 @@
-Qwik 프로젝트 (SSG)
-
 ## Project Overview
 이 프로젝트는 Qwik Framework를 사용한 정적 사이트 생성(SSG) 포트폴리오입니다.
-기존 Svelte 5에서 마이그레이션되었습니다.
 
 ## Tech Stack
 - **Framework**: Qwik + Qwik City
@@ -39,8 +36,5 @@ npm run build.server # SSG 빌드
 npm run preview      # 빌드 미리보기
 ```
 
-## Migration Notes
-- Svelte 5 runes → Qwik signals로 변환됨
-- SvelteKit 라우팅 → Qwik City 라우팅
-- Paraglide → Qwik Speak
-- 타임라인 애니메이션은 특히 주의 필요 (GSAP + ScrollTrigger)
+## 주의사항
+테일윈드는 절대 쓰지말 것.
