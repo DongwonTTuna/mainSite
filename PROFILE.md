@@ -98,14 +98,14 @@
   - Delivered fully responsive site with SEO optimization
   - Achieved 95+ Lighthouse performance score
 
-- **Restaurant Recommendation Map Application** (2023)
+- **Restaurant Recommendation Map Application** (2025)
   - Location-based discovery app with personalized recommendations and real-time reviews
   - Tech Stack: React Native, Google Maps API, Firebase
   - Built location-based restaurant discovery app with personalized recommendations
   - Integrated real-time reviews and ratings system
   - Implemented filtering by cuisine type, price range, and distance
 
-- **Restaurant Data Web Scraper** (2023)
+- **Restaurant Data Web Scraper** (2025)
   - Automated data pipeline processing 10K+ restaurants monthly with Python
   - Tech Stack: Python, BeautifulSoup, Selenium, PostgreSQL
   - Built data pipeline processing 10K+ restaurants monthly
