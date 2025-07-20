@@ -1,0 +1,56 @@
+@import url("/css/sanitize.css");
+@tailwind base;
+@tailwind components; 
+@tailwind utilities;
+
+/* Custom CSS Variables for Portfolio Design System */
+:root {
+  /* Primary Colors */
+  --portfolio-dark: #0F172A;
+  --portfolio-light: #F8FAFC;
+  
+  /* Category Colors */
+  --education: #3B82F6;
+  --career: #10B981;
+  --project: #F59E0B;
+  --certification: #8B5CF6;
+  
+  /* UI Colors */
+  --text-primary: #1E293B;
+  --text-secondary: #64748B;
+  --border: #E2E8F0;
+  --hover: #F1F5F9;
+  
+  /* Timeline Configuration */
+  --timeline-node-spacing: 400px;
+  --timeline-branch-height: 300px;
+  --timeline-center-line: 50vh;
+}
+
+/* Performance Optimizations */
+.timeline-container {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.timeline-node {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Timeline-specific utilities */
+@layer utilities {
+  .gpu-accelerated {
+    transform: translateZ(0);
+    will-change: transform;
+  }
+  
+  .scroll-smooth {
+    scroll-behavior: smooth;
+  }
+}
