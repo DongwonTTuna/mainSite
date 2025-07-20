@@ -1,0 +1,74 @@
+{
+  "app": {
+    "title": "Lee Dongwon - Interactive Portfolio",
+    "description": "Portfolio of Lee Dongwon - Full Stack Engineer with 2 years of experience in React, Python, and cloud technologies",
+    "nav": {
+      "home": "Home",
+      "about": "About",
+      "projects": "Projects",
+      "contact": "Contact"
+    },
+    "hero": {
+      "name": "Lee Dongwon",
+      "role": "Full Stack Engineer",
+      "subtitle": "Building scalable web applications with modern technologies",
+      "cta": "View Projects"
+    },
+    "about": {
+      "title": "About Me",
+      "basic_info": "Basic Information",
+      "birth_date": "Birth Date",
+      "nationality": "Nationality",
+      "korean": "Korean",
+      "location": "Location",
+      "education": "Education",
+      "tokyo_tsushin_university": "Tokyo Tsushin University",
+      "tokyo_info_creator": "Tokyo Information Creator Engineering College",
+      "technical_skills": "Technical Skills",
+      "certifications": "Certifications",
+      "cert_fit": "Fundamental Information Technology Engineer (2022)",
+      "cert_kanji": "Japan Kanji Aptitude Test Level 3 (2022)",
+      "cert_meet": "MEET (Economics & Management) Certification (2020)",
+      "user_centered_dev": "User-Centered Development",
+      "user_centered_desc": "With 2 years of professional experience, I've grown from a junior developer to a confident engineer capable of owning features end-to-end. My focus is on creating scalable, user-friendly applications.",
+      "proactivity": "Proactivity and Self-Initiative",
+      "proactivity_desc": "Self-taught TypeScript, cloud infrastructure, and modern DevOps practices. Active contributor to open-source projects and regularly attend tech meetups to stay current with industry trends.",
+      "responsibility_title": "Responsibility",
+      "responsibility_desc": "Successfully delivered 15+ features from conception to production. Reduced bug reports by 60% through comprehensive testing strategies and maintained 99.9% uptime for critical services.",
+      "customer_oriented": "Customer-Oriented Thinking",
+      "customer_oriented_desc": "Strong communication skills developed through cross-functional collaboration. Active participant in code reviews and contributed to improving team development processes."
+    },
+    "work": {
+      "title": "Work Experience",
+      "engineer": "Full Stack Engineer",
+      "nextbeat_desc": "Working as a Full Stack Engineer at Hoikushi Bank! (保育士バンク！). Developing with Svelte/SvelteKit, Nest.js, and Scala.",
+      "present": "Present",
+      "years_of_experience": "Years of Experience"
+    },
+    "projects": {
+      "title": "Projects",
+      "college_projects": "Personal & Academic Projects",
+      "seat_assignment_system": "Restaurant Recommendation Map - Location-based discovery app with personalized recommendations and real-time reviews",
+      "crypto_chart_viewer": "Restaurant Data Web Scraper - Automated data pipeline processing 10K+ restaurants monthly with Python",
+      "freelance_dev": "Freelance Development",
+      "view_project": "View Project",
+      "view_code": "View Code"
+    },
+    "contact": {
+      "title": "Get In Touch",
+      "email": "Email",
+      "github": "GitHub",
+      "linkedin": "LinkedIn",
+      "twitter": "Twitter",
+      "send_message": "Send Message"
+    },
+    "footer": {
+      "copyright": "© 2024 Lee Dongwon. All rights reserved."
+    },
+    "aria": {
+      "language_selector": "Language selector",
+      "menu_toggle": "Toggle navigation menu",
+      "scroll_to_top": "Scroll to top"
+    }
+  }
+}

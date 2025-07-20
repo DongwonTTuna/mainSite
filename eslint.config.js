@@ -1,7 +1,7 @@
 import prettier from "eslint-config-prettier"
 import js from "@eslint/js"
 import { includeIgnoreFile } from "@eslint/compat"
-import svelte from "eslint-plugin-svelte"
+import qwikPlugin from "eslint-plugin-qwik"
 import compat from "eslint-plugin-compat"
 import globals from "globals"
 import { fileURLToPath } from "node:url"
@@ -12,21 +12,24 @@ export default ts.config(
   includeIgnoreFile(gitignorePath),
   js.configs.recommended,
   ...ts.configs.recommended,
-  ...svelte.configs["flat/recommended"],
   prettier,
-  ...svelte.configs["flat/prettier"],
   compat.configs["flat/recommended"],
   {
+    plugins: {
+      qwik: qwikPlugin
+    },
     languageOptions: {
       globals: {
         ...globals.browser,
         ...globals.node
       }
+    },
+    rules: {
+      ...qwikPlugin.configs.recommended.rules
     }
   },
   {
-    files: ["**/*.svelte"],
-
+    files: ["**/*.tsx", "**/*.ts"],
     languageOptions: {
       parserOptions: {
         parser: ts.parser
@@ -34,6 +37,6 @@ export default ts.config(
     }
   },
   {
-    ignores: ["src/lib/i18n/generated/**"]
+    ignores: ["dist/**", ".qwik/**", "tmp/**", "server/**"]
   }
 )
