@@ -1,4 +1,4 @@
-import { component$, useSignal, $ } from '@builder.io/qwik';
+import { component$, useSignal, $, useStyles$ } from '@builder.io/qwik';
 import { useLocation, useNavigate } from '@builder.io/qwik-city';
 import { languages } from '~/lib/i18n/speak-config';
 import { inlineTranslate } from 'qwik-speak';
@@ -16,6 +16,88 @@ const languageOptions: Language[] = [
 ];
 
 export const LanguageSwitch = component$(() => {
+  useStyles$(`
+    .language-switch {
+      position: relative;
+    }
+
+    .language-button {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: transparent;
+      border: 1px solid #e5e5e5;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--qwik-primary-color);
+      transition: all 0.2s ease;
+    }
+
+    .language-button:hover {
+      border-color: var(--qwik-primary-color);
+    }
+
+    .language-flag {
+      font-size: 1.25rem;
+      line-height: 1;
+    }
+
+    .chevron {
+      transition: transform 0.2s ease;
+    }
+
+    .chevron.is-open {
+      transform: rotate(180deg);
+    }
+
+    .language-dropdown {
+      position: absolute;
+      top: calc(100% + 0.5rem);
+      right: 0;
+      min-width: 150px;
+      background: white;
+      border: 1px solid #e5e5e5;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      padding: 0.5rem;
+      z-index: 10;
+    }
+
+    .language-option {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      width: 100%;
+      padding: 0.5rem;
+      background: transparent;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--qwik-primary-color);
+      text-align: left;
+      transition: background 0.2s ease;
+    }
+
+    .language-option:hover {
+      background: #f5f5f5;
+    }
+
+    .language-option.is-active {
+      background: #f0f0f0;
+      font-weight: 600;
+    }
+
+    .check-icon {
+      margin-left: auto;
+      color: #10b981;
+    }
+  `);
+
   const t = inlineTranslate();
   const location = useLocation();
   const navigate = useNavigate();
@@ -99,87 +181,6 @@ export const LanguageSwitch = component$(() => {
         </div>
       )}
 
-      <style>{`
-        .language-switch {
-          position: relative;
-        }
-
-        .language-button {
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-          padding: 0.5rem 1rem;
-          background: transparent;
-          border: 1px solid #e5e5e5;
-          border-radius: 8px;
-          cursor: pointer;
-          font-size: 0.875rem;
-          font-weight: 500;
-          color: var(--qwik-primary-color);
-          transition: all 0.2s ease;
-        }
-
-        .language-button:hover {
-          border-color: var(--qwik-primary-color);
-        }
-
-        .language-flag {
-          font-size: 1.25rem;
-          line-height: 1;
-        }
-
-        .chevron {
-          transition: transform 0.2s ease;
-        }
-
-        .chevron.is-open {
-          transform: rotate(180deg);
-        }
-
-        .language-dropdown {
-          position: absolute;
-          top: calc(100% + 0.5rem);
-          right: 0;
-          min-width: 150px;
-          background: white;
-          border: 1px solid #e5e5e5;
-          border-radius: 8px;
-          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-          padding: 0.5rem;
-          z-index: 10;
-        }
-
-        .language-option {
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-          width: 100%;
-          padding: 0.5rem;
-          background: transparent;
-          border: none;
-          border-radius: 6px;
-          cursor: pointer;
-          font-size: 0.875rem;
-          font-weight: 500;
-          color: var(--qwik-primary-color);
-          text-align: left;
-          transition: background 0.2s ease;
-        }
-
-        .language-option:hover {
-          background: #f5f5f5;
-        }
-
-        .language-option.is-active {
-          background: #f0f0f0;
-          font-weight: 600;
-        }
-
-        .check-icon {
-          margin-left: auto;
-          color: #10b981;
-        }
-      `}</style>
     </div>
   );
 });

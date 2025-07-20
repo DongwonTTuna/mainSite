@@ -6,6 +6,9 @@ import {
 } from '@builder.io/qwik-city';
 import { RouterHead } from './components/router-head/router-head';
 import { isDev } from '@builder.io/qwik/build';
+import { useQwikSpeak } from 'qwik-speak';
+import { config } from './lib/i18n/speak-config';
+import { translationFn } from './lib/i18n/speak-functions';
 
 import './global.css';
 
@@ -16,6 +19,11 @@ export default component$(() => {
    *
    * Don't remove the `<head>` and `<body>` elements.
    */
+
+  /**
+   * Init Qwik Speak
+   */
+  useQwikSpeak({ config, translationFn });
 
   return (
     <QwikCityProvider>

@@ -1,34 +1,49 @@
 import type { RequestHandler } from '@builder.io/qwik-city';
+import { setSpeakContext, validateLocale } from 'qwik-speak';
 import { config } from '~/lib/i18n/speak-config';
 
 /**
  * This middleware runs for every request.
  * It sets up the locale based on the URL or browser preferences.
  */
-export const onRequest: RequestHandler = async ({ locale, url, redirect, request }) => {
+export const onRequest: RequestHandler = async ({ locale, url, redirect, request, params }) => {
   const pathname = url.pathname;
   const supportedLocales = config.supportedLocales.map(l => l.lang);
   
-  // Extract locale from pathname
-  const pathnameLocale = pathname.split('/')[1];
+  let lang: string | undefined = undefined;
   
-  // If we're at root, redirect to default locale
-  if (pathname === '/') {
-    throw redirect(302, `/${config.defaultLocale.lang}/`);
-  }
-  
-  // If the pathname locale is supported, use it
-  if (supportedLocales.includes(pathnameLocale)) {
-    locale(pathnameLocale);
+  // Check if we have a lang param from the route
+  if (params.lang && validateLocale(params.lang)) {
+    // Check supported locales
+    lang = config.supportedLocales.find(value => value.lang === params.lang)?.lang;
   } else {
-    // Otherwise, try to detect from Accept-Language header
-    const acceptLanguage = request.headers.get('accept-language');
-    const detectedLocale = detectLocaleFromHeader(acceptLanguage, supportedLocales);
+    // Extract locale from pathname
+    const pathnameLocale = pathname.split('/')[1];
     
-    // Redirect to detected or default locale
-    const targetLocale = detectedLocale || config.defaultLocale.lang;
-    throw redirect(302, `/${targetLocale}${pathname}`);
+    // If we're at root, redirect to default locale
+    if (pathname === '/') {
+      throw redirect(302, `/${config.defaultLocale.lang}/`);
+    }
+    
+    // If the pathname locale is supported, use it
+    if (supportedLocales.includes(pathnameLocale)) {
+      lang = pathnameLocale;
+    } else {
+      // Otherwise, try to detect from Accept-Language header
+      const acceptLanguage = request.headers.get('accept-language');
+      const detectedLocale = detectLocaleFromHeader(acceptLanguage, supportedLocales);
+      
+      // Redirect to detected or default locale
+      const targetLocale = detectedLocale || config.defaultLocale.lang;
+      throw redirect(302, `/${targetLocale}${pathname}`);
+    }
   }
+  
+  // Set Speak context (optional: set the configuration on the server)
+  setSpeakContext(config);
+  
+  // Set Qwik locale
+  locale(lang || config.defaultLocale.lang);
 };
 
 /**

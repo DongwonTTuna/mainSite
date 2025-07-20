@@ -1,60 +1,41 @@
-import { useVisibleTask$, type Signal } from '@builder.io/qwik';
+import { useSignal, useVisibleTask$ } from '@builder.io/qwik';
 import type { GSAPInstance } from 'gsap';
 
-// We'll import GSAP dynamically to ensure it only loads on the client
+// Cache for GSAP instance
 let gsapInstance: GSAPInstance | null = null;
 
 /**
- * Hook for using GSAP animations in Qwik components
- * 
- * @param callback - Function that sets up GSAP animations
- * @param deps - Array of dependencies to track for re-running the animation
+ * Hook for loading GSAP in Qwik components
+ * Returns a signal containing the GSAP instance once loaded
  * 
  * @example
  * ```tsx
  * const boxRef = useSignal<HTMLElement>();
+ * const gsap = useGSAP();
  * 
- * useGSAP(() => {
- *   if (!boxRef.value) return;
+ * useVisibleTask$(() => {
+ *   if (!boxRef.value || !gsap.value) return;
  *   
- *   gsap.to(boxRef.value, {
+ *   gsap.value.to(boxRef.value, {
  *     rotation: 360,
  *     duration: 2,
  *     ease: "power2.inOut"
  *   });
- * }, [boxRef.value]);
+ * });
  * ```
  */
-export const useGSAP = (
-  callback: (gsap: GSAPInstance) => void | (() => void),
-  deps: Array<Signal<any> | any> = []
-) => {
-  useVisibleTask$(async ({ track, cleanup }) => {
-    // Track dependencies
-    deps.forEach(dep => {
-      if (dep && typeof dep === 'object' && 'value' in dep) {
-        track(() => dep.value);
-      }
-    });
+export const useGSAP = () => {
+  const gsapSignal = useSignal<GSAPInstance | null>(null);
 
+  useVisibleTask$(async () => {
     // Dynamically import GSAP only on the client
     if (!gsapInstance) {
       const gsapModule = await import('gsap');
       gsapInstance = gsapModule.default || gsapModule.gsap;
     }
-
-    // Execute the callback with GSAP instance
-    const cleanupFn = callback(gsapInstance);
-
-    // Set up cleanup
-    cleanup(() => {
-      if (typeof cleanupFn === 'function') {
-        cleanupFn();
-      }
-      // Kill all tweens to prevent memory leaks
-      if (gsapInstance) {
-        gsapInstance.killTweensOf('*');
-      }
-    });
+    
+    gsapSignal.value = gsapInstance;
   });
+
+  return gsapSignal;
 };

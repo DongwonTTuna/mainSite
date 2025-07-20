@@ -1,4 +1,4 @@
-import { component$, useSignal, useStore } from '@builder.io/qwik';
+import { component$, useSignal, useStore, useVisibleTask$, useStyles$ } from '@builder.io/qwik';
 import { inlineTranslate } from 'qwik-speak';
 import { useScrollTrigger } from '~/lib/gsap';
 
@@ -14,6 +14,180 @@ interface TimelineEvent {
 }
 
 export const Timeline = component$(() => {
+  useStyles$(`
+    .timeline-section {
+      position: relative;
+      padding: 4rem 0;
+      background: #f7fafc;
+      overflow: hidden;
+    }
+
+    .timeline-header {
+      text-align: center;
+      margin-bottom: 4rem;
+      padding: 0 1rem;
+    }
+
+    .timeline-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      margin-bottom: 1rem;
+      color: #2d3748;
+    }
+
+    .timeline-subtitle {
+      font-size: 1.25rem;
+      color: #718096;
+    }
+
+    .timeline-container {
+      position: relative;
+      width: 100%;
+      height: 500px;
+    }
+
+    .timeline-track {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      height: 100%;
+      padding: 0 50px;
+      will-change: transform;
+    }
+
+    .timeline-line {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: #e2e8f0;
+      transform: translateY(-50%);
+      z-index: 1;
+    }
+
+    .timeline-item {
+      position: relative;
+      flex-shrink: 0;
+      width: 350px;
+      margin-right: 100px;
+      z-index: 2;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 0 0 4px white, 0 0 0 6px currentColor;
+      z-index: 3;
+    }
+
+    .timeline-content {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      transform: translateY(-50%);
+      transition: all 0.3s ease;
+    }
+
+    .timeline-item:nth-child(odd) .timeline-content {
+      margin-bottom: 80px;
+    }
+
+    .timeline-item:nth-child(even) .timeline-content {
+      margin-top: 80px;
+    }
+
+    .timeline-content:hover {
+      transform: translateY(-50%) scale(1.05);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .timeline-date {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #a0aec0;
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-event-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #2d3748;
+      margin-bottom: 0.75rem;
+    }
+
+    .timeline-event-description {
+      color: #4a5568;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .timeline-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .timeline-tag {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      background: #edf2f7;
+      color: #4a5568;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+
+    .timeline-link {
+      display: inline-flex;
+      align-items: center;
+      color: #667eea;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .timeline-link:hover {
+      color: #5a67d8;
+      transform: translateX(4px);
+    }
+
+    .timeline-end {
+      width: 100px;
+      flex-shrink: 0;
+    }
+
+    /* Mobile responsive */
+    @media (max-width: 768px) {
+      .timeline-container {
+        height: auto;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .timeline-track {
+        position: static;
+        padding: 2rem 1rem;
+      }
+
+      .timeline-item {
+        width: 280px;
+        margin-right: 2rem;
+      }
+
+      .timeline-content {
+        padding: 1.5rem;
+      }
+    }
+  `);
+
   const t = inlineTranslate();
   const containerRef = useSignal<HTMLElement>();
   const trackRef = useSignal<HTMLElement>();
@@ -70,9 +244,16 @@ export const Timeline = component$(() => {
     achievement: '#e53e3e'
   };
 
+  const gsapWithST = useScrollTrigger();
+
   // GSAP ScrollTrigger animation
-  useScrollTrigger((gsap, ScrollTrigger) => {
-    if (!containerRef.value || !trackRef.value) return;
+  useVisibleTask$(({ track, cleanup }) => {
+    track(() => containerRef.value);
+    track(() => trackRef.value);
+    track(() => gsapWithST.value);
+
+    const { gsap, ScrollTrigger } = gsapWithST.value || {};
+    if (!containerRef.value || !trackRef.value || !gsap || !ScrollTrigger) return;
 
     // Calculate total width needed for horizontal scroll
     const totalWidth = trackRef.value.scrollWidth;
@@ -114,10 +295,12 @@ export const Timeline = component$(() => {
     const handleResize = () => ScrollTrigger.refresh();
     window.addEventListener('resize', handleResize);
     
-    return () => {
+    cleanup(() => {
       window.removeEventListener('resize', handleResize);
-    };
-  }, [containerRef.value, trackRef.value]);
+      // Clean up ScrollTriggers
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    });
+  });
 
   return (
     <section ref={containerRef} class="timeline-section">
@@ -163,179 +346,6 @@ export const Timeline = component$(() => {
         </div>
       </div>
 
-      <style>{`
-        .timeline-section {
-          position: relative;
-          padding: 4rem 0;
-          background: #f7fafc;
-          overflow: hidden;
-        }
-
-        .timeline-header {
-          text-align: center;
-          margin-bottom: 4rem;
-          padding: 0 1rem;
-        }
-
-        .timeline-title {
-          font-size: clamp(2rem, 4vw, 3rem);
-          font-weight: 800;
-          margin-bottom: 1rem;
-          color: #2d3748;
-        }
-
-        .timeline-subtitle {
-          font-size: 1.25rem;
-          color: #718096;
-        }
-
-        .timeline-container {
-          position: relative;
-          width: 100%;
-          height: 500px;
-        }
-
-        .timeline-track {
-          position: absolute;
-          display: flex;
-          align-items: center;
-          height: 100%;
-          padding: 0 50px;
-          will-change: transform;
-        }
-
-        .timeline-line {
-          position: absolute;
-          top: 50%;
-          left: 0;
-          right: 0;
-          height: 2px;
-          background: #e2e8f0;
-          transform: translateY(-50%);
-          z-index: 1;
-        }
-
-        .timeline-item {
-          position: relative;
-          flex-shrink: 0;
-          width: 350px;
-          margin-right: 100px;
-          z-index: 2;
-        }
-
-        .timeline-dot {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          width: 20px;
-          height: 20px;
-          border-radius: 50%;
-          transform: translate(-50%, -50%);
-          box-shadow: 0 0 0 4px white, 0 0 0 6px currentColor;
-          z-index: 3;
-        }
-
-        .timeline-content {
-          background: white;
-          border-radius: 12px;
-          padding: 2rem;
-          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-          transform: translateY(-50%);
-          transition: all 0.3s ease;
-        }
-
-        .timeline-item:nth-child(odd) .timeline-content {
-          margin-bottom: 80px;
-        }
-
-        .timeline-item:nth-child(even) .timeline-content {
-          margin-top: 80px;
-        }
-
-        .timeline-content:hover {
-          transform: translateY(-50%) scale(1.05);
-          box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-        }
-
-        .timeline-date {
-          font-size: 0.875rem;
-          font-weight: 600;
-          color: #a0aec0;
-          margin-bottom: 0.5rem;
-        }
-
-        .timeline-event-title {
-          font-size: 1.5rem;
-          font-weight: 700;
-          color: #2d3748;
-          margin-bottom: 0.75rem;
-        }
-
-        .timeline-event-description {
-          color: #4a5568;
-          line-height: 1.6;
-          margin-bottom: 1rem;
-        }
-
-        .timeline-tags {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 0.5rem;
-          margin-bottom: 1rem;
-        }
-
-        .timeline-tag {
-          display: inline-block;
-          padding: 0.25rem 0.75rem;
-          background: #edf2f7;
-          color: #4a5568;
-          border-radius: 9999px;
-          font-size: 0.75rem;
-          font-weight: 500;
-        }
-
-        .timeline-link {
-          display: inline-flex;
-          align-items: center;
-          color: #667eea;
-          font-weight: 600;
-          text-decoration: none;
-          transition: all 0.2s ease;
-        }
-
-        .timeline-link:hover {
-          color: #5a67d8;
-          transform: translateX(4px);
-        }
-
-        .timeline-end {
-          width: 100px;
-          flex-shrink: 0;
-        }
-
-        /* Mobile responsive */
-        @media (max-width: 768px) {
-          .timeline-container {
-            height: auto;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-          }
-
-          .timeline-track {
-            position: static;
-            padding: 2rem 1rem;
-          }
-
-          .timeline-item {
-            width: 280px;
-            margin-right: 2rem;
-          }
-
-          .timeline-content {
-            padding: 1.5rem;
-          }
-        }
-      `}</style>
     </section>
   );
 });

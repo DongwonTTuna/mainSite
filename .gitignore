@@ -1,13 +1,18 @@
-test-results
+# Dependencies
 node_modules
 
-# Output
+# Qwik build artifacts
+/dist
+/build
+/server
+/.qwik
+/tmp
+
+# Deployment
 .output
 .vercel
 .netlify
 .wrangler
-/.svelte-kit
-/build
 
 # OS
 .DS_Store
@@ -23,9 +28,21 @@ Thumbs.db
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
-# Paraglide
-src/lib/i18n/runtime/*
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
 
 # Editor
 .idea
 .vscode
+*.swp
+*.swo
+*~
+
+# Testing
+test-results
+coverage
+.nyc_output

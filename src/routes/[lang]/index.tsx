@@ -1,4 +1,4 @@
-import { component$ } from '@builder.io/qwik';
+import { component$, useStyles$ } from '@builder.io/qwik';
 import type { DocumentHead, StaticGenerateHandler } from '@builder.io/qwik-city';
 import { useTranslations } from './layout';
 import { inlineTranslate } from 'qwik-speak';
@@ -12,6 +12,33 @@ import { Timeline } from '~/components/timeline/Timeline';
 export default component$(() => {
   const translations = useTranslations();
   const t = inlineTranslate();
+  
+  useStyles$(`
+    .about-section,
+    .contact-section {
+      padding: 5rem 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .about-section {
+      background: #ffffff;
+    }
+
+    .contact-section {
+      background: #f8f9fa;
+    }
+
+    section h2 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 3rem;
+      color: #2d3748;
+    }
+  `);
   
   return (
     <>
@@ -36,33 +63,6 @@ export default component$(() => {
           {/* Contact form will be added */}
         </div>
       </section>
-
-      <style>{`
-        .about-section,
-        .contact-section {
-          padding: 5rem 0;
-          min-height: 100vh;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-
-        .about-section {
-          background: #ffffff;
-        }
-
-        .contact-section {
-          background: #f8f9fa;
-        }
-
-        section h2 {
-          font-size: 2.5rem;
-          font-weight: 800;
-          text-align: center;
-          margin-bottom: 3rem;
-          color: #2d3748;
-        }
-      `}</style>
     </>
   );
 });
@@ -73,7 +73,7 @@ export default component$(() => {
 export const onStaticGenerate: StaticGenerateHandler = () => {
   return {
     params: config.supportedLocales.map(locale => ({
-      lang: locale.lang
+      lang: locale.lang !== config.defaultLocale.lang ? locale.lang : '.'
     }))
   };
 };
