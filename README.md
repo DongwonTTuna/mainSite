@@ -8,9 +8,12 @@
 
 ## 기술 스택
 
-- **프론트엔드**: Svelte, SvelteKit, Typescript
-- **백엔드**: Node.js, Express
-- **데이터베이스**: MySQL
+- **프론트엔드**: Qwik, Qwik City, TypeScript
+- **스타일링**: Tailwind CSS
+- **애니메이션**: GSAP
+- **국제화(i18n)**: Qwik Speak
+- **빌드**: Vite, Static Site Generation (SSG)
+- **배포**: Cloudflare Pages
 
 ## 이력
 
@@ -35,24 +38,53 @@
 
 ## 프로젝트 구조
 
-- **src/views**
-  - 각 페이지의 Svelte 컴포넌트가 위치합니다.
-- **src/views/common**
-  - 공통적으로 사용되는 레이아웃, 헤더, 푸터 등의 컴포넌트가 위치합니다.
-- **src/views/pages**
-  - 각 페이지별로 컴포넌트가 위치합니다.
-  - 각 페이지는 Svelte 컴포넌트로 작성되어 있으며, 라우팅에 따라 자동으로 매핑됩니다.
-  - src/routes/+page.svelte의 경우, src/views/pages/Page.svelte로 이동합니다.
-- **src/views/**/\_components\*\*
-  - 재사용 가능한 컴포넌트들이 위치합니다.
-- **src/views/**/\_images\*\*
-  - 이미지 파일들이 위치합니다.
-- **src/views/**/\_types\*\*
-  - 페이지에서 사용하는 타입 정의가 위치합니다.
-- **src/lib**
-  - 유틸리티 함수, 타입 정의 등 공통적으로 사용되는 코드가 위치합니다.
-- **src/routes/api**
-  - API 엔드포인트가 정의되어 있습니다.
-  - 예: `/api/contact`는 연락처 폼 제출을 처리합니다.
-- **src/routes**
-  - SvelteKit의 라우팅 설정이 포함되어 있습니다.
+- **src/routes/**
+  - Qwik City의 파일 기반 라우팅
+  - `[lang]/` - 다국어 지원을 위한 동적 라우팅
+  - `index.tsx` - 각 라우트의 페이지 컴포넌트
+  - `layout.tsx` - 레이아웃 컴포넌트
+  - `plugin.ts` - 미들웨어 (i18n 설정 등)
+- **src/components/**
+  - 재사용 가능한 Qwik 컴포넌트 (.tsx)
+  - `sections/` - 페이지 섹션 컴포넌트
+  - `timeline/` - 타임라인 관련 컴포넌트
+  - `ui/` - UI 컴포넌트 (Modal, SocialLinks 등)
+  - `animations/` - 애니메이션 컴포넌트
+- **src/lib/**
+  - `i18n/` - Qwik Speak 설정 및 번역 함수
+  - `stores/` - 전역 상태 관리
+  - `utils/` - 유틸리티 함수
+  - `hooks/` - 커스텀 훅
+- **src/i18n/**
+  - `en-US/`, `ko/`, `ja/` - 언어별 번역 파일
+- **public/**
+  - 정적 자산 (이미지, 폰트 등)
+- **adapters/static/**
+  - SSG 어댑터 설정
+
+## 프로젝트 실행
+
+```bash
+# 개발 서버 실행
+npm run dev
+
+# 프로덕션 빌드
+npm run build
+
+# SSG 빌드 (정적 사이트 생성)
+npm run build.server
+
+# 빌드 미리보기
+npm run preview
+
+# 번역 추출
+npm run qwik-speak-extract
+```
+
+## 마이그레이션 정보
+
+이 프로젝트는 Svelte 5에서 Qwik으로 마이그레이션되었습니다.
+- **성능 향상**: Qwik의 resumability로 초기 로딩 속도 개선
+- **번들 크기 감소**: 자동 코드 분할로 ~1KB 초기 JS
+- **SEO 최적화**: SSG를 통한 완전한 정적 사이트 생성
+- **다국어 지원**: Qwik Speak를 통한 향상된 i18n

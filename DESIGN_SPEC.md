@@ -3,7 +3,7 @@
 ## Project Overview
 **Project**: Lee Dongwon Interactive Portfolio
 **Objective**: Create a visually striking portfolio website featuring an interactive horizontal timeline that responds to vertical scrolling
-**Tech Stack**: SvelteKit 5 (Runes), Tailwind CSS, GSAP, Vercel
+**Tech Stack**: Qwik + Qwik City (SSG), Tailwind CSS, GSAP, Cloudflare Pages
 
 ## System Architecture
 
@@ -13,7 +13,7 @@
 ┌─────────────────────────────────────────────────────────┐
 │                    Client Browser                        │
 ├─────────────────────────────────────────────────────────┤
-│                 SvelteKit Application                    │
+│                  Qwik Application                        │
 ├──────────────┬────────────────┬────────────────────────┤
 │  Components  │  State Manager │   Animation Engine      │
 ├──────────────┴────────────────┴────────────────────────┤
@@ -26,41 +26,47 @@
 ```
 src/
 ├── routes/
-│   └── +page.svelte          # Main portfolio page
+│   └── index.tsx             # Main portfolio page
 ├── lib/
 │   ├── components/
 │   │   ├── sections/
-│   │   │   ├── FirstView.svelte
-│   │   │   ├── Timeline.svelte
-│   │   │   └── Contact.svelte
+│   │   │   ├── FirstView.tsx
+│   │   │   ├── Timeline.tsx
+│   │   │   └── Contact.tsx
 │   │   ├── timeline/
-│   │   │   ├── TimelineContainer.svelte
-│   │   │   ├── TimelineTrack.svelte
-│   │   │   ├── TimelineNode.svelte
-│   │   │   └── TimelinePointer.svelte
+│   │   │   ├── TimelineContainer.tsx
+│   │   │   ├── TimelineTrack.tsx
+│   │   │   ├── TimelineNode.tsx
+│   │   │   └── TimelinePointer.tsx
 │   │   ├── ui/
-│   │   │   ├── Modal.svelte
-│   │   │   ├── SocialLinks.svelte
-│   │   │   └── ScrollIndicator.svelte
+│   │   │   ├── Modal.tsx
+│   │   │   ├── SocialLinks.tsx
+│   │   │   └── ScrollIndicator.tsx
 │   │   └── animations/
-│   │       ├── FadeIn.svelte
-│   │       └── Parallax.svelte
+│   │       ├── FadeIn.tsx
+│   │       └── Parallax.tsx
 │   ├── stores/
 │   │   ├── scroll.ts
 │   │   └── timeline.ts
 │   ├── hooks/
-│   │   ├── useScrollHijack.ts
-│   │   ├── useTimelinePosition.ts
-│   │   └── useAnimation.ts
+│   │   ├── useScrollHijack.tsx
+│   │   ├── useTimelinePosition.tsx
+│   │   └── useAnimation.tsx
 │   ├── utils/
 │   │   ├── animations.ts
 │   │   └── responsive.ts
-│   └── data/
-│       └── timeline.json
-├── static/
-│   ├── fonts/
-│   └── images/
-└── app.html
+│   ├── data/
+│   │   └── timeline.json
+│   └── i18n/
+│       ├── speak-config.ts
+│       └── speak-functions.ts
+├── i18n/
+│   ├── en-US/
+│   ├── ko/
+│   └── ja/
+└── public/
+    ├── fonts/
+    └── images/
 ```
 
 ## Component Design
@@ -128,71 +134,106 @@ interface ContactProps {
 
 ### 2. State Management
 
-#### Scroll Store (Svelte 5 Runes)
+#### Scroll Store (Qwik Signals)
 ```typescript
 // stores/scroll.ts
-class ScrollStore {
-  scrollY = $state(0);
-  scrollProgress = $state(0);
-  isScrolling = $state(false);
-  
-  timelinePosition = $derived(() => {
-    return this.scrollProgress * TIMELINE_WIDTH;
+import { createContextId } from '@builder.io/qwik';
+
+export interface ScrollStore {
+  scrollY: number;
+  scrollProgress: number;
+  isScrolling: boolean;
+  timelinePosition: number;
+}
+
+export const ScrollContext = createContextId<ScrollStore>('scroll');
+
+// In component:
+export const useScrollStore = () => {
+  const store = useStore<ScrollStore>({
+    scrollY: 0,
+    scrollProgress: 0,
+    isScrolling: false,
+    timelinePosition: 0
   });
   
-  updateScroll(deltaY: number) {
+  const updateScroll = $((deltaY: number) => {
     // Convert vertical scroll to horizontal progress
-  }
-}
+    store.scrollProgress = Math.max(0, Math.min(1, store.scrollProgress + deltaY / 10000));
+    store.timelinePosition = store.scrollProgress * TIMELINE_WIDTH;
+  });
+  
+  return { store, updateScroll };
+};
 ```
 
 #### Timeline Store
 ```typescript
 // stores/timeline.ts
-class TimelineStore {
-  events = $state<TimelineEvent[]>([]);
-  activeEvent = $state<string | null>(null);
-  modalOpen = $state(false);
-  
-  hoveredEvent = $state<string | null>(null);
-  
-  visibleEvents = $derived(() => {
-    // Calculate which events are in viewport
-  });
+import { createContextId, useComputed$ } from '@builder.io/qwik';
+
+export interface TimelineStore {
+  events: TimelineEvent[];
+  activeEvent: string | null;
+  modalOpen: boolean;
+  hoveredEvent: string | null;
 }
+
+export const TimelineContext = createContextId<TimelineStore>('timeline');
+
+// In component:
+export const useTimelineStore = () => {
+  const store = useStore<TimelineStore>({
+    events: [],
+    activeEvent: null,
+    modalOpen: false,
+    hoveredEvent: null
+  });
+  
+  const visibleEvents = useComputed$(() => {
+    // Calculate which events are in viewport
+    return store.events.filter(event => {
+      // Visibility logic based on scroll position
+    });
+  });
+  
+  return { store, visibleEvents };
+};
 ```
 
 ## Animation System
 
 ### 1. Scroll Hijacking Implementation
 ```typescript
-// hooks/useScrollHijack.ts
-export function useScrollHijack() {
-  let rafId: number;
-  let velocity = 0;
+// hooks/useScrollHijack.tsx
+import { useVisibleTask$, useSignal } from '@builder.io/qwik';
+
+export function useScrollHijack(scrollStore: ScrollStore) {
+  const velocity = useSignal(0);
+  const rafId = useSignal<number>(0);
   const friction = 0.95;
   
-  $effect(() => {
+  useVisibleTask$(({ cleanup }) => {
     function handleWheel(e: WheelEvent) {
       e.preventDefault();
-      velocity += e.deltaY * 0.5;
+      velocity.value += e.deltaY * 0.5;
     }
     
     function updateScroll() {
-      if (Math.abs(velocity) > 0.1) {
-        scrollStore.updateScroll(velocity);
-        velocity *= friction;
-        rafId = requestAnimationFrame(updateScroll);
+      if (Math.abs(velocity.value) > 0.1) {
+        scrollStore.updateScroll(velocity.value);
+        velocity.value *= friction;
+        rafId.value = requestAnimationFrame(updateScroll);
       }
     }
     
     window.addEventListener('wheel', handleWheel, { passive: false });
     updateScroll();
     
-    return () => {
+    cleanup(() => {
       window.removeEventListener('wheel', handleWheel);
-      cancelAnimationFrame(rafId);
-    };
+      cancelAnimationFrame(rafId.value);
+    });
   });
 }
 ```
@@ -200,48 +241,76 @@ export function useScrollHijack() {
 ### 2. GSAP Integration
 ```typescript
 // utils/animations.ts
-export function createTimelineAnimation(element: HTMLElement) {
-  const tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: element,
-      start: "top center",
-      end: "bottom center",
-      scrub: 1,
+import { useVisibleTask$ } from '@builder.io/qwik';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+export function useTimelineAnimation() {
+  const timelineRef = useSignal<HTMLElement>();
+  
+  useVisibleTask$(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    
+    if (timelineRef.value) {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: timelineRef.value,
+          start: "top center",
+          end: "bottom center",
+          scrub: 1,
+        }
+      });
+      
+      return () => {
+        ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      };
     }
   });
   
-  return tl;
+  return timelineRef;
 }
 
-export function animateNodeEntrance(node: HTMLElement) {
-  gsap.from(node, {
-    scale: 0,
-    opacity: 0,
-    duration: 0.5,
-    ease: "back.out(1.7)"
+export function useNodeAnimation(nodeRef: Signal<HTMLElement | undefined>) {
+  useVisibleTask$(() => {
+    if (nodeRef.value) {
+      gsap.from(nodeRef.value, {
+        scale: 0,
+        opacity: 0,
+        duration: 0.5,
+        ease: "back.out(1.7)"
+      });
+    }
   });
 }
 ```
 
 ### 3. Mobile Touch Handling
 ```typescript
-// hooks/useTouchScroll.ts
-export function useTouchScroll() {
-  let touchStartX = 0;
-  let currentX = 0;
+// hooks/useTouchScroll.tsx
+import { useVisibleTask$, useSignal } from '@builder.io/qwik';
+
+export function useTouchScroll(scrollStore: ScrollStore) {
+  const touchStartX = useSignal(0);
+  const currentX = useSignal(0);
   
-  $effect(() => {
+  useVisibleTask$(({ cleanup }) => {
     function handleTouchStart(e: TouchEvent) {
-      touchStartX = e.touches[0].clientX;
+      touchStartX.value = e.touches[0].clientX;
     }
     
     function handleTouchMove(e: TouchEvent) {
-      currentX = e.touches[0].clientX;
-      const deltaX = touchStartX - currentX;
+      currentX.value = e.touches[0].clientX;
+      const deltaX = touchStartX.value - currentX.value;
       scrollStore.updateScroll(deltaX);
     }
     
-    // Add event listeners with proper cleanup
+    window.addEventListener('touchstart', handleTouchStart);
+    window.addEventListener('touchmove', handleTouchMove);
+    
+    cleanup(() => {
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove);
+    });
   });
 }
 ```
@@ -353,23 +422,36 @@ export const fontConfig = {
 - **Focus Indicators**: Visible focus states
 
 ### Implementation
-```svelte
-<div 
-  role="region" 
-  aria-label="Career Timeline"
-  aria-live="polite"
->
-  {#each events as event}
-    <button
-      role="button"
-      aria-label={`${event.title} - ${formatDate(event.date)}`}
-      aria-expanded={modalOpen && activeEvent === event.id}
-      tabindex="0"
+```tsx
+import { component$ } from '@builder.io/qwik';
+
+export const Timeline = component$(() => {
+  const { store } = useTimelineStore();
+  
+  return (
+    <div 
+      role="region" 
+      aria-label="Career Timeline"
+      aria-live="polite"
     >
-      <!-- Timeline node content -->
-    </button>
-  {/each}
-</div>
+      {store.events.map((event) => (
+        <button
+          key={event.id}
+          role="button"
+          aria-label={`${event.title} - ${formatDate(event.date)}`}
+          aria-expanded={store.modalOpen && store.activeEvent === event.id}
+          tabindex="0"
+          onClick$={() => {
+            store.activeEvent = event.id;
+            store.modalOpen = true;
+          }}
+        >
+          {/* Timeline node content */}
+        </button>
+      ))}
+    </div>
+  );
+});
 ```
 
 ## Testing Strategy
@@ -403,28 +485,43 @@ test('timeline scrolls horizontally on vertical wheel', async ({ page }) => {
 
 ## Deployment Configuration
 
-### Vercel Deployment
+### Cloudflare Pages Deployment
 ```json
+// wrangler.toml
+name = "dongwontuna-portfolio"
+compatibility_date = "2024-01-01"
+
+[site]
+bucket = "./dist"
+
+[build]
+command = "npm run build.server"
+
+[[build.upload]]
+format = "service-worker"
+
+// _routes.json (auto-generated)
 {
-  "buildCommand": "npm run build",
-  "outputDirectory": ".svelte-kit/output",
-  "framework": "sveltekit",
-  "regions": ["hnd1", "sfo1"],
-  "functions": {
-    "routes/*": {
-      "memory": 512
-    }
-  }
+  "include": ["/*"],
+  "exclude": [
+    "/_headers",
+    "/_redirects",
+    "/build/*",
+    "/favicon.ico",
+    "/manifest.json"
+  ],
+  "version": 1
 }
 ```
 
 ## Implementation Timeline
 
 ### Phase 1: Foundation (Week 1)
-- [ ] Project setup with SvelteKit 5
-- [ ] Basic component structure
+- [ ] Project setup with Qwik + Qwik City
+- [ ] SSG configuration with static adapter
+- [ ] Basic component structure (.tsx)
 - [ ] Static timeline data
-- [ ] Responsive layout
+- [ ] Responsive layout with Tailwind CSS
 
 ### Phase 2: Interactions (Week 2)
 - [ ] Scroll hijacking implementation
@@ -446,11 +543,12 @@ test('timeline scrolls horizontally on vertical wheel', async ({ page }) => {
 
 ## Technical Decisions
 
-### Why SvelteKit 5 with Runes?
-- Superior performance with compiled output
-- Built-in SSG capabilities
-- Simpler state management with Runes
-- Excellent developer experience
+### Why Qwik + Qwik City?
+- Revolutionary resumability (no hydration needed)
+- Automatic code splitting (~1KB initial JS)
+- Built-in SSG capabilities with static adapter
+- Fine-grained lazy loading
+- Superior performance for Core Web Vitals
 
 ### Why GSAP over Framer Motion?
 - More powerful scroll-based animations

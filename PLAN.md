@@ -1,33 +1,45 @@
 # Portfolio Website Implementation Plan
 
+> **⚠️ DEPRECATED**: This plan was created for the original Svelte 5 implementation. 
+> 
+> **For the current Qwik implementation, please refer to:**
+> - **[PLAN-MIGRATION.md](./PLAN-MIGRATION.md)** - Comprehensive Svelte to Qwik migration guide
+> - **[IMPLEMENTATION_PLAN.md](./IMPLEMENTATION_PLAN.md)** - Updated implementation plan with Qwik patterns
+> 
+> The content below is preserved for historical reference but should not be used for the current Qwik-based project.
+
 ## Development Environment Setup
 
-- [ ] Initialize Svelte 5 project with Vite
-  - Tool: npm create vite@latest
+- [ ] Initialize Qwik project with SSG
+  - Tool: npm create qwik@latest
   - Implementation:
-    1. Run `npm create vite@latest mainSite -- --template svelte`
-    2. Ensure Svelte 5 is installed (check package.json for "svelte": "^5.x.x")
-    3. Configure vite.config.js for optimal build settings
+    1. Run `npm create qwik@latest`
+    2. Select "Qwik City App" and "Static site (SSG)"
+    3. Configure vite.config.ts for optimal build settings
+    4. Run `npm run qwik add static` for SSG adapter
   - Requirements:
-    - Svelte 5 with Runes support
+    - Qwik + Qwik City framework
     - TypeScript configuration
-    - CSS modules support
+    - SSG adapter for static site generation
   - Test plan:
-    - [ ] Verify $state() rune works in a test component
-    - [ ] Check hot module replacement works
+    - [ ] Verify useSignal() works in a test component
+    - [ ] Check HMR works with component$
+    - [ ] Confirm SSG build generates static HTML
 
-- [ ] Install and configure Motion animation library
-  - Tool: npm/Motion library
+- [ ] Install and configure GSAP animation library
+  - Tool: npm/GSAP with ScrollTrigger
   - Implementation:
-    1. Run `npm install motion`
-    2. Create motion.config.js for global settings
-    3. Test basic animation import
+    1. Run `npm install gsap`
+    2. Register ScrollTrigger plugin in useVisibleTask$
+    3. Test basic animation with Qwik's lifecycle
   - Requirements:
-    - Motion library for scroll animations
-    - Tree-shaking enabled for bundle optimization
+    - GSAP for timeline animations
+    - ScrollTrigger for scroll-based animations
+    - Client-side only execution (useVisibleTask$)
   - Test plan:
-    - [ ] Import { animate, scroll } works without errors
-    - [ ] Basic animation executes correctly
+    - [ ] GSAP imports work in components
+    - [ ] Animations run only on client side
+    - [ ] ScrollTrigger syncs with scroll
 
 - [ ] Set up CSS architecture and design system
   - Tool: CSS Custom Properties + PostCSS
@@ -49,54 +61,79 @@
 
 ### Implement scroll state management
 - [ ] Create scroll state store
-  - Tool: Svelte 5 Runes in stores/scroll.svelte.js
+  - Tool: Qwik Context API with useStore
   - Implementation:
-    ```javascript
-    // stores/scroll.svelte.js
-    export const scrollState = {
-      progress: $state(0),
-      velocity: $state(0), 
-      direction: $state(0),
-      isScrolling: $state(false)
-    };
+    ```typescript
+    // stores/scroll.ts
+    import { createContextId } from '@builder.io/qwik';
+    
+    export interface ScrollStore {
+      progress: number;
+      velocity: number;
+      direction: number;
+      isScrolling: boolean;
+    }
+    
+    export const ScrollContext = createContextId<ScrollStore>('scroll');
+    
+    // In component:
+    const scrollStore = useStore<ScrollStore>({
+      progress: 0,
+      velocity: 0,
+      direction: 0,
+      isScrolling: false
+    });
     ```
-    1. Create reactive state with $state runes
-    2. Export state object for component access
-    3. Add scroll event listener in root component
+    1. Create context with createContextId
+    2. Use useStore for reactive state
+    3. Add scroll handler in useVisibleTask$
   - Requirements:
     - Track scroll progress (0-1)
     - Detect scroll velocity
     - Determine scroll direction
   - Test plan:
-    - [ ] State updates on scroll
-    - [ ] Values are reactive in components
+    - [ ] Store updates trigger re-renders
+    - [ ] Context accessible in child components
 
 ### Implement timeline state management
 - [ ] Create timeline state store
-  - Tool: Svelte 5 Runes + $derived
+  - Tool: Qwik useStore + useComputed$
   - Implementation:
-    ```javascript
-    // stores/timeline.svelte.js
-    import { scrollState } from './scroll.svelte.js';
+    ```typescript
+    // stores/timeline.ts
+    import { createContextId, useComputed$ } from '@builder.io/qwik';
     
-    export const timelineState = {
-      currentYear: $state(2022),
-      selectedNode: $state(null),
-      hoveredNode: $state(null),
-      horizontalOffset: $derived(() => scrollState.progress * TIMELINE_WIDTH),
-      visibleNodes: $state([])
-    };
+    export interface TimelineStore {
+      currentYear: number;
+      selectedNode: string | null;
+      hoveredNode: string | null;
+      visibleNodes: string[];
+    }
+    
+    export const TimelineContext = createContextId<TimelineStore>('timeline');
+    
+    // In component:
+    const timelineStore = useStore<TimelineStore>({
+      currentYear: 2022,
+      selectedNode: null,
+      hoveredNode: null,
+      visibleNodes: []
+    });
+    
+    const horizontalOffset = useComputed$(() => 
+      scrollStore.progress * TIMELINE_WIDTH
+    );
     ```
-    1. Create reactive timeline state
-    2. Derive horizontal offset from scroll progress
-    3. Track user interactions
+    1. Create timeline context and store
+    2. Use useComputed$ for derived values
+    3. Track user interactions with onClick$
   - Requirements:
     - Synchronize with scroll state
     - Track node visibility
     - Handle user interactions
   - Test plan:
-    - [ ] Horizontal offset updates with scroll
-    - [ ] Node selection works correctly
+    - [ ] Computed values update reactively
+    - [ ] Event handlers work with $
 
 ## Component Implementation
 
@@ -119,35 +156,41 @@
     - [ ] Scroll indicator visible and animated
 
 - [ ] Implement entrance animations
-  - Tool: Motion animate() + onMount
+  - Tool: GSAP + useVisibleTask$
   - Implementation:
-    ```javascript
-    import { onMount } from 'svelte';
-    import { animate } from 'motion';
+    ```typescript
+    import { useVisibleTask$ } from '@builder.io/qwik';
+    import gsap from 'gsap';
     
-    onMount(() => {
-      animate('.title', { opacity: [0, 1], y: [20, 0] }, { duration: 0.8 });
-      animate('.social-links', { opacity: [0, 1] }, { delay: 0.4 });
+    useVisibleTask$(() => {
+      gsap.fromTo('.title', 
+        { opacity: 0, y: 20 }, 
+        { opacity: 1, y: 0, duration: 0.8 }
+      );
+      gsap.fromTo('.social-links', 
+        { opacity: 0 }, 
+        { opacity: 1, delay: 0.4 }
+      );
     });
     ```
-    1. Use onMount for initialization
+    1. Use useVisibleTask$ for client-side animations
     2. Stagger animations for visual hierarchy
-    3. Add easing functions
+    3. Add GSAP easing functions
   - Requirements:
     - Smooth fade-in effects
     - Proper timing sequence
     - No layout shift
   - Test plan:
-    - [ ] Animations run once on mount
-    - [ ] Timing feels natural
+    - [ ] Animations run once when visible
+    - [ ] No SSR errors
 
 ### Timeline Container Component
 - [ ] Create horizontal scrolling container
-  - Tool: Svelte 5 + Motion scroll()
+  - Tool: Qwik component$ + GSAP ScrollTrigger
   - Implementation:
-    1. Create src/lib/components/Timeline/Timeline.svelte
+    1. Create src/components/timeline/Timeline.tsx
     2. Set up fixed 100vh container
-    3. Create horizontal timeline element
+    3. Create horizontal timeline element with ref
     4. Implement scroll-to-horizontal transform
   - Requirements:
     - Vertical scroll transforms to horizontal movement
@@ -156,68 +199,85 @@
   - Test plan:
     - [ ] Vertical scroll moves timeline horizontally
     - [ ] Performance maintains 60fps
+    - [ ] No hydration issues
 
 - [ ] Implement scroll-driven animation
-  - Tool: Motion scroll() + animate()
+  - Tool: GSAP ScrollTrigger
   - Implementation:
-    ```javascript
-    import { scroll, animate } from 'motion';
+    ```typescript
+    import { useVisibleTask$, useSignal } from '@builder.io/qwik';
+    import gsap from 'gsap';
+    import { ScrollTrigger } from 'gsap/ScrollTrigger';
     
-    onMount(() => {
-      const timeline = document.querySelector('.timeline-track');
-      const animation = animate(timeline, 
-        { x: [0, -totalWidth] },
-        { ease: "linear" }
-      );
+    const timelineRef = useSignal<HTMLElement>();
+    
+    useVisibleTask$(() => {
+      gsap.registerPlugin(ScrollTrigger);
       
-      scroll(animation, {
-        target: window,
-        offset: ["start start", "end end"]
-      });
+      if (timelineRef.value) {
+        gsap.to(timelineRef.value, {
+          x: -totalWidth,
+          ease: "none",
+          scrollTrigger: {
+            trigger: ".timeline-container",
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+            pin: true
+          }
+        });
+      }
     });
     ```
-    1. Calculate total timeline width
-    2. Create linear animation
-    3. Link to scroll progress
+    1. Register ScrollTrigger plugin
+    2. Create scrubbed animation
+    3. Pin container during scroll
   - Requirements:
     - Smooth horizontal movement
     - Correct offset calculations
     - No jank or stutter
   - Test plan:
-    - [ ] Timeline moves proportionally to scroll
-    - [ ] Start and end positions correct
+    - [ ] Timeline moves with scroll
+    - [ ] Pinning works correctly
 
 ### Timeline Node Component
 - [ ] Create individual timeline node
-  - Tool: Svelte 5 components
+  - Tool: Qwik component$ with TypeScript
   - Implementation:
-    1. Create src/lib/components/Timeline/TimelineNode.svelte
-    2. Accept props for node data
-    3. Position based on date
-    4. Add hover/click handlers
+    1. Create src/components/timeline/TimelineNode.tsx
+    2. Define props interface for node data
+    3. Position based on date calculation
+    4. Add hover/click handlers with $
   - Requirements:
     - Display date, title, type icon
     - Hover state with tooltip
-    - Click to open modal
+    - Click to open modal (onClick$)
   - Test plan:
     - [ ] Nodes render at correct positions
     - [ ] Hover effects work
-    - [ ] Click events fire correctly
+    - [ ] Click events fire with $
 
 - [ ] Implement node animations
-  - Tool: Motion + Intersection Observer
+  - Tool: GSAP + Intersection Observer in useVisibleTask$
   - Implementation:
-    ```javascript
-    import { animate } from 'motion';
+    ```typescript
+    import { useVisibleTask$, useSignal } from '@builder.io/qwik';
+    import gsap from 'gsap';
     
-    onMount(() => {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            animate(entry.target, { opacity: [0, 1], scale: [0.8, 1] });
-          }
+    const nodeRef = useSignal<HTMLElement>();
+    
+    useVisibleTask$(() => {
+      if (nodeRef.value) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              gsap.fromTo(entry.target, 
+                { opacity: 0, scale: 0.8 },
+                { opacity: 1, scale: 1, duration: 0.5 }
+              );
+            }
+          });
         });
-      });
       
       observer.observe(node);
     });

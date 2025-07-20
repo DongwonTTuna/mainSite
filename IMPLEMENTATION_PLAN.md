@@ -1,18 +1,33 @@
 # Interactive Portfolio - Implementation Plan
 
+> **Note**: This implementation plan has been updated to reflect the migration from Svelte 5 to Qwik with SSG. All code examples and configurations now use Qwik patterns and best practices.
+
 ## Project Setup & Configuration
 
 ### Phase 1: Environment Setup (Day 1)
 
-- [ ] Initialize SvelteKit 5 project with TypeScript
-  - Command: `npm create svelte@latest mainSite`
-  - Options: SvelteKit, TypeScript, ESLint, Prettier, Vitest
+- [ ] Initialize Qwik project with TypeScript
+  - Command: `npm create qwik@latest`
+  - Options: Qwik City App, Static site (SSG)
   
 - [ ] Install core dependencies
   ```bash
+  # Styling
   npm install -D tailwindcss postcss autoprefixer @tailwindcss/typography
-  npm install gsap @gsap/scrolltrigger
-  npm install lucide-svelte
+  
+  # Animation
+  npm install gsap
+  
+  # i18n
+  npm install qwik-speak
+  
+  # Icons (if needed)
+  npm install -D unplugin-icons
+  ```
+  
+- [ ] Configure SSG adapter
+  ```bash
+  npm run qwik add static
   ```
 
 - [ ] Configure Tailwind CSS
@@ -36,12 +51,13 @@
   - Global styles
 
 - [ ] Implement FirstView section
-  ```svelte
-  <!-- src/lib/components/sections/FirstView.svelte -->
-  - Hero text with staggered animations
+  ```tsx
+  // src/components/sections/FirstView.tsx
+  - Hero text with staggered animations (useVisibleTask$)
   - Social links component
   - Scroll indicator with CSS animation
   - Responsive design
+  - Multi-language support with inlineTranslate
   ```
 
 - [ ] Setup animation utilities
@@ -53,9 +69,10 @@
 - [ ] Create scroll management system
   ```typescript
   // src/lib/stores/scroll.ts
-  - Scroll hijacking logic
-  - Progress calculation
-  - Velocity and momentum
+  - Scroll hijacking logic with useVisibleTask$
+  - Progress calculation with useSignal
+  - Velocity and momentum tracking
+  - Context-based state sharing
   ```
 
 - [ ] Build Timeline components
@@ -80,12 +97,13 @@
 
 #### Day 5: Modal System
 - [ ] Create Modal components
-  ```svelte
-  <!-- src/lib/components/ui/Modal.svelte -->
+  ```tsx
+  // src/components/ui/Modal.tsx
   - Backdrop with blur
   - Content container
-  - Smooth transitions
-  - Close on escape/click outside
+  - Smooth transitions (CSS)
+  - Close on escape/click outside (onClick$)
+  - Portal rendering for proper z-index
   ```
 
 - [ ] Implement modal content
@@ -127,10 +145,11 @@
 #### Day 8: Testing Implementation
 - [ ] Unit tests setup
   ```typescript
-  // Component tests with Vitest
-  - Props validation
-  - Event handling
-  - Store updates
+  // Component tests with Vitest + @builder.io/qwik/testing
+  - Component rendering with createDOM
+  - Signal updates validation
+  - Event handling with $
+  - Store context testing
   ```
 
 - [ ] Integration tests
@@ -175,11 +194,12 @@
   - Sitemap
 
 #### Day 11: Deployment
-- [ ] Vercel configuration
-  - Build settings
+- [ ] Cloudflare Pages configuration
+  - Build settings for SSG
   - Environment variables
   - Domain setup
-  - Analytics
+  - _routes.json configuration
+  - Analytics integration
 
 - [ ] Launch checklist
   - Final testing
@@ -191,103 +211,151 @@
 
 ### 1. Scroll Hijacking Hook
 ```typescript
-// src/lib/hooks/useScrollHijack.ts
-import { scrollStore } from '$lib/stores/scroll';
+// src/lib/hooks/useScrollHijack.tsx
+import { useVisibleTask$, useSignal, $ } from '@builder.io/qwik';
+import type { ScrollStore } from '~/lib/stores/scroll';
 
-export function useScrollHijack() {
-  let isScrolling = false;
-  let scrollTimeout: NodeJS.Timeout;
+export function useScrollHijack(scrollStore: ScrollStore) {
+  const isScrolling = useSignal(false);
+  const scrollTimeout = useSignal<number | null>(null);
   
-  const handleWheel = (e: WheelEvent) => {
+  const handleWheel = $((e: WheelEvent) => {
     e.preventDefault();
     
-    if (!isScrolling) {
-      isScrolling = true;
-      scrollStore.setScrolling(true);
+    if (!isScrolling.value) {
+      isScrolling.value = true;
+      scrollStore.isScrolling = true;
     }
     
-    clearTimeout(scrollTimeout);
-    scrollTimeout = setTimeout(() => {
-      isScrolling = false;
-      scrollStore.setScrolling(false);
+    if (scrollTimeout.value) {
+      clearTimeout(scrollTimeout.value);
+    }
+    
+    scrollTimeout.value = window.setTimeout(() => {
+      isScrolling.value = false;
+      scrollStore.isScrolling = false;
     }, 150);
     
-    scrollStore.updateProgress(e.deltaY);
-  };
+    scrollStore.scrollProgress += e.deltaY / 10000;
+    scrollStore.scrollProgress = Math.max(0, Math.min(1, scrollStore.scrollProgress));
+  });
   
-  // Mount/unmount logic
-  return { handleWheel };
+  useVisibleTask$(({ cleanup }) => {
+    window.addEventListener('wheel', handleWheel, { passive: false });
+    
+    cleanup(() => {
+      window.removeEventListener('wheel', handleWheel);
+      if (scrollTimeout.value) {
+        clearTimeout(scrollTimeout.value);
+      }
+    });
+  });
 }
 ```
 
 ### 2. Timeline Node Component
-```svelte
-<!-- src/lib/components/timeline/TimelineNode.svelte -->
-<script lang="ts">
-  import { onMount } from 'svelte';
-  import { gsap } from 'gsap';
-  import type { TimelineEvent } from '$lib/types';
-  
-  export let event: TimelineEvent;
-  export let isActive: boolean;
-  
-  let nodeElement: HTMLElement;
-  
-  onMount(() => {
-    gsap.from(nodeElement, {
-      scale: 0,
-      duration: 0.5,
-      ease: 'back.out(1.7)',
-      scrollTrigger: {
-        trigger: nodeElement,
-        start: 'center center',
-        toggleActions: 'play none none reverse'
-      }
-    });
-  });
-</script>
+```tsx
+// src/components/timeline/TimelineNode.tsx
+import { component$, useSignal, useVisibleTask$ } from '@builder.io/qwik';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import type { TimelineEvent } from '~/lib/types';
 
-<button
-  bind:this={nodeElement}
-  class="timeline-node {event.position}"
-  class:active={isActive}
-  aria-label={event.title}
->
-  <div class="node-content">
-    <span class="date">{formatDate(event.date)}</span>
-    <h3>{event.title}</h3>
-  </div>
-</button>
+interface TimelineNodeProps {
+  event: TimelineEvent;
+  isActive: boolean;
+  onNodeClick$: (id: string) => void;
+}
+
+export const TimelineNode = component$<TimelineNodeProps>(({ 
+  event, 
+  isActive,
+  onNodeClick$ 
+}) => {
+  const nodeRef = useSignal<HTMLElement>();
+  
+  useVisibleTask$(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    
+    if (nodeRef.value) {
+      gsap.from(nodeRef.value, {
+        scale: 0,
+        duration: 0.5,
+        ease: 'back.out(1.7)',
+        scrollTrigger: {
+          trigger: nodeRef.value,
+          start: 'center center',
+          toggleActions: 'play none none reverse'
+        }
+      });
+    }
+    
+    return () => {
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    };
+  });
+  
+  return (
+    <button
+      ref={nodeRef}
+      class={`timeline-node ${event.position} ${isActive ? 'active' : ''}`}
+      aria-label={event.title}
+      onClick$={() => onNodeClick$(event.id)}
+    >
+      <div class="node-content">
+        <span class="date">{formatDate(event.date)}</span>
+        <h3>{event.title}</h3>
+      </div>
+    </button>
+  );
+});
 ```
 
 ### 3. Mobile Touch Handler
 ```typescript
-// src/lib/utils/touch.ts
-export function handleTimelineTouch(container: HTMLElement) {
-  let startX = 0;
-  let scrollLeft = 0;
+// src/lib/hooks/useTouchScroll.tsx
+import { useVisibleTask$, useSignal, $ } from '@builder.io/qwik';
+import type { ScrollStore } from '~/lib/stores/scroll';
+
+export function useTouchScroll(scrollStore: ScrollStore) {
+  const containerRef = useSignal<HTMLElement>();
+  const startX = useSignal(0);
+  const scrollLeft = useSignal(0);
   
-  const handleStart = (e: TouchEvent) => {
-    startX = e.touches[0].pageX - container.offsetLeft;
-    scrollLeft = container.scrollLeft;
-  };
+  const handleStart = $((e: TouchEvent) => {
+    if (!containerRef.value) return;
+    startX.value = e.touches[0].pageX - containerRef.value.offsetLeft;
+    scrollLeft.value = containerRef.value.scrollLeft;
+  });
   
-  const handleMove = (e: TouchEvent) => {
-    if (!startX) return;
+  const handleMove = $((e: TouchEvent) => {
+    if (!startX.value || !containerRef.value) return;
     e.preventDefault();
     
-    const x = e.touches[0].pageX - container.offsetLeft;
-    const walk = (x - startX) * 2;
-    container.scrollLeft = scrollLeft - walk;
-  };
+    const x = e.touches[0].pageX - containerRef.value.offsetLeft;
+    const walk = (x - startX.value) * 2;
+    containerRef.value.scrollLeft = scrollLeft.value - walk;
+    
+    // Update scroll store
+    const maxScroll = containerRef.value.scrollWidth - containerRef.value.clientWidth;
+    scrollStore.scrollProgress = containerRef.value.scrollLeft / maxScroll;
+  });
   
-  container.addEventListener('touchstart', handleStart);
-  container.addEventListener('touchmove', handleMove);
+  useVisibleTask$(({ cleanup }) => {
+    if (containerRef.value) {
+      containerRef.value.addEventListener('touchstart', handleStart);
+      containerRef.value.addEventListener('touchmove', handleMove);
+      
+      cleanup(() => {
+        if (containerRef.value) {
+          containerRef.value.removeEventListener('touchstart', handleStart);
+          containerRef.value.removeEventListener('touchmove', handleMove);
+        }
+      });
+    }
+  });
   
-  return () => {
-    container.removeEventListener('touchstart', handleStart);
-    container.removeEventListener('touchmove', handleMove);
-  };
+  return containerRef;
 }
 ```
 
@@ -349,7 +417,9 @@ perf: optimize image loading with lazy load
 ## Resources & References
 
 ### Documentation
-- [SvelteKit 5 Docs](https://kit.svelte.dev/)
+- [Qwik Documentation](https://qwik.builder.io/)
+- [Qwik City SSG Guide](https://qwik.builder.io/docs/guides/static-site-generation/)
+- [Qwik Speak i18n](https://github.com/robisim74/qwik-speak)
 - [GSAP ScrollTrigger](https://greensock.com/scrolltrigger/)
 - [Tailwind CSS](https://tailwindcss.com/)
 
