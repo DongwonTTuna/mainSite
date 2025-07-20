@@ -1,8 +1,6 @@
 <script lang="ts">
   import { m } from "$lib/i18n"
   import { onMount } from "svelte"
-  import TerminalAnimation from "./terminal/TerminalAnimation.svelte"
-  import { CRTPixelizer } from "$lib/components/crt-pixelizer"
 
   let heroContent: HTMLDivElement
   let mouseX = 0
@@ -34,17 +32,7 @@
   })
 </script>
 
-<CRTPixelizer 
-  pixelSize={3}
-  gridOpacity={0.12}
-  scanlineIntensity={0.3}
-  colorBleedAmount={0.8}
-  enableCurvature={true}
-  enableAnimation={true}
-  flickerIntensity={0.015}
-  scanlineSpeed={10}
->
-  <section class="hero-section" role="main" on:mousemove={handleMouseMove}>
+<section class="hero-section" role="main" on:mousemove={handleMouseMove}>
     <div
       class="hero-content"
       bind:this={heroContent}
@@ -72,11 +60,7 @@
         </a>
       </div>
     </div>
-    <div class="hero-visual">
-      <TerminalAnimation />
-    </div>
   </section>
-</CRTPixelizer>
 
 <style>
   .hero-section {
@@ -95,7 +79,6 @@
     max-width: var(--max-width-content);
     animation: fadeInUp 1s ease-out;
     position: relative;
-    left: 300px;
   }
 
   @media (max-width: 768px) {
@@ -112,10 +95,6 @@
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
       box-shadow: 0 8px 32px rgba(245, 158, 11, 0.1);
-    }
-
-    .hero-visual {
-      opacity: 0.6;
     }
   }
 
@@ -178,22 +157,6 @@
     border-color: var(--color-accent);
     box-shadow: var(--shadow-lg), var(--shadow-glow);
     color: var(--color-text-on-accent);
-  }
-
-  .hero-visual {
-    position: absolute;
-    top: 50%;
-    left: 40%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: visible;
-    z-index: 0;
-    pointer-events: none;
-    opacity: 0.8;
   }
 
   @keyframes fadeInUp {
