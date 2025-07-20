@@ -102,6 +102,13 @@ export const FirstView = component$(() => {
         font-size: 1.5rem;
       }
     }
+    
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+    }
 
     @media (min-width: 768px) {
       .hero-name {
@@ -199,7 +206,7 @@ export const FirstView = component$(() => {
       </div>
 
       {/* Scroll indicator */}
-      <div ref={scrollRef}>
+      <div ref={scrollRef} class="scroll-indicator">
         <ScrollIndicator />
       </div>
     </section>
