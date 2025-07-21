@@ -17,6 +17,7 @@ const QWIK_SCRIPT_HASHES = [
   'sha256-aQN/mYK3Xk6MmCp/vuZHTafdvG3CjhZQ0Tn9uyLLB+I=',
   'sha256-EwODyXb+JyP/QFEaG9yjy11qmIlA9bcynhiLgeq19to=',
   'sha256-Ixeqw7WXt51vvnXJRZBZFStZ780P8hT5LzcDDydDTyk=',
+  'sha256-5uGWjBSlDPCFj5p40kCdpy/0zkFsgF0OSLh2ePEy2yw=',
 ];
 
 export function getCSPDirectives(isDev = false): Record<string, string> {
@@ -59,8 +60,11 @@ export function getCSPString(isDev = false): string {
 }
 
 export function getCSPMetaString(): string {
+  // Detect development mode
+  const isDev = import.meta.env.DEV || import.meta.env.MODE === 'development';
+  
   // For meta tags, exclude frame-ancestors (doesn't work in meta)
-  const directives = getCSPDirectives(false);
+  const directives = getCSPDirectives(isDev);
   delete directives['frame-ancestors'];
   
   return Object.entries(directives)

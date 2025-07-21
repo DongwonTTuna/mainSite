@@ -112,7 +112,7 @@ export const Timeline = component$(() => {
   const state = useStore({
     scrollProgress: 0,
     currentYear: 2022,
-    currentMonth: 1,
+    currentMonth: 4,
     isMobile: false,
   });
 
@@ -155,15 +155,21 @@ export const Timeline = component$(() => {
           onUpdate: (self) => {
             const progress = self.progress;
             const currentX = progress * (totalWidth - window.innerWidth);
-            const totalProgress = currentX / pixelsPerMonth;
-            const year = Math.floor(startYear + totalProgress / 12);
-            const month = Math.floor(totalProgress % 12) + 1;
             
-            if (state.currentYear !== year && year >= startYear && year <= endYear) {
-              state.currentYear = year;
-            }
-            if (state.currentMonth !== month) {
-              state.currentMonth = month;
+            // Calculate current position in months
+            const monthsFromStart = currentX / pixelsPerMonth;
+            const totalMonths = Math.floor(monthsFromStart);
+            const year = startYear + Math.floor(totalMonths / 12);
+            const month = (totalMonths % 12) + 1;
+            
+            // Update state only if values changed and are valid
+            if (year >= startYear && year <= endYear) {
+              if (state.currentYear !== year) {
+                state.currentYear = year;
+              }
+              if (state.currentMonth !== month && month >= 1 && month <= 12) {
+                state.currentMonth = month;
+              }
             }
           }
         }
@@ -179,15 +185,21 @@ export const Timeline = component$(() => {
       
       const handleScroll = () => {
         const scrollLeft = container.scrollLeft;
-        const totalProgress = scrollLeft / pixelsPerMonth;
-        const year = Math.floor(startYear + totalProgress / 12);
-        const month = Math.floor(totalProgress % 12) + 1;
         
-        if (state.currentYear !== year && year >= startYear && year <= endYear) {
-          state.currentYear = year;
-        }
-        if (state.currentMonth !== month) {
-          state.currentMonth = month;
+        // Calculate current position in months
+        const monthsFromStart = scrollLeft / pixelsPerMonth;
+        const totalMonths = Math.floor(monthsFromStart);
+        const year = startYear + Math.floor(totalMonths / 12);
+        const month = (totalMonths % 12) + 1;
+        
+        // Update state only if values changed and are valid
+        if (year >= startYear && year <= endYear) {
+          if (state.currentYear !== year) {
+            state.currentYear = year;
+          }
+          if (state.currentMonth !== month && month >= 1 && month <= 12) {
+            state.currentMonth = month;
+          }
         }
       };
 

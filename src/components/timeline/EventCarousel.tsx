@@ -54,17 +54,24 @@ export const EventCarousel = component$<EventCarouselProps>(({ events, currentMo
       cursor: pointer;
       position: relative;
       overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     }
 
     .carousel-card.highlight {
       border-color: var(--color-blue-500);
-      transform: translateY(-4px);
-      box-shadow: 0 10px 25px rgba(59, 130, 246, 0.15);
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 12px 30px rgba(59, 130, 246, 0.25);
+      background: linear-gradient(to bottom, rgba(59, 130, 246, 0.05), white);
     }
 
     .carousel-card:hover {
       transform: translateY(-2px);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    }
+
+    .carousel-card.highlight:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 14px 35px rgba(59, 130, 246, 0.3);
     }
 
     .card-header {
@@ -88,6 +95,27 @@ export const EventCarousel = component$<EventCarouselProps>(({ events, currentMo
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.025em;
+    }
+    
+    .card-category.education {
+      background-color: var(--color-blue-500);
+    }
+    
+    .card-category.work {
+      background-color: var(--color-green-500);
+    }
+    
+    .card-category.project {
+      background-color: var(--color-purple-500);
+    }
+    
+    .card-category.certification {
+      background-color: var(--color-amber-500);
+    }
+    
+    /* Default category color for unknown categories */
+    .card-category {
+      background-color: var(--color-gray-500);
     }
 
     .card-title {
@@ -167,26 +195,23 @@ export const EventCarousel = component$<EventCarouselProps>(({ events, currentMo
   `);
 
   const containerRef = useSignal<HTMLElement>();
-  
-  // Category colors
-  const categoryColors = {
-    education: 'var(--color-blue-500)',
-    work: 'var(--color-green-500)',
-    project: 'var(--color-purple-500)',
-    certification: 'var(--color-amber-500)',
-  };
 
-  // Filter events for current year
-  const yearEvents = events.filter(event => event.year === currentYear);
+  // Filter events for current year - ensure events is defined
+  const yearEvents = events?.filter(event => event.year === currentYear) || [];
 
-  useVisibleTask$(() => {
+  useVisibleTask$(({ track }) => {
+    track(() => currentMonth);
+    track(() => currentYear);
+    
     if (!containerRef.value) return;
 
-    // Auto-scroll to highlighted card
-    const highlightedCard = containerRef.value.querySelector('.carousel-card.highlight');
-    if (highlightedCard) {
-      highlightedCard.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-    }
+    // Auto-scroll to highlighted card when month or year changes
+    setTimeout(() => {
+      const highlightedCard = containerRef.value.querySelector('.carousel-card.highlight');
+      if (highlightedCard) {
+        highlightedCard.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+    }, 100);
   });
 
   return (
@@ -195,8 +220,8 @@ export const EventCarousel = component$<EventCarouselProps>(({ events, currentMo
       {yearEvents.length > 0 ? (
         <div ref={containerRef} class="carousel-container">
           {yearEvents.map((event) => {
-            const isHighlight = event.month === currentMonth;
-            const categoryColor = categoryColors[event.category] || 'var(--color-gray-500)';
+            // Highlight card when year and month match
+            const isHighlight = event.year === currentYear && event.month === currentMonth;
             
             return (
               <div
@@ -206,8 +231,7 @@ export const EventCarousel = component$<EventCarouselProps>(({ events, currentMo
                 <div class="card-header">
                   <div class="card-date">{event.month}월</div>
                   <div
-                    class="card-category"
-                    style={`background-color: ${categoryColor};`}
+                    class={`card-category ${event.category}`}
                   >
                     {event.category}
                   </div>
