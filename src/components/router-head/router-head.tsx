@@ -16,6 +16,28 @@ export const RouterHead = component$(() => {
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="icon" type="image/png" href="/favicon.png" />
 
+      {/* Content Security Policy */}
+      <meta
+        http-equiv="Content-Security-Policy"
+        content="
+          default-src 'self';
+          script-src 'self' 'wasm-unsafe-eval';
+          style-src 'self' 'unsafe-inline';
+          img-src 'self' data: https:;
+          font-src 'self' data:;
+          connect-src 'self' https://api.github.com https://api.linkedin.com;
+          media-src 'self';
+          object-src 'none';
+          frame-src 'none';
+          frame-ancestors 'none';
+          base-uri 'self';
+          form-action 'self';
+          worker-src 'self';
+          manifest-src 'self';
+          upgrade-insecure-requests;
+        "
+      />
+
       {head.meta.map((m) => (
         <meta key={m.key} {...m} />
       ))}

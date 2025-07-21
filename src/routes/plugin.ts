@@ -5,8 +5,9 @@ import { config } from '~/lib/i18n/speak-config';
 /**
  * This middleware runs for every request.
  * It sets up the locale based on the URL or browser preferences.
+ * Also sets security headers including CSP for non-SSG environments.
  */
-export const onRequest: RequestHandler = async ({ locale, url, redirect, request, params }) => {
+export const onRequest: RequestHandler = async ({ locale, url, redirect, request, params, headers }) => {
   const pathname = url.pathname;
   const supportedLocales = config.supportedLocales.map(l => l.lang);
   
@@ -41,6 +42,35 @@ export const onRequest: RequestHandler = async ({ locale, url, redirect, request
   
   // Set Qwik locale
   locale(lang || config.defaultLocale.lang);
+  
+  // Set security headers for non-SSG environments (dev, preview, SSR)
+  // CSP Header (same policy as meta tag)
+  headers.set(
+    'Content-Security-Policy',
+    [
+      "default-src 'self'",
+      "script-src 'self' 'wasm-unsafe-eval'",
+      "style-src 'self' 'unsafe-inline'",
+      "img-src 'self' data: https:",
+      "font-src 'self' data:",
+      "connect-src 'self' https://api.github.com https://api.linkedin.com",
+      "media-src 'self'",
+      "object-src 'none'",
+      "frame-src 'none'",
+      "frame-ancestors 'none'",
+      "base-uri 'self'",
+      "form-action 'self'",
+      "worker-src 'self'",
+      "manifest-src 'self'",
+      "upgrade-insecure-requests"
+    ].join('; ')
+  );
+  
+  // Additional security headers
+  headers.set('X-Frame-Options', 'DENY');
+  headers.set('X-Content-Type-Options', 'nosniff');
+  headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+  headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
 };
 
 /**
