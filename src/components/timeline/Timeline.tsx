@@ -2,6 +2,7 @@ import { component$, useSignal, useVisibleTask$, useStore, useStyles$ } from '@b
 import { timelineData } from '~/data/timeline-data';
 import { TimelineNode } from './TimelineNode';
 import { TimelinePointer } from './TimelinePointer';
+import { EventCarousel } from './EventCarousel';
 
 export const Timeline = component$(() => {
   useStyles$(`
@@ -15,9 +16,10 @@ export const Timeline = component$(() => {
     .timeline-container {
       position: relative;
       width: 100%;
-      height: 100vh;
+      height: 200px;
       display: flex;
       align-items: center;
+      margin-top: 4rem;
     }
 
     .timeline-track {
@@ -110,6 +112,7 @@ export const Timeline = component$(() => {
   const state = useStore({
     scrollProgress: 0,
     currentYear: 2022,
+    currentMonth: 1,
     isMobile: false,
   });
 
@@ -152,15 +155,15 @@ export const Timeline = component$(() => {
           onUpdate: (self) => {
             const progress = self.progress;
             const currentX = progress * (totalWidth - window.innerWidth);
-            const yearProgress = currentX / pixelsPerYear;
-            const year = Math.floor(startYear + yearProgress);
+            const totalProgress = currentX / pixelsPerMonth;
+            const year = Math.floor(startYear + totalProgress / 12);
+            const month = Math.floor(totalProgress % 12) + 1;
             
             if (state.currentYear !== year && year >= startYear && year <= endYear) {
               state.currentYear = year;
-              const yearDisplay = document.querySelector('.timeline-current-year');
-              if (yearDisplay) {
-                yearDisplay.textContent = year.toString();
-              }
+            }
+            if (state.currentMonth !== month) {
+              state.currentMonth = month;
             }
           }
         }
@@ -172,37 +175,26 @@ export const Timeline = component$(() => {
       });
     } else {
       // Mobile: Touch-based horizontal scrolling
-      const track = trackRef.value;
-      let startX = 0;
-      let scrollLeft = 0;
-      let isDown = false;
-
-      const handleTouchStart = (e: TouchEvent) => {
-        isDown = true;
-        startX = e.touches[0].pageX - track.offsetLeft;
-        scrollLeft = track.scrollLeft;
+      const container = containerRef.value;
+      
+      const handleScroll = () => {
+        const scrollLeft = container.scrollLeft;
+        const totalProgress = scrollLeft / pixelsPerMonth;
+        const year = Math.floor(startYear + totalProgress / 12);
+        const month = Math.floor(totalProgress % 12) + 1;
+        
+        if (state.currentYear !== year && year >= startYear && year <= endYear) {
+          state.currentYear = year;
+        }
+        if (state.currentMonth !== month) {
+          state.currentMonth = month;
+        }
       };
 
-      const handleTouchMove = (e: TouchEvent) => {
-        if (!isDown) return;
-        e.preventDefault();
-        const x = e.touches[0].pageX - track.offsetLeft;
-        const walk = (x - startX) * 2;
-        track.scrollLeft = scrollLeft - walk;
-      };
-
-      const handleTouchEnd = () => {
-        isDown = false;
-      };
-
-      track.addEventListener('touchstart', handleTouchStart);
-      track.addEventListener('touchmove', handleTouchMove);
-      track.addEventListener('touchend', handleTouchEnd);
+      container.addEventListener('scroll', handleScroll);
 
       cleanup(() => {
-        track.removeEventListener('touchstart', handleTouchStart);
-        track.removeEventListener('touchmove', handleTouchMove);
-        track.removeEventListener('touchend', handleTouchEnd);
+        container.removeEventListener('scroll', handleScroll);
       });
     }
 
@@ -228,7 +220,7 @@ export const Timeline = component$(() => {
   return (
     <section ref={containerRef} class="timeline-section">
       {/* Fixed center pointer for desktop */}
-      {!state.isMobile && <TimelinePointer />}
+      {!state.isMobile && <TimelinePointer currentYear={state.currentYear} currentMonth={state.currentMonth} />}
 
       {/* Timeline container */}
       <div class="timeline-container">
@@ -285,6 +277,13 @@ export const Timeline = component$(() => {
           ← Swipe to explore →
         </div>
       )}
+
+      {/* Event Carousel */}
+      <EventCarousel 
+        events={timelineData} 
+        currentYear={state.currentYear}
+        currentMonth={state.currentMonth}
+      />
     </section>
   );
 });

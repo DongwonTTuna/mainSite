@@ -1,5 +1,6 @@
 import { component$ } from '@builder.io/qwik';
 import { useDocumentHead, useLocation } from '@builder.io/qwik-city';
+import { getCSPMetaString } from '~/utils/csp-config';
 
 /**
  * The RouterHead component is placed inside of the document `<head>` element.
@@ -19,23 +20,7 @@ export const RouterHead = component$(() => {
       {/* Content Security Policy */}
       <meta
         http-equiv="Content-Security-Policy"
-        content="
-          default-src 'self';
-          script-src 'self' 'wasm-unsafe-eval';
-          style-src 'self' 'unsafe-inline';
-          img-src 'self' data: https:;
-          font-src 'self' data:;
-          connect-src 'self' https://api.github.com https://api.linkedin.com;
-          media-src 'self';
-          object-src 'none';
-          frame-src 'none';
-          frame-ancestors 'none';
-          base-uri 'self';
-          form-action 'self';
-          worker-src 'self';
-          manifest-src 'self';
-          upgrade-insecure-requests;
-        "
+        content={getCSPMetaString()}
       />
 
       {head.meta.map((m) => (

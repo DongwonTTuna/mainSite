@@ -1,6 +1,7 @@
 import type { RequestHandler } from '@builder.io/qwik-city';
 import { setSpeakContext, validateLocale } from 'qwik-speak';
 import { config } from '~/lib/i18n/speak-config';
+import { getCSPString } from '~/utils/csp-config';
 
 /**
  * This middleware runs for every request.
@@ -44,27 +45,8 @@ export const onRequest: RequestHandler = async ({ locale, url, redirect, request
   locale(lang || config.defaultLocale.lang);
   
   // Set security headers for non-SSG environments (dev, preview, SSR)
-  // CSP Header (same policy as meta tag)
-  headers.set(
-    'Content-Security-Policy',
-    [
-      "default-src 'self'",
-      "script-src 'self' 'wasm-unsafe-eval'",
-      "style-src 'self' 'unsafe-inline'",
-      "img-src 'self' data: https:",
-      "font-src 'self' data:",
-      "connect-src 'self' https://api.github.com https://api.linkedin.com",
-      "media-src 'self'",
-      "object-src 'none'",
-      "frame-src 'none'",
-      "frame-ancestors 'none'",
-      "base-uri 'self'",
-      "form-action 'self'",
-      "worker-src 'self'",
-      "manifest-src 'self'",
-      "upgrade-insecure-requests"
-    ].join('; ')
-  );
+  const isDev = import.meta.env.DEV;
+  headers.set('Content-Security-Policy', getCSPString(isDev));
   
   // Additional security headers
   headers.set('X-Frame-Options', 'DENY');
