@@ -37,6 +37,8 @@ export const EventCarousel = component$<EventCarouselProps>(({ events, currentMo
       overflow-x: auto;
       scroll-behavior: smooth;
       scrollbar-width: none;
+      padding: 0.5rem 0.5rem 1rem 0.5rem;
+      margin: -0.5rem -0.5rem -1rem -0.5rem;
     }
 
     .carousel-container::-webkit-scrollbar {
@@ -49,17 +51,18 @@ export const EventCarousel = component$<EventCarouselProps>(({ events, currentMo
       background: white;
       border-radius: 0.75rem;
       padding: 1.25rem;
-      border: 2px solid transparent;
+      border: 3px solid transparent;
       transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
       cursor: pointer;
       position: relative;
       overflow: hidden;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      margin: 3px;
     }
 
     .carousel-card.highlight {
       border-color: var(--color-blue-500);
-      transform: translateY(-4px) scale(1.02);
+      transform: translateY(-4px);
       box-shadow: 0 12px 30px rgba(59, 130, 246, 0.25);
       background: linear-gradient(to bottom, rgba(59, 130, 246, 0.05), white);
     }
@@ -70,7 +73,7 @@ export const EventCarousel = component$<EventCarouselProps>(({ events, currentMo
     }
 
     .carousel-card.highlight:hover {
-      transform: translateY(-4px) scale(1.02);
+      transform: translateY(-6px);
       box-shadow: 0 14px 35px rgba(59, 130, 246, 0.3);
     }
 

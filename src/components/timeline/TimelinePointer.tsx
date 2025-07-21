@@ -44,6 +44,19 @@ export const TimelinePointer = component$<TimelinePointerProps>(({ currentYear =
       left: 50%;
       transform: translateX(-50%);
       margin-top: 4rem;
+      text-align: center;
+    }
+
+    .timeline-title {
+      font-size: 0.875rem;
+      color: var(--color-gray-600);
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 600;
+    }
+
+    .year-label {
       padding: 0.5rem 1rem;
       background-color: var(--color-gray-800);
       color: white;
@@ -52,6 +65,7 @@ export const TimelinePointer = component$<TimelinePointerProps>(({ currentYear =
       font-size: 1.125rem;
       white-space: nowrap;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      display: inline-block;
     }
 
     .pointer-triangle.inverted {
@@ -71,7 +85,10 @@ export const TimelinePointer = component$<TimelinePointerProps>(({ currentYear =
         
         {/* Current year and month display */}
         <div class="year-display">
-          <span class="timeline-current-year">{currentYear}년 {currentMonth}월</span>
+          <div class="timeline-title">Timeline</div>
+          <div class="year-label">
+            <span class="timeline-current-year">{currentYear}년 {currentMonth}월</span>
+          </div>
         </div>
       </div>
     </div>
