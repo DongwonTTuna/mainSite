@@ -48,7 +48,7 @@ export const TimelinePointer = component$<TimelinePointerProps>(({ currentYear =
       text-align: center;
     }
 
-    .year-label {
+    .year-label-pointer {
       padding: 0.5rem 1rem;
       background-color: var(--color-gray-800);
       color: white;
@@ -77,7 +77,7 @@ export const TimelinePointer = component$<TimelinePointerProps>(({ currentYear =
         
         {/* Current year and month display */}
         <div class="year-display">
-          <div class="year-label">
+          <div class="year-label-pointer">
             <span class="timeline-current-year">{currentYear}년 {currentMonth}월</span>
           </div>
         </div>

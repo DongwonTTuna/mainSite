@@ -23,17 +23,15 @@ export const TimelineNode = component$<TimelineNodeProps>(({ event, index, curre
       border-radius: 50%;
       transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
       cursor: pointer;
-      box-shadow: 0 0 0 4px white, 0 2px 8px rgba(0, 0, 0, 0.1);
+      
     }
 
     .timeline-node.highlight .node-circle {
-      transform: scale(1.5);
-      box-shadow: 0 0 0 6px white, 0 4px 12px rgba(0, 0, 0, 0.15);
+      transform: scale(1.3);
     }
 
     .timeline-node.hovered .node-circle {
       transform: scale(1.3);
-      box-shadow: 0 0 0 6px white, 0 6px 20px rgba(0, 0, 0, 0.2);
     }
 
     .node-tooltip {
@@ -141,7 +139,7 @@ export const TimelineNode = component$<TimelineNodeProps>(({ event, index, curre
     <div
       ref={nodeRef}
       class={`timeline-node ${isHighlighted ? 'highlight' : ''} ${isHovered.value ? 'hovered' : ''}`}
-      style={`left: calc(${xPosition}px + 50vw);`}
+      style={`left: calc(${xPosition}px - 9px + 50vw);`}
     >
       {/* Node circle */}
       <div
