@@ -10,7 +10,7 @@ export interface TimelineEvent {
     github?: string;
     live?: string;
   };
-  position: 'top' | 'bottom';
+  position?: 'top' | 'bottom';
   highlight?: boolean;
 }
 

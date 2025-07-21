@@ -253,9 +253,10 @@ export const Timeline = component$(() => {
     nodes.forEach((node, index) => {
       gsap.from(node, {
         opacity: 0,
-        y: node.classList.contains('top') ? -30 : 30,
-        duration: 0.6,
-        delay: index * 0.1,
+        scale: 0.5,
+        duration: 0.4,
+        delay: index * 0.05,
+        ease: 'back.out(1.7)',
         scrollTrigger: {
           trigger: node,
           start: 'left 80%',
