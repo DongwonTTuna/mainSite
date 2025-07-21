@@ -13,13 +13,35 @@ export const Timeline = component$(() => {
       overflow: hidden;
     }
 
+    .timeline-header {
+      position: absolute;
+      top: 4rem;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      z-index: 10;
+    }
+
+    .timeline-title {
+      font-size: 3rem;
+      font-weight: bold;
+      color: var(--color-gray-800);
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .timeline-subtitle {
+      font-size: 1.25rem;
+      color: var(--color-gray-600);
+      font-weight: 400;
+    }
+
     .timeline-container {
       position: relative;
       width: 100%;
-      height: 200px;
+      height: 100vh;
       display: flex;
       align-items: center;
-      margin-top: 4rem;
     }
 
     .timeline-track {
@@ -47,6 +69,10 @@ export const Timeline = component$(() => {
     }
 
     .year-label {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 0;
       font-size: 1.5rem;
       font-weight: bold;
       color: var(--color-gray-800);
@@ -90,6 +116,18 @@ export const Timeline = component$(() => {
     @media (max-width: 768px) {
       .timeline-section {
         min-height: auto;
+      }
+
+      .timeline-header {
+        top: 2rem;
+      }
+
+      .timeline-title {
+        font-size: 2rem;
+      }
+
+      .timeline-subtitle {
+        font-size: 1rem;
       }
 
       .timeline-container {
@@ -231,6 +269,12 @@ export const Timeline = component$(() => {
 
   return (
     <section ref={containerRef} class="timeline-section">
+      {/* Timeline Header */}
+      <div class="timeline-header">
+        <h2 class="timeline-title">My Journey</h2>
+        <p class="timeline-subtitle">A timeline of my professional growth and achievements</p>
+      </div>
+
       {/* Fixed center pointer for desktop */}
       {!state.isMobile && <TimelinePointer currentYear={state.currentYear} currentMonth={state.currentMonth} />}
 
