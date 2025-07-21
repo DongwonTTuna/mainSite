@@ -72,7 +72,7 @@ export const Timeline = component$(() => {
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
-      bottom: 0;
+      bottom: 35px;
       font-size: 1.5rem;
       font-weight: bold;
       color: var(--color-gray-800);
@@ -84,7 +84,6 @@ export const Timeline = component$(() => {
       width: 2px;
       height: 2rem;
       background-color: black;
-      margin-top: 0.5rem;
     }
 
     .month-marker {
@@ -320,7 +319,13 @@ export const Timeline = component$(() => {
 
           {/* Timeline events */}
           {timelineData.map((event, index) => (
-            <TimelineNode key={event.id} event={event} index={index} />
+            <TimelineNode 
+              key={event.id} 
+              event={event} 
+              index={index} 
+              currentYear={state.currentYear}
+              currentMonth={state.currentMonth}
+            />
           ))}
 
           {/* Extra padding at the end */}

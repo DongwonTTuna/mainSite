@@ -4,9 +4,11 @@ import type { TimelineEvent } from '~/types/timeline';
 interface TimelineNodeProps {
   event: TimelineEvent;
   index: number;
+  currentYear?: number;
+  currentMonth?: number;
 }
 
-export const TimelineNode = component$<TimelineNodeProps>(({ event, index }) => {
+export const TimelineNode = component$<TimelineNodeProps>(({ event, index, currentYear, currentMonth }) => {
   useStyles$(`
     .timeline-node {
       position: absolute;
@@ -25,8 +27,7 @@ export const TimelineNode = component$<TimelineNodeProps>(({ event, index }) => 
     }
 
     .timeline-node.highlight .node-circle {
-      width: 1.5rem;
-      height: 1.5rem;
+      transform: scale(1.5);
       box-shadow: 0 0 0 6px white, 0 4px 12px rgba(0, 0, 0, 0.15);
     }
 
@@ -95,6 +96,9 @@ export const TimelineNode = component$<TimelineNodeProps>(({ event, index }) => 
 
   const nodeRef = useSignal<HTMLElement>();
   const isHovered = useSignal(false);
+  
+  // Check if this node should be highlighted based on current month/year
+  const isHighlighted = currentYear === event.year && currentMonth === event.month;
 
   // Category colors
   const categoryColors = {
@@ -136,7 +140,7 @@ export const TimelineNode = component$<TimelineNodeProps>(({ event, index }) => 
   return (
     <div
       ref={nodeRef}
-      class={`timeline-node ${event.highlight ? 'highlight' : ''} ${isHovered.value ? 'hovered' : ''}`}
+      class={`timeline-node ${isHighlighted ? 'highlight' : ''} ${isHovered.value ? 'hovered' : ''}`}
       style={`left: calc(${xPosition}px + 50vw);`}
     >
       {/* Node circle */}
