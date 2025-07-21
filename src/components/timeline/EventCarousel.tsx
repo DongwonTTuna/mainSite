@@ -195,6 +195,8 @@ export const EventCarousel = component$<EventCarouselProps>(({ events, currentMo
   `);
 
   const containerRef = useSignal<HTMLElement>();
+  const prevMonthRef = useSignal<number>(currentMonth);
+  const prevYearRef = useSignal<number>(currentYear);
 
   // Filter events for current year - ensure events is defined
   const yearEvents = events?.filter(event => event.year === currentYear) || [];
@@ -204,12 +206,47 @@ export const EventCarousel = component$<EventCarouselProps>(({ events, currentMo
     track(() => currentYear);
     
     if (!containerRef.value) return;
+    
+    // Only process if month or year actually changed
+    if (prevMonthRef.value === currentMonth && prevYearRef.value === currentYear) return;
+    prevMonthRef.value = currentMonth;
+    prevYearRef.value = currentYear;
 
-    // Auto-scroll to highlighted card when month or year changes
+    // Delay to ensure DOM updates
     setTimeout(() => {
-      const highlightedCard = containerRef.value.querySelector('.carousel-card.highlight');
-      if (highlightedCard) {
-        highlightedCard.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      const highlightedCard = containerRef.value.querySelector('.carousel-card.highlight') as HTMLElement;
+      if (!highlightedCard) return;
+
+      const container = containerRef.value;
+      const containerRect = container.getBoundingClientRect();
+      const cardRect = highlightedCard.getBoundingClientRect();
+      
+      // Check if card is fully visible
+      const isFullyVisible = 
+        cardRect.left >= containerRect.left && 
+        cardRect.right <= containerRect.right;
+      
+      // Only scroll if card is not fully visible
+      if (!isFullyVisible) {
+        const cardOffsetLeft = highlightedCard.offsetLeft;
+        const cardWidth = highlightedCard.offsetWidth;
+        const containerWidth = container.offsetWidth;
+        const currentScroll = container.scrollLeft;
+        
+        // Calculate minimal scroll needed
+        if (cardRect.left < containerRect.left) {
+          // Card is hidden on the left - scroll just enough to show it
+          container.scrollTo({ 
+            left: cardOffsetLeft - 20, // 20px padding
+            behavior: 'smooth' 
+          });
+        } else if (cardRect.right > containerRect.right) {
+          // Card is hidden on the right - scroll just enough to show it
+          container.scrollTo({ 
+            left: cardOffsetLeft - containerWidth + cardWidth + 20, // 20px padding
+            behavior: 'smooth' 
+          });
+        }
       }
     }, 100);
   });
