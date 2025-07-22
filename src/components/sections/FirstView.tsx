@@ -174,9 +174,17 @@ export const FirstView = component$(() => {
     .intro-sections {
       position: relative;
       z-index: 10;
-      padding: 6rem 0;
       background: linear-gradient(to bottom, var(--bg-primary), var(--bg-secondary));
       backdrop-filter: blur(20px);
+    }
+    
+    .intro-title {
+      text-align: center;
+      font-size: var(--text-3xl);
+      font-weight: var(--font-bold);
+      color: var(--text-primary);
+      padding-top: 3rem;
+      letter-spacing: var(--tracking-tight);
     }
 
     /* Enhanced social links wrapper */
@@ -392,9 +400,10 @@ export const FirstView = component$(() => {
 
       {/* Introduction sections with enhanced styling */}
       <div class="intro-sections">
-        <IntroBio />
-        <IntroSkills />
-        <IntroCTA />
+        <h2 class="intro-title">{t('app.intro.title')}</h2>
+        <IntroBio/>
+        <IntroSkills/>
+        <IntroCTA/>
       </div>
     </section>
   );

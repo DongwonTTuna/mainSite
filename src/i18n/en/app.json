@@ -15,6 +15,7 @@
       "cta": "View Projects"
     },
     "intro": {
+      "title": "About Me",
       "greeting": "Hi, I'm",
       "bio": {
         "line1": "A passionate Full Stack Engineer with 2 years of experience",

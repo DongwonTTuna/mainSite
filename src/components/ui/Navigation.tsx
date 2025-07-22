@@ -12,7 +12,7 @@ export const Navigation = component$(() => {
   const t = inlineTranslate();
   const location = useLocation();
   const isMenuOpen = useSignal(false);
-  const currentLang = location.url.pathname.split('/')[1] || 'en-US';
+  const currentLang = location.url.pathname.split('/')[1] || 'en';
 
   useStyles$(`
     .navigation {

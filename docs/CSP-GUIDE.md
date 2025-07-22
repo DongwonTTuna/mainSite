@@ -50,4 +50,4 @@ directives['script-src'] = "'self' 'wasm-unsafe-eval' 'unsafe-inline'";
 ## 추가 리소스
 
 - [Qwik CSP Documentation](https://qwik.dev/docs/advanced/csp/)
-- [MDN CSP Reference](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP)
+- [MDN CSP Reference](https://developer.mozilla.org/en/docs/Web/HTTP/CSP)

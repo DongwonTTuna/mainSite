@@ -26,7 +26,7 @@
 ## i18n Structure
 - `/src/routes/[lang]/` - 언어별 라우팅
 - `qwik-speak` 사용 - Paraglide 대체
-- 지원 언어: en-US, ko, ja
+- 지원 언어: en, ko, ja
 
 ## Build Commands
 ```bash

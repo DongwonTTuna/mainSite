@@ -8,7 +8,7 @@ export default component$(() => {
   // This will be handled by middleware to redirect to default language
   return (
     <div>
-      <script dangerouslySetInnerHTML="window.location.href = '/en-US/';" />
+      <script dangerouslySetInnerHTML="window.location.href = '/en/';" />
     </div>
   );
 });

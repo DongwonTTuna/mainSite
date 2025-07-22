@@ -10,7 +10,7 @@ interface Language {
 }
 
 const languageOptions: Language[] = [
-  { lang: 'en-US', label: 'English', flag: '🇺🇸' },
+  { lang: 'en', label: 'English', flag: '🇺🇸' },
   { lang: 'ko', label: '한국어', flag: '🇰🇷' },
   { lang: 'ja', label: '日本語', flag: '🇯🇵' },
 ];
@@ -103,7 +103,7 @@ export const LanguageSwitch = component$(() => {
   const navigate = useNavigate();
   const isOpen = useSignal(false);
   
-  const currentLang = location.url.pathname.split('/')[1] || 'en-US';
+  const currentLang = location.url.pathname.split('/')[1] || 'en';
   const currentLanguage = languageOptions.find(lang => lang.lang === currentLang) || languageOptions[0];
 
   const toggleDropdown = $(() => {

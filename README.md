@@ -56,7 +56,7 @@
   - `utils/` - 유틸리티 함수
   - `hooks/` - 커스텀 훅
 - **src/i18n/**
-  - `en-US/`, `ko/`, `ja/` - 언어별 번역 파일
+  - `en/`, `ko/`, `ja/` - 언어별 번역 파일
 - **public/**
   - 정적 자산 (이미지, 폰트 등)
 - **adapters/static/**

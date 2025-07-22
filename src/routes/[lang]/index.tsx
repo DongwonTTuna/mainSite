@@ -38,34 +38,34 @@ export const onStaticGenerate: StaticGenerateHandler = () => {
  * Document head configuration
  */
 export const head: DocumentHead = ({ params }) => {
-  const lang = params.lang || 'en-US';
+  const lang = params.lang || 'en';
   
   const titles: Record<string, string> = {
-    'en-US': 'Lee Dongwon - Interactive Portfolio',
+    'en': 'Lee Dongwon - Interactive Portfolio',
     'ko': '이동원 - 인터랙티브 포트폴리오',
     'ja': 'イ・ドンウォン - インタラクティブポートフォリオ'
   };
   
   const descriptions: Record<string, string> = {
-    'en-US': 'Interactive portfolio showcasing creative works and projects',
+    'en': 'Interactive portfolio showcasing creative works and projects',
     'ko': '창의적인 작품과 프로젝트를 소개하는 인터랙티브 포트폴리오',
     'ja': 'クリエイティブな作品とプロジェクトを紹介するインタラクティブポートフォリオ'
   };
   
   return {
-    title: titles[lang] || titles['en-US'],
+    title: titles[lang] || titles['en'],
     meta: [
       {
         name: 'description',
-        content: descriptions[lang] || descriptions['en-US'],
+        content: descriptions[lang] || descriptions['en'],
       },
       {
         property: 'og:title',
-        content: titles[lang] || titles['en-US'],
+        content: titles[lang] || titles['en'],
       },
       {
         property: 'og:description',
-        content: descriptions[lang] || descriptions['en-US'],
+        content: descriptions[lang] || descriptions['en'],
       },
       {
         property: 'og:type',
@@ -79,8 +79,8 @@ export const head: DocumentHead = ({ params }) => {
     links: [
       {
         rel: 'alternate',
-        hreflang: 'en-US',
-        href: 'https://dongwontuna.net/en-US/',
+        hreflang: 'en',
+        href: 'https://dongwontuna.net/en/',
       },
       {
         rel: 'alternate',
