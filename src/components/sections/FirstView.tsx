@@ -173,6 +173,7 @@ export const FirstView = component$(() => {
 
     .intro-sections {
       position: relative;
+      padding-top: 3rem;
       z-index: 10;
       background: linear-gradient(to bottom, var(--bg-primary), var(--bg-secondary));
       backdrop-filter: blur(20px);
@@ -183,7 +184,6 @@ export const FirstView = component$(() => {
       font-size: var(--text-3xl);
       font-weight: var(--font-bold);
       color: var(--text-primary);
-      padding-top: 3rem;
       letter-spacing: var(--tracking-tight);
     }
 
@@ -399,7 +399,7 @@ export const FirstView = component$(() => {
       </div>
 
       {/* Introduction sections with enhanced styling */}
-      <div class="intro-sections">
+      <div class="intro-sections" id="about">
         <h2 class="intro-title">{t('app.intro.title')}</h2>
         <IntroBio/>
         <IntroSkills/>

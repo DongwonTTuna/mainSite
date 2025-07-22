@@ -18,7 +18,7 @@ export const TimelinePointer = component$<TimelinePointerProps>(({ currentYear =
 
     .pointer-content {
       position: relative;
-      bottom: 15px;
+      top: 15px;
     }
 
     .pointer-triangle {
@@ -26,12 +26,12 @@ export const TimelinePointer = component$<TimelinePointerProps>(({ currentYear =
       height: 0;
       border-left: 20px solid transparent;
       border-right: 20px solid transparent;
-      border-top: 30px solid var(--color-gray-800);
+      border-bottom: 30px solid var(--color-gray-800);
     }
 
     .pointer-line {
       position: absolute;
-      bottom: 100%;
+      top: 100%;
       left: 50%;
       transform: translateX(-50%);
       width: 4px;
@@ -41,10 +41,10 @@ export const TimelinePointer = component$<TimelinePointerProps>(({ currentYear =
 
     .year-display {
       position: absolute;
-      bottom: -10px;
+      top: -10px;
       left: 50%;
       transform: translateX(-50%);
-      margin-bottom: 6rem;
+      margin-top: 6rem;
       text-align: center;
     }
 
@@ -69,18 +69,18 @@ export const TimelinePointer = component$<TimelinePointerProps>(({ currentYear =
   return (
     <div class="timeline-pointer">
       <div class="pointer-content">
-        {/* Main pointer triangle */}
-        <div class="pointer-triangle" />
-        
-        {/* Vertical line above pointer */}
-        <div class="pointer-line" />
-        
         {/* Current year and month display */}
         <div class="year-display">
           <div class="year-label-pointer">
             <span class="timeline-current-year">{currentYear}년 {currentMonth}월</span>
           </div>
         </div>
+        
+        {/* Main pointer triangle */}
+        <div class="pointer-triangle" />
+        
+        {/* Vertical line below pointer */}
+        <div class="pointer-line" />
       </div>
     </div>
   );
