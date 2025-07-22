@@ -34,8 +34,8 @@
           "qwik": "Qwik",
           "python": "Python",
           "nodejs": "Node.js",
+          "nestjs": "NestJS",
           "scala": "Scala",
-          "java": "Java",
           "aws": "AWS",
           "docker": "Docker",
           "kubernetes": "Kubernetes",
@@ -43,7 +43,11 @@
           "git": "Git",
           "cicd": "CI/CD",
           "testing": "Testing",
-          "vscode": "VS Code"
+          "playwright": "Playwright",
+          "storybook": "Storybook",
+          "scrum": "Scrum",
+          "apidesign": "API Design",
+          "claudecode": "Claude Code"
         }
       },
       "cta": {

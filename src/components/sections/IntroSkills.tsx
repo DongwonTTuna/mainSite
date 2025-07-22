@@ -33,7 +33,7 @@ const skills: Skill[] = [
   { key: 'kubernetes', category: 'cloud' },
 
   // Development Tools
-  { key: 'claude', category: 'tools' },
+  { key: 'claudecode', category: 'tools' },
 ];
 
 // Category information with emojis
@@ -98,7 +98,7 @@ export const IntroSkills = component$<IntroSkillsProps>((props) => {
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: end;
       width: 220px;
       height: 220px;
       background: var(--glass-bg);
@@ -222,7 +222,7 @@ export const IntroSkills = component$<IntroSkillsProps>((props) => {
       letter-spacing: var(--tracking-wide);
       transition: all var(--duration-normal) ease;
       text-transform: capitalize;
-      margin-top: 0.5rem;
+      margin-bottom: 1rem;
     }
 
     .skill-item:hover .skill-name {
