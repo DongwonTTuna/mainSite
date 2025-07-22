@@ -117,23 +117,6 @@ export const FirstView = component$(() => {
       margin: 0 auto;
     }
 
-    /* Glass card for main content */
-    .hero-content {
-      background: var(--glass-bg);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid var(--glass-border);
-      border-radius: 2rem;
-      padding: 3rem 2rem;
-      box-shadow: var(--glass-shadow);
-      transition: all var(--duration-slow) var(--ease-out-expo);
-    }
-
-    .hero-content:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 20px 60px 0 rgba(31, 38, 135, 0.5);
-    }
-
     .hero-greeting {
       font-size: var(--text-2xl);
       font-weight: var(--font-light);
