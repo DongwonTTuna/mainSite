@@ -96,8 +96,14 @@
       "view_project": "プロジェクトを見る",
       "view_code": "コードを見る"
     },
+    "timeline": {
+      "title": "私の旅路",
+      "subtitle": "プロフェッショナルとしての成長と成果のタイムライン",
+      "mobile_hint": "← スワイプして探索 →"
+    },
     "contact": {
       "title": "お問い合わせ",
+      "message": "ご訪問いただきありがとうございます。いつでもお気軽にお問い合わせください！",
       "email": "メール",
       "github": "GitHub",
       "linkedin": "LinkedIn",

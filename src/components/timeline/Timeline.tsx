@@ -1,10 +1,12 @@
 import { component$, useSignal, useVisibleTask$, useStore, useStyles$ } from '@builder.io/qwik';
+import { inlineTranslate } from 'qwik-speak';
 import { timelineData } from '~/data/timeline-data';
 import { TimelineNode } from './TimelineNode';
 import { TimelinePointer } from './TimelinePointer';
 import { EventCarousel } from './EventCarousel';
 
 export const Timeline = component$(() => {
+  const t = inlineTranslate();
   useStyles$(`
     .timeline-section {
       position: relative;
@@ -271,8 +273,8 @@ export const Timeline = component$(() => {
     <section ref={containerRef} class="timeline-section">
       {/* Timeline Header */}
       <div class="timeline-header">
-        <h2 class="timeline-title">My Journey</h2>
-        <p class="timeline-subtitle">A timeline of my professional growth and achievements</p>
+        <h2 class="timeline-title">{t('app.timeline.title')}</h2>
+        <p class="timeline-subtitle">{t('app.timeline.subtitle')}</p>
       </div>
 
       {/* Fixed center pointer for desktop */}
@@ -336,7 +338,7 @@ export const Timeline = component$(() => {
       {/* Mobile scroll hint */}
       {state.isMobile && (
         <div class="mobile-hint">
-          ← Swipe to explore →
+          {t('app.timeline.mobile_hint')}
         </div>
       )}
 

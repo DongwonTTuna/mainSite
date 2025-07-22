@@ -1,8 +1,10 @@
 import { component$, useSignal, useVisibleTask$, useStyles$ } from '@builder.io/qwik';
+import { inlineTranslate } from 'qwik-speak';
 import { personalInfo } from '~/data/personal-info';
 import { SocialLinks } from '~/components/ui/SocialLinks';
 
 export const ContactSection = component$(() => {
+  const t = inlineTranslate();
   useStyles$(`
     .contact-section {
       position: relative;
@@ -171,7 +173,7 @@ export const ContactSection = component$(() => {
       <div class="contact-container">
         {/* Headline */}
         <h2 ref={headlineRef} class="contact-headline">
-          Get In Touch
+          {t('app.contact.title')}
         </h2>
 
         {/* Email */}
@@ -191,9 +193,7 @@ export const ContactSection = component$(() => {
 
         {/* Thank you message */}
         <p ref={messageRef} class="message-section">
-          방문해 주셔서 감사합니다. 언제든지 연락 주시면 빠르게 답변 드리겠습니다.
-          <br />
-          Thank you for visiting. Feel free to reach out anytime!
+          {t('app.contact.message')}
         </p>
 
         {/* Background decoration */}

@@ -96,8 +96,14 @@
       "view_project": "프로젝트 보기",
       "view_code": "코드 보기"
     },
+    "timeline": {
+      "title": "나의 여정",
+      "subtitle": "저의 전문적 성장과 성취의 타임라인",
+      "mobile_hint": "← 스와이프하여 탐색 →"
+    },
     "contact": {
       "title": "연락하기",
+      "message": "방문해 주셔서 감사합니다. 언제든지 연락 주시면 빠르게 답변 드리겠습니다.",
       "email": "이메일",
       "github": "깃허브",
       "linkedin": "링크드인",

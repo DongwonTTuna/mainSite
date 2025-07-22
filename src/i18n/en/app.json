@@ -96,8 +96,14 @@
       "view_project": "View Project",
       "view_code": "View Code"
     },
+    "timeline": {
+      "title": "My Journey",
+      "subtitle": "A timeline of my professional growth and achievements",
+      "mobile_hint": "← Swipe to explore →"
+    },
     "contact": {
       "title": "Get In Touch",
+      "message": "Thank you for visiting. Feel free to reach out anytime!",
       "email": "Email",
       "github": "GitHub",
       "linkedin": "LinkedIn",
