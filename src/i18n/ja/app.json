@@ -31,15 +31,19 @@
           "react": "React",
           "svelte": "Svelte",
           "typescript": "TypeScript",
+          "qwik": "Qwik",
           "python": "Python",
           "nodejs": "Node.js",
           "scala": "Scala",
+          "java": "Java",
           "aws": "AWS",
           "docker": "Docker",
           "kubernetes": "Kubernetes",
+          "terraform": "Terraform",
           "git": "Git",
           "cicd": "CI/CD",
-          "testing": "テスティング"
+          "testing": "テスティング",
+          "vscode": "VS Code"
         }
       },
       "cta": {
