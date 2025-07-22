@@ -14,7 +14,7 @@ export const IntroBio = component$<IntroBioProps>((props) => {
       position: relative;
       max-width: 800px;
       margin: 0 auto;
-      padding: 3rem 1.5rem;
+      padding: 1.5rem 1.5rem 3rem;
       text-align: center;
     }
 
