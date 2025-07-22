@@ -18,23 +18,22 @@ const skills: Skill[] = [
   // Frontend Technologies
   { key: 'react', category: 'frontend' },
   { key: 'svelte', category: 'frontend' },
-  { key: 'typescript', category: 'frontend' },
   { key: 'qwik', category: 'frontend' },
-  
+  { key: 'typescript', category: 'frontend' },
+
   // Backend Technologies
   { key: 'python', category: 'backend' },
   { key: 'nodejs', category: 'backend' },
+  { key: 'nestjs', category: 'backend' },
   { key: 'scala', category: 'backend' },
   
   // Cloud & Infrastructure
   { key: 'aws', category: 'cloud' },
   { key: 'docker', category: 'cloud' },
   { key: 'kubernetes', category: 'cloud' },
-  
+
   // Development Tools
-  { key: 'git', category: 'tools' },
-  { key: 'cicd', category: 'tools' },
-  { key: 'testing', category: 'tools' },
+  { key: 'claude', category: 'tools' },
 ];
 
 // Category information with emojis
@@ -213,22 +212,7 @@ export const IntroSkills = component$<IntroSkillsProps>((props) => {
       filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.4));
     }
 
-    /* SVG icon colors by category */
-    .skill-item.category-frontend .skill-icon {
-      color: #61DAFB;
-    }
-    
-    .skill-item.category-backend .skill-icon {
-      color: #68A063;
-    }
-    
-    .skill-item.category-cloud .skill-icon {
-      color: #FF9900;
-    }
-    
-    .skill-item.category-tools .skill-icon {
-      color: #F05032;
-    }
+    /* SVG icon colors - removed to let each icon use its own brand colors */
 
     .skill-name {
       font-size: var(--text-lg);
