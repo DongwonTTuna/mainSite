@@ -14,6 +14,39 @@
       "subtitle": "최신 기술로 확장 가능한 웹 애플리케이션 구축",
       "cta": "프로젝트 보기"
     },
+    "intro": {
+      "greeting": "안녕하세요,",
+      "bio": {
+        "line1": "2년 경력의 열정적인 풀스택 엔지니어입니다",
+        "line2": "복잡한 문제에 대한 우아한 솔루션을 만드는 것을 전문으로 하며,",
+        "line3": "깔끔하고 효율적인 코드를 통해 아이디어를 현실로 구현합니다."
+      },
+      "skills": {
+        "title": "핵심 기술",
+        "frontend": "프론트엔드",
+        "backend": "백엔드",
+        "cloud": "클라우드",
+        "tools": "도구",
+        "items": {
+          "react": "React",
+          "svelte": "Svelte",
+          "typescript": "TypeScript",
+          "python": "Python",
+          "nodejs": "Node.js",
+          "scala": "Scala",
+          "aws": "AWS",
+          "docker": "Docker",
+          "kubernetes": "Kubernetes",
+          "git": "Git",
+          "cicd": "CI/CD",
+          "testing": "테스팅"
+        }
+      },
+      "cta": {
+        "primary": "작업물 보기",
+        "secondary": "연락하기"
+      }
+    },
     "about": {
       "title": "자기소개",
       "basic_info": "기본 정보",

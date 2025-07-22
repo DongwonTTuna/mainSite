@@ -4,6 +4,7 @@
  * Import existing styles
  */
 @import '/src/css/sanitize.css';
+@import '/src/css/design-system.css';
 
 /**
  * CSS Variables

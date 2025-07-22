@@ -14,6 +14,39 @@
       "subtitle": "最新技術でスケーラブルなWebアプリケーションを構築",
       "cta": "プロジェクトを見る"
     },
+    "intro": {
+      "greeting": "はじめまして、",
+      "bio": {
+        "line1": "2年の経験を持つ情熱的なフルスタックエンジニアです",
+        "line2": "複雑な問題にエレガントなソリューションを作ることを専門とし、",
+        "line3": "クリーンで効率的なコードを通じてアイデアを現実に変えます。"
+      },
+      "skills": {
+        "title": "コア技術",
+        "frontend": "フロントエンド",
+        "backend": "バックエンド",
+        "cloud": "クラウド",
+        "tools": "ツール",
+        "items": {
+          "react": "React",
+          "svelte": "Svelte",
+          "typescript": "TypeScript",
+          "python": "Python",
+          "nodejs": "Node.js",
+          "scala": "Scala",
+          "aws": "AWS",
+          "docker": "Docker",
+          "kubernetes": "Kubernetes",
+          "git": "Git",
+          "cicd": "CI/CD",
+          "testing": "テスティング"
+        }
+      },
+      "cta": {
+        "primary": "作品を見る",
+        "secondary": "お問い合わせ"
+      }
+    },
     "about": {
       "title": "自己紹介",
       "basic_info": "基本情報",
