@@ -6,6 +6,20 @@ interface TimelinePointerProps {
 }
 
 export const TimelinePointer = component$<TimelinePointerProps>(({ currentYear = 2022, currentMonth = 1 }) => {
+  const formatDate = (year: number, month: number) => {
+    // Get language from pathname
+    const path = typeof window !== 'undefined' ? window.location.pathname : '';
+    const lang = path.split('/')[1] || 'en';
+    
+    if (lang === 'ko') {
+      return `${year}년 ${month}월`;
+    } else if (lang === 'ja') {
+      return `${year}年${month}月`;
+    } else {
+      const date = new Date(year, month - 1);
+      return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+    }
+  };
   useStyles$(`
     .timeline-pointer {
       position: absolute;
@@ -72,7 +86,7 @@ export const TimelinePointer = component$<TimelinePointerProps>(({ currentYear =
         {/* Current year and month display */}
         <div class="year-display">
           <div class="year-label-pointer">
-            <span class="timeline-current-year">{currentYear}년 {currentMonth}월</span>
+            <span class="timeline-current-year">{formatDate(currentYear, currentMonth)}</span>
           </div>
         </div>
         

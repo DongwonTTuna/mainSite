@@ -1,12 +1,13 @@
 import { component$, useSignal, useVisibleTask$, useStore, useStyles$ } from '@builder.io/qwik';
 import { inlineTranslate } from 'qwik-speak';
-import { timelineData } from '~/data/timeline-data';
+import { getTimelineData } from '~/data/timeline-data';
 import { TimelineNode } from './TimelineNode';
 import { TimelinePointer } from './TimelinePointer';
 import { EventCarousel } from './EventCarousel';
 
 export const Timeline = component$(() => {
   const t = inlineTranslate();
+  const timelineData = getTimelineData(t);
   useStyles$(`
     .timeline-section {
       position: relative;

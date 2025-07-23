@@ -117,6 +117,70 @@
       "language_selector": "언어 선택기",
       "menu_toggle": "메뉴 열기/닫기",
       "scroll_to_top": "맨 위로 가기"
+    },
+    "timeline_categories": {
+      "education": "학력",
+      "work": "경력",
+      "project": "프로젝트",
+      "certification": "자격증"
+    },
+    "timeline_events": {
+      "tit_2022_04": {
+        "title": "도쿄정보크리에이터공학원 입학",
+        "description": "컴퓨터공학 전공 시작"
+      },
+      "seat_system_2022_05": {
+        "title": "자리배치 시스템",
+        "description": "교실 자리 배치를 자동화하는 웹 애플리케이션 개발"
+      },
+      "crypto_chart_2022_09": {
+        "title": "실시간 암호화폐 차트 사이트",
+        "description": "실시간 암호화폐 차트 및 데이터 시각화 웹사이트 구축"
+      },
+      "jlpt_3_2022_09": {
+        "title": "일본한자능력검정 3급",
+        "description": "일본한자능력검정 3급 취득"
+      },
+      "fe_2022_11": {
+        "title": "정보처리산업기사",
+        "description": "정보처리산업기사 자격증 취득"
+      },
+      "nextbeat_2023_05": {
+        "title": "Nextbeat Inc. 입사",
+        "description": "풀스택 개발자로 커리어 시작"
+      },
+      "analytics_dashboard_2023_08": {
+        "title": "실시간 분석 대시보드",
+        "description": "실시간 데이터 분석 대시보드 개발 및 성능 최적화"
+      },
+      "tit_graduate_2024_03": {
+        "title": "도쿄정보크리에이터공학원 졸업",
+        "description": "컴퓨터공학 과정 수료"
+      },
+      "tcu_2024_04": {
+        "title": "도쿄통신대학 입학",
+        "description": "정보공학 전공 시작"
+      },
+      "ecommerce_2024": {
+        "title": "이커머스 플랫폼 리뉴얼",
+        "description": "대규모 이커머스 플랫폼 리뉴얼 및 성능 개선 주도"
+      },
+      "bioden_2024_07": {
+        "title": "BiodenKR 기업 웹사이트",
+        "description": "기업 웹사이트 풀스택 개발 및 디자인"
+      },
+      "current_position_2025": {
+        "title": "Nextbeat Inc. 풀스택 개발자",
+        "description": "현재 풀스택 개발자로 활동 중"
+      },
+      "restaurant_map_2025_05": {
+        "title": "맛집 추천 지도 앱",
+        "description": "위치 기반 맛집 추천 애플리케이션"
+      },
+      "restaurant_scraper_2025_08": {
+        "title": "맛집 데이터 수집기",
+        "description": "맛집 데이터 수집 및 분석 자동화 시스템"
+      }
     }
   }
 }

@@ -1,4 +1,5 @@
 import { component$, useSignal, useVisibleTask$, useStyles$ } from '@builder.io/qwik';
+import { inlineTranslate } from 'qwik-speak';
 import type { TimelineEvent } from '~/types/timeline';
 
 interface TimelineNodeProps {
@@ -9,6 +10,23 @@ interface TimelineNodeProps {
 }
 
 export const TimelineNode = component$<TimelineNodeProps>(({ event, index, currentYear, currentMonth }) => {
+  const t = inlineTranslate();
+  
+  const formatDate = (year: number, month: number) => {
+    // Get language from pathname
+    const path = typeof window !== 'undefined' ? window.location.pathname : '';
+    const lang = path.split('/')[1] || 'en';
+    
+    if (lang === 'ko') {
+      return `${year}년 ${month}월`;
+    } else if (lang === 'ja') {
+      return `${year}年${month}月`;
+    } else {
+      const date = new Date(year, month - 1);
+      return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+    }
+  };
+  
   useStyles$(`
     .timeline-node {
       position: absolute;
@@ -149,7 +167,7 @@ export const TimelineNode = component$<TimelineNodeProps>(({ event, index, curre
 
       {/* Tooltip on hover */}
       <div class="node-tooltip">
-        {event.year}년 {event.month}월 - {event.title}
+        {formatDate(event.year, event.month)} - {event.title}
       </div>
     </div>
   );

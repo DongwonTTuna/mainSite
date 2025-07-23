@@ -117,6 +117,70 @@
       "language_selector": "Language selector",
       "menu_toggle": "Toggle navigation menu",
       "scroll_to_top": "Scroll to top"
+    },
+    "timeline_categories": {
+      "education": "EDUCATION",
+      "work": "WORK",
+      "project": "PROJECT",
+      "certification": "CERTIFICATION"
+    },
+    "timeline_events": {
+      "tit_2022_04": {
+        "title": "Tokyo IT Creator Engineering College",
+        "description": "Started studying Computer Science"
+      },
+      "seat_system_2022_05": {
+        "title": "Seat Assignment System",
+        "description": "Developed web application to automate classroom seating arrangements"
+      },
+      "crypto_chart_2022_09": {
+        "title": "Realtime Cryptocurrency Charting Site",
+        "description": "Built real-time cryptocurrency charts and data visualization website"
+      },
+      "jlpt_3_2022_09": {
+        "title": "Japanese Kanji Proficiency Test Level 3",
+        "description": "Passed JLPT Level 3 certification"
+      },
+      "fe_2022_11": {
+        "title": "Fundamental Information Technology Engineer",
+        "description": "Obtained FE certification"
+      },
+      "nextbeat_2023_05": {
+        "title": "Joined Nextbeat Inc.",
+        "description": "Started career as Full Stack Engineer"
+      },
+      "analytics_dashboard_2023_08": {
+        "title": "Real-time Analytics Dashboard",
+        "description": "Developed and optimized real-time data analytics dashboard"
+      },
+      "tit_graduate_2024_03": {
+        "title": "Graduated from Tokyo IT Creator Engineering College",
+        "description": "Completed Computer Science program"
+      },
+      "tcu_2024_04": {
+        "title": "Tokyo Correspondence University",
+        "description": "Enrolled in Information Engineering program"
+      },
+      "ecommerce_2024": {
+        "title": "E-commerce Platform Redesign",
+        "description": "Led large-scale e-commerce platform renewal and performance improvement"
+      },
+      "bioden_2024_07": {
+        "title": "BiodenKR Corporate Website",
+        "description": "Full-stack development and design of corporate website"
+      },
+      "current_position_2025": {
+        "title": "Full Stack Engineer @ Nextbeat Inc.",
+        "description": "Currently working as Full Stack Engineer"
+      },
+      "restaurant_map_2025_05": {
+        "title": "Restaurant Recommendation Map App",
+        "description": "Location-based restaurant recommendation application"
+      },
+      "restaurant_scraper_2025_08": {
+        "title": "Restaurant Data Web Scraper",
+        "description": "Automated restaurant data collection and analysis system"
+      }
     }
   }
 }

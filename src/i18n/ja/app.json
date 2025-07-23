@@ -117,6 +117,70 @@
       "language_selector": "言語セレクター",
       "menu_toggle": "メニューを開く／閉じる",
       "scroll_to_top": "ページトップへ"
+    },
+    "timeline_categories": {
+      "education": "学歴",
+      "work": "職歴",
+      "project": "プロジェクト",
+      "certification": "資格"
+    },
+    "timeline_events": {
+      "tit_2022_04": {
+        "title": "東京情報クリエイター工学院入学",
+        "description": "コンピュータサイエンス専攻開始"
+      },
+      "seat_system_2022_05": {
+        "title": "席替えシステム",
+        "description": "教室の座席配置を自動化するウェブアプリケーション開発"
+      },
+      "crypto_chart_2022_09": {
+        "title": "リアルタイム暗号通貨チャートサイト",
+        "description": "リアルタイム暗号通貨チャートとデータ可視化ウェブサイト構築"
+      },
+      "jlpt_3_2022_09": {
+        "title": "日本漢字能力検定3級",
+        "description": "日本漢字能力検定3級取得"
+      },
+      "fe_2022_11": {
+        "title": "基本情報技術者",
+        "description": "基本情報技術者資格取得"
+      },
+      "nextbeat_2023_05": {
+        "title": "Nextbeat Inc. 入社",
+        "description": "フルスタックエンジニアとしてキャリアスタート"
+      },
+      "analytics_dashboard_2023_08": {
+        "title": "リアルタイム分析ダッシュボード",
+        "description": "リアルタイムデータ分析ダッシュボードの開発と性能最適化"
+      },
+      "tit_graduate_2024_03": {
+        "title": "東京情報クリエイター工学院卒業",
+        "description": "コンピュータサイエンス課程修了"
+      },
+      "tcu_2024_04": {
+        "title": "東京通信大学入学",
+        "description": "情報工学専攻開始"
+      },
+      "ecommerce_2024": {
+        "title": "Eコマースプラットフォームリニューアル",
+        "description": "大規模Eコマースプラットフォームのリニューアルと性能改善をリード"
+      },
+      "bioden_2024_07": {
+        "title": "BiodenKR企業ウェブサイト",
+        "description": "企業ウェブサイトのフルスタック開発とデザイン"
+      },
+      "current_position_2025": {
+        "title": "Nextbeat Inc. フルスタックエンジニア",
+        "description": "現在フルスタックエンジニアとして活躍中"
+      },
+      "restaurant_map_2025_05": {
+        "title": "飲食店推薦マップアプリ",
+        "description": "位置情報ベースの飲食店推薦アプリケーション"
+      },
+      "restaurant_scraper_2025_08": {
+        "title": "飲食店データ収集システム",
+        "description": "飲食店データ収集・分析自動化システム"
+      }
     }
   }
 }

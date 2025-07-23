@@ -1,4 +1,5 @@
 import { component$, useSignal, useVisibleTask$, useStyles$ } from '@builder.io/qwik';
+import { inlineTranslate } from 'qwik-speak';
 import type { TimelineEvent } from '~/types/timeline';
 
 interface EventCarouselProps {
@@ -8,6 +9,30 @@ interface EventCarouselProps {
 }
 
 export const EventCarousel = component$<EventCarouselProps>(({ events, currentMonth, currentYear }) => {
+  const t = inlineTranslate();
+
+  const category = {
+    education: t('app.timeline_categories.education'),
+    work: t('app.timeline_categories.work'),
+    project: t('app.timeline_categories.project'),
+    certification: t('app.timeline_categories.certification'),
+  }
+  
+  const formatMonth = (month: number) => {
+    // Get language from pathname
+    const path = typeof window !== 'undefined' ? window.location.pathname : '';
+    const lang = path.split('/')[1] || 'en';
+    
+    if (lang === 'ko') {
+      return `${month}월`;
+    } else if (lang === 'ja') {
+      return `${month}月`;
+    } else {
+      const date = new Date(2022, month - 1);
+      return date.toLocaleDateString('en-US', { month: 'short' });
+    }
+  };
+  
   useStyles$(`
     .event-carousel {
       position: absolute;
@@ -256,24 +281,37 @@ export const EventCarousel = component$<EventCarouselProps>(({ events, currentMo
 
   return (
     <div class="event-carousel">
-      <h3 class="carousel-title">{currentYear}년 이벤트</h3>
+      <h3 class="carousel-title">
+        {(() => {
+          const path = typeof window !== 'undefined' ? window.location.pathname : '';
+          const lang = path.split('/')[1] || 'en';
+          
+          if (lang === 'ko') {
+            return `${currentYear}년 이벤트`;
+          } else if (lang === 'ja') {
+            return `${currentYear}年のイベント`;
+          } else {
+            return `${currentYear} Events`;
+          }
+        })()}
+      </h3>
       {yearEvents.length > 0 ? (
         <div ref={containerRef} class="carousel-container">
           {yearEvents.map((event) => {
             // Highlight card when year and month match
             const isHighlight = event.year === currentYear && event.month === currentMonth;
-            
+
             return (
               <div
                 key={event.id}
                 class={`carousel-card ${isHighlight ? 'highlight' : ''}`}
               >
                 <div class="card-header">
-                  <div class="card-date">{event.month}월</div>
+                  <div class="card-date">{formatMonth(event.month)}</div>
                   <div
                     class={`card-category ${event.category}`}
                   >
-                    {event.category}
+                    {category[event.category]}
                   </div>
                 </div>
                 
