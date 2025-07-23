@@ -1,25 +1,18 @@
-import { component$, useStyles$ } from '@builder.io/qwik';
+import { component$, useStyles$ } from "@builder.io/qwik"
+import { useFormatDate } from "qwik-speak"
 
 interface TimelinePointerProps {
-  currentYear?: number;
-  currentMonth?: number;
+  currentYear?: number
+  currentMonth?: number
 }
 
 export const TimelinePointer = component$<TimelinePointerProps>(({ currentYear = 2022, currentMonth = 1 }) => {
+  const fd = useFormatDate()
+
   const formatDate = (year: number, month: number) => {
-    // Get language from pathname
-    const path = typeof window !== 'undefined' ? window.location.pathname : '';
-    const lang = path.split('/')[1] || 'en';
-    
-    if (lang === 'ko') {
-      return `${year}년 ${month}월`;
-    } else if (lang === 'ja') {
-      return `${year}年${month}月`;
-    } else {
-      const date = new Date(year, month - 1);
-      return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
-    }
-  };
+    const date = new Date(year, month - 1)
+    return fd(date, { year: "numeric", month: "long" })
+  }
   useStyles$(`
     .timeline-pointer {
       position: absolute;
@@ -78,24 +71,24 @@ export const TimelinePointer = component$<TimelinePointerProps>(({ currentYear =
       border-top: none;
       border-bottom: 30px solid var(--color-gray-800);
     }
-  `);
+  `)
 
   return (
-    <div class="timeline-pointer">
-      <div class="pointer-content">
+    <div class='timeline-pointer'>
+      <div class='pointer-content'>
         {/* Current year and month display */}
-        <div class="year-display">
-          <div class="year-label-pointer">
-            <span class="timeline-current-year">{formatDate(currentYear, currentMonth)}</span>
+        <div class='year-display'>
+          <div class='year-label-pointer'>
+            <span class='timeline-current-year'>{formatDate(currentYear, currentMonth)}</span>
           </div>
         </div>
-        
+
         {/* Main pointer triangle */}
-        <div class="pointer-triangle" />
-        
+        <div class='pointer-triangle' />
+
         {/* Vertical line below pointer */}
-        <div class="pointer-line" />
+        <div class='pointer-line' />
       </div>
     </div>
-  );
-});
+  )
+})

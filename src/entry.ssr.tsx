@@ -10,15 +10,13 @@
  * - npm run build
  *
  */
-import {
-  renderToStream,
-  type RenderToStreamOptions,
-} from '@builder.io/qwik/server';
-import { manifest } from '@qwik-client-manifest';
-import Root from './root';
-import { isDev } from '@builder.io/qwik/build';
-import type { RenderOptions } from '@builder.io/qwik/server';
-import { config } from './lib/i18n/speak-config';
+
+import { isDev } from "@builder.io/qwik/build"
+import type { RenderOptions } from "@builder.io/qwik/server"
+import { type RenderToStreamOptions, renderToStream } from "@builder.io/qwik/server"
+import { manifest } from "@qwik-client-manifest"
+import { config } from "./lib/i18n/speak-config"
+import Root from "./root"
 
 /**
  * Determine the base URL to use for loading the chunks in the browser.
@@ -27,9 +25,9 @@ import { config } from './lib/i18n/speak-config';
  */
 export function extractBase({ serverData }: RenderOptions): string {
   if (!isDev && serverData?.locale) {
-    return '/build/' + serverData.locale;
+    return "/build/" + serverData.locale
   } else {
-    return '/build';
+    return "/build"
   }
 }
 
@@ -42,10 +40,10 @@ export default function (opts: RenderToStreamOptions) {
     // Use container attributes to set attributes on the html tag.
     containerAttributes: {
       lang: opts.serverData?.locale || config.defaultLocale.lang,
-      ...opts.containerAttributes,
+      ...opts.containerAttributes
     },
     serverData: {
-      ...opts.serverData,
-    },
-  });
+      ...opts.serverData
+    }
+  })
 }

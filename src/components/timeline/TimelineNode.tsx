@@ -1,32 +1,23 @@
-import { component$, useSignal, useVisibleTask$, useStyles$ } from '@builder.io/qwik';
-import { inlineTranslate } from 'qwik-speak';
-import type { TimelineEvent } from '~/types/timeline';
+import { component$, useSignal, useStyles$, useVisibleTask$ } from "@builder.io/qwik"
+import { inlineTranslate, useFormatDate } from "qwik-speak"
+import type { TimelineEvent } from "~/types/timeline"
 
 interface TimelineNodeProps {
-  event: TimelineEvent;
-  index: number;
-  currentYear?: number;
-  currentMonth?: number;
+  event: TimelineEvent
+  index: number
+  currentYear?: number
+  currentMonth?: number
 }
 
 export const TimelineNode = component$<TimelineNodeProps>(({ event, index, currentYear, currentMonth }) => {
-  const t = inlineTranslate();
-  
+  const _t = inlineTranslate()
+  const fd = useFormatDate()
+
   const formatDate = (year: number, month: number) => {
-    // Get language from pathname
-    const path = typeof window !== 'undefined' ? window.location.pathname : '';
-    const lang = path.split('/')[1] || 'en';
-    
-    if (lang === 'ko') {
-      return `${year}년 ${month}월`;
-    } else if (lang === 'ja') {
-      return `${year}年${month}月`;
-    } else {
-      const date = new Date(year, month - 1);
-      return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
-    }
-  };
-  
+    const date = new Date(year, month - 1)
+    return fd(date, { year: "numeric", month: "long" })
+  }
+
   useStyles$(`
     .timeline-node {
       position: absolute;
@@ -108,67 +99,64 @@ export const TimelineNode = component$<TimelineNodeProps>(({ event, index, curre
     .timeline-node.hovered .category-indicator {
       opacity: 1;
     }
-  `);
+  `)
 
-  const nodeRef = useSignal<HTMLElement>();
-  const isHovered = useSignal(false);
-  
+  const nodeRef = useSignal<HTMLElement>()
+  const isHovered = useSignal(false)
+
   // Check if this node should be highlighted based on current month/year
-  const isHighlighted = currentYear === event.year && currentMonth === event.month;
+  const isHighlighted = currentYear === event.year && currentMonth === event.month
 
   // Category colors
   const categoryColors = {
-    education: 'var(--color-blue-500)',
-    work: 'var(--color-green-500)',
-    project: 'var(--color-purple-500)',
-    certification: 'var(--color-amber-500)',
-  };
+    education: "var(--color-blue-500)",
+    work: "var(--color-green-500)",
+    project: "var(--color-purple-500)",
+    certification: "var(--color-amber-500)"
+  }
 
-  const nodeColor = categoryColors[event.category] || 'var(--color-gray-500)';
+  const nodeColor = categoryColors[event.category] || "var(--color-gray-500)"
 
   // Calculate position on timeline
-  const monthOffset = (event.month - 1) * 100;
-  const yearOffset = (event.year - 2022) * 1200;
-  const xPosition = yearOffset + monthOffset;
+  const monthOffset = (event.month - 1) * 100
+  const yearOffset = (event.year - 2022) * 1200
+  const xPosition = yearOffset + monthOffset
 
   useVisibleTask$(() => {
-    if (!nodeRef.value) return;
+    if (!nodeRef.value) return
 
     const handleMouseEnter = () => {
-      isHovered.value = true;
-    };
+      isHovered.value = true
+    }
 
     const handleMouseLeave = () => {
-      isHovered.value = false;
-    };
+      isHovered.value = false
+    }
 
-    nodeRef.value.addEventListener('mouseenter', handleMouseEnter);
-    nodeRef.value.addEventListener('mouseleave', handleMouseLeave);
+    nodeRef.value.addEventListener("mouseenter", handleMouseEnter)
+    nodeRef.value.addEventListener("mouseleave", handleMouseLeave)
 
     return () => {
       if (nodeRef.value) {
-        nodeRef.value.removeEventListener('mouseenter', handleMouseEnter);
-        nodeRef.value.removeEventListener('mouseleave', handleMouseLeave);
+        nodeRef.value.removeEventListener("mouseenter", handleMouseEnter)
+        nodeRef.value.removeEventListener("mouseleave", handleMouseLeave)
       }
-    };
-  });
+    }
+  })
 
   return (
     <div
       ref={nodeRef}
-      class={`timeline-node ${isHighlighted ? 'highlight' : ''} ${isHovered.value ? 'hovered' : ''}`}
+      class={`timeline-node ${isHighlighted ? "highlight" : ""} ${isHovered.value ? "hovered" : ""}`}
       style={`left: calc(${xPosition}px - 9px + 50vw);`}
     >
       {/* Node circle */}
-      <div
-        class="node-circle"
-        style={`background-color: ${nodeColor};`}
-      />
+      <div class='node-circle' style={`background-color: ${nodeColor};`} />
 
       {/* Tooltip on hover */}
-      <div class="node-tooltip">
+      <div class='node-tooltip'>
         {formatDate(event.year, event.month)} - {event.title}
       </div>
     </div>
-  );
-});
+  )
+})

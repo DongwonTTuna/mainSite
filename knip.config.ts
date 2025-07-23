@@ -59,15 +59,7 @@ export default {
   ignoreDependencies: [
     // Qwik virtual modules (not actual packages)
     '@qwik-city-plan',
-    '@qwik-client-manifest',
-    
-    // TypeScript ESLint plugins used in eslint config
-    '@typescript-eslint/eslint-plugin',
-    '@typescript-eslint/parser',
-    
-    // Stylelint plugins
-    'stylelint-config-standard-scss',
-    'stylelint-prettier'
+    '@qwik-client-manifest'
   ],
   
   // Ignore specific exports

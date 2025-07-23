@@ -1,5 +1,5 @@
-import { component$, Slot } from '@builder.io/qwik';
-import { Navigation } from '~/components/ui/Navigation';
+import { component$, Slot } from "@builder.io/qwik"
+import { Navigation } from "~/components/ui/Navigation"
 
 export default component$(() => {
   return (
@@ -7,5 +7,5 @@ export default component$(() => {
       <Navigation />
       <Slot />
     </>
-  );
-});
+  )
+})

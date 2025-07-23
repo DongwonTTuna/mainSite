@@ -1,19 +1,19 @@
-import { component$, useSignal, $, useStyles$ } from '@builder.io/qwik';
-import { useLocation, useNavigate } from '@builder.io/qwik-city';
-import { languages } from '~/lib/i18n/speak-config';
-import { inlineTranslate } from 'qwik-speak';
+import { $, component$, useSignal, useStyles$ } from "@builder.io/qwik"
+import { useLocation, useNavigate } from "@builder.io/qwik-city"
+import { inlineTranslate } from "qwik-speak"
+import { languages } from "~/lib/i18n/speak-config"
 
 interface Language {
-  lang: string;
-  label: string;
-  flag: string;
+  lang: string
+  label: string
+  flag: string
 }
 
 const languageOptions: Language[] = [
-  { lang: 'en', label: 'English', flag: '🇺🇸' },
-  { lang: 'ko', label: '한국어', flag: '🇰🇷' },
-  { lang: 'ja', label: '日本語', flag: '🇯🇵' },
-];
+  { lang: "en", label: "English", flag: "🇺🇸" },
+  { lang: "ko", label: "한국어", flag: "🇰🇷" },
+  { lang: "ja", label: "日本語", flag: "🇯🇵" }
+]
 
 export const LanguageSwitch = component$(() => {
   useStyles$(`
@@ -96,83 +96,83 @@ export const LanguageSwitch = component$(() => {
       margin-left: auto;
       color: #10b981;
     }
-  `);
+  `)
 
-  const t = inlineTranslate();
-  const location = useLocation();
-  const navigate = useNavigate();
-  const isOpen = useSignal(false);
-  
-  const currentLang = location.url.pathname.split('/')[1] || 'en';
-  const currentLanguage = languageOptions.find(lang => lang.lang === currentLang) || languageOptions[0];
+  const t = inlineTranslate()
+  const location = useLocation()
+  const _navigate = useNavigate()
+  const isOpen = useSignal(false)
+
+  const currentLang = location.url.pathname.split("/")[1] || "en"
+  const currentLanguage = languageOptions.find((lang) => lang.lang === currentLang) || languageOptions[0]
 
   const toggleDropdown = $(() => {
-    isOpen.value = !isOpen.value;
-  });
+    isOpen.value = !isOpen.value
+  })
 
   const selectLanguage = $((lang: string) => {
-    const currentPath = location.url.pathname;
-    const pathParts = currentPath.split('/');
-    pathParts[1] = lang;
-    const newPath = pathParts.join('/');
-    
+    const currentPath = location.url.pathname
+    const pathParts = currentPath.split("/")
+    pathParts[1] = lang
+    const newPath = pathParts.join("/")
+
     // 페이지 새로고침으로 언어 변경
-    window.location.href = newPath;
-  });
+    window.location.href = newPath
+  })
 
   return (
-    <div class="language-switch">
+    <div class='language-switch'>
       <button
-        class="language-button"
+        class='language-button'
         onClick$={toggleDropdown}
-        aria-label={t('app.aria.language_selector')}
+        aria-label={t("app.aria.language_selector")}
         aria-expanded={isOpen.value}
       >
-        <span class="language-flag">{currentLanguage.flag}</span>
-        <span class="language-label">{currentLanguage.label}</span>
+        <span class='language-flag'>{currentLanguage.flag}</span>
+        <span class='language-label'>{currentLanguage.label}</span>
         <svg
-          class={`chevron ${isOpen.value ? 'is-open' : ''}`}
-          width="12"
-          height="12"
-          viewBox="0 0 12 12"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
+          class={`chevron ${isOpen.value ? "is-open" : ""}`}
+          width='12'
+          height='12'
+          viewBox='0 0 12 12'
+          fill='none'
+          xmlns='http://www.w3.org/2000/svg'
         >
           <path
-            d="M3 4.5L6 7.5L9 4.5"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            d='M3 4.5L6 7.5L9 4.5'
+            stroke='currentColor'
+            stroke-width='2'
+            stroke-linecap='round'
+            stroke-linejoin='round'
           />
         </svg>
       </button>
 
       {isOpen.value && (
-        <div class="language-dropdown">
-          {languageOptions.map(option => (
+        <div class='language-dropdown'>
+          {languageOptions.map((option) => (
             <button
               key={option.lang}
-              class={`language-option ${option.lang === currentLang ? 'is-active' : ''}`}
+              class={`language-option ${option.lang === currentLang ? "is-active" : ""}`}
               onClick$={() => selectLanguage(option.lang)}
             >
-              <span class="language-flag">{option.flag}</span>
-              <span class="language-label">{option.label}</span>
+              <span class='language-flag'>{option.flag}</span>
+              <span class='language-label'>{option.label}</span>
               {option.lang === currentLang && (
                 <svg
-                  class="check-icon"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
+                  class='check-icon'
+                  width='16'
+                  height='16'
+                  viewBox='0 0 16 16'
+                  fill='none'
+                  xmlns='http://www.w3.org/2000/svg'
                 >
                   <path
-                    d="M13.5 4.5L6 12L2.5 8.5"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    d='M13.5 4.5L6 12L2.5 8.5'
+                    stroke='currentColor'
+                    stroke-width='2'
+                    stroke-linecap='round'
+                    stroke-linejoin='round'
                   />
                 </svg>
               )}
@@ -180,7 +180,6 @@ export const LanguageSwitch = component$(() => {
           ))}
         </div>
       )}
-
     </div>
-  );
-});
+  )
+})

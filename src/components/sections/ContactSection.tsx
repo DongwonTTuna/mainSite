@@ -1,10 +1,10 @@
-import { component$, useSignal, useVisibleTask$, useStyles$ } from '@builder.io/qwik';
-import { inlineTranslate } from 'qwik-speak';
-import { personalInfo } from '~/data/personal-info';
-import { SocialLinks } from '~/components/ui/SocialLinks';
+import { component$, useSignal, useStyles$, useVisibleTask$ } from "@builder.io/qwik"
+import { inlineTranslate } from "qwik-speak"
+import { SocialLinks } from "~/components/ui/SocialLinks"
+import { personalInfo } from "~/data/personal-info"
 
 export const ContactSection = component$(() => {
-  const t = inlineTranslate();
+  const t = inlineTranslate()
   useStyles$(`
     .contact-section {
       position: relative;
@@ -129,79 +129,85 @@ export const ContactSection = component$(() => {
         padding: 0 2rem;
       }
     }
-  `);
+  `)
 
-  const sectionRef = useSignal<HTMLElement>();
-  const headlineRef = useSignal<HTMLElement>();
-  const emailRef = useSignal<HTMLElement>();
-  const socialRef = useSignal<HTMLElement>();
-  const messageRef = useSignal<HTMLElement>();
+  const sectionRef = useSignal<HTMLElement>()
+  const headlineRef = useSignal<HTMLElement>()
+  const emailRef = useSignal<HTMLElement>()
+  const socialRef = useSignal<HTMLElement>()
+  const messageRef = useSignal<HTMLElement>()
 
   useVisibleTask$(async () => {
-    const { gsap } = await import('gsap');
-    const { ScrollTrigger } = await import('gsap/ScrollTrigger');
-    
-    gsap.registerPlugin(ScrollTrigger);
-    
-    if (!sectionRef.value) return;
+    const { gsap } = await import("gsap")
+    const { ScrollTrigger } = await import("gsap/ScrollTrigger")
+
+    gsap.registerPlugin(ScrollTrigger)
+
+    if (!sectionRef.value) return
 
     // Animate elements on scroll
-    const elements = [
-      headlineRef.value,
-      emailRef.value,
-      socialRef.value,
-      messageRef.value
-    ].filter(Boolean);
+    const elements = [headlineRef.value, emailRef.value, socialRef.value, messageRef.value].filter(Boolean)
 
     gsap.from(elements, {
       opacity: 0,
       y: 30,
       duration: 0.8,
       stagger: 0.2,
-      ease: 'power3.out',
+      ease: "power3.out",
       scrollTrigger: {
         trigger: sectionRef.value,
-        start: 'top 80%',
-        end: 'top 50%',
-        toggleActions: 'play none none reverse'
+        start: "top 80%",
+        end: "top 50%",
+        toggleActions: "play none none reverse"
       }
-    });
-  });
+    })
+  })
 
   return (
-    <section ref={sectionRef} id="contact" class="contact-section">
-      <div class="contact-container">
+    <section ref={sectionRef} id='contact' class='contact-section'>
+      <div class='contact-container'>
         {/* Headline */}
-        <h2 ref={headlineRef} class="contact-headline">
-          {t('app.contact.title')}
+        <h2 ref={headlineRef} class='contact-headline'>
+          {t("app.contact.title")}
         </h2>
 
         {/* Email */}
-        <div ref={emailRef} class="email-section">
-          <a href={`mailto:${personalInfo.email}`} class="email-link">
-            <svg class="email-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+        <div ref={emailRef} class='email-section'>
+          <a href={`mailto:${personalInfo.email}`} class='email-link'>
+            <svg
+              class='email-icon'
+              fill='none'
+              stroke='currentColor'
+              viewBox='0 0 24 24'
+              xmlns='http://www.w3.org/2000/svg'
+            >
+              <path
+                stroke-linecap='round'
+                stroke-linejoin='round'
+                stroke-width='2'
+                d='M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'
+              />
             </svg>
-            <span class="email-text">{personalInfo.email}</span>
+            <span class='email-text'>{personalInfo.email}</span>
           </a>
         </div>
 
         {/* Social Links */}
-        <div ref={socialRef} class="social-section">
-          <SocialLinks variant="center" size="large" />
+        <div ref={socialRef} class='social-section'>
+          <SocialLinks variant='center' size='large' />
         </div>
 
         {/* Thank you message */}
-        <p ref={messageRef} class="message-section">
-          {t('app.contact.message')}
+        <p ref={messageRef} class='message-section'>
+          {t("app.contact.message")}
         </p>
 
         {/* Background decoration */}
-        <div class="bg-decoration">
-          <div class="decoration-circle-1" />
-          <div class="decoration-circle-2" />
+        <div class='bg-decoration'>
+          <div class='decoration-circle-1' />
+          <div class='decoration-circle-2' />
         </div>
       </div>
     </section>
-  );
-});
+  )
+})

@@ -124,6 +124,7 @@
       "project": "プロジェクト",
       "certification": "資格"
     },
+    "timeline_events_year": "{{year}}年のイベント",
     "timeline_events": {
       "tit_2022_04": {
         "title": "東京情報クリエイター工学院入学",

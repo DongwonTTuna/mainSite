@@ -1,10 +1,10 @@
-import { component$, useSignal, useVisibleTask$, useStyles$ } from '@builder.io/qwik';
-import { inlineTranslate } from 'qwik-speak';
-import { SocialLinks } from '~/components/ui/SocialLinks';
-import { ScrollIndicator } from '~/components/ui/ScrollIndicator';
-import { IntroBio } from './IntroBio';
-import { IntroSkills } from './IntroSkills';
-import { IntroCTA } from './IntroCTA';
+import { component$, useSignal, useStyles$, useVisibleTask$ } from "@builder.io/qwik"
+import { inlineTranslate } from "qwik-speak"
+import { ScrollIndicator } from "~/components/ui/ScrollIndicator"
+import { SocialLinks } from "~/components/ui/SocialLinks"
+import { IntroBio } from "./IntroBio"
+import { IntroCTA } from "./IntroCTA"
+import { IntroSkills } from "./IntroSkills"
 
 export const FirstView = component$(() => {
   useStyles$(`
@@ -259,152 +259,172 @@ export const FirstView = component$(() => {
         border: 1px solid rgba(255, 255, 255, 0.2);
       }
     }
-  `);
+  `)
 
-  const containerRef = useSignal<HTMLElement>();
-  const greetingRef = useSignal<HTMLElement>();
-  const nameRef = useSignal<HTMLElement>();
-  const titleRef = useSignal<HTMLElement>();
-  const socialRef = useSignal<HTMLElement>();
-  const scrollRef = useSignal<HTMLElement>();
-  const heroContentRef = useSignal<HTMLElement>();
-  const particlesRef = useSignal<HTMLElement>();
-  const t = inlineTranslate();
+  const containerRef = useSignal<HTMLElement>()
+  const greetingRef = useSignal<HTMLElement>()
+  const nameRef = useSignal<HTMLElement>()
+  const titleRef = useSignal<HTMLElement>()
+  const socialRef = useSignal<HTMLElement>()
+  const scrollRef = useSignal<HTMLElement>()
+  const heroContentRef = useSignal<HTMLElement>()
+  const particlesRef = useSignal<HTMLElement>()
+  const t = inlineTranslate()
 
   // Advanced GSAP animations
   useVisibleTask$(async () => {
-    const { gsap } = await import('gsap');
-    
-    if (!containerRef.value) return;
+    const { gsap } = await import("gsap")
+
+    if (!containerRef.value) return
 
     // Create particles
     if (particlesRef.value) {
       for (let i = 0; i < 50; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        particle.style.left = `${Math.random() * 100}%`;
-        particle.style.animationDelay = `${Math.random() * 10}s`;
-        particle.style.animationDuration = `${10 + Math.random() * 10}s`;
-        particlesRef.value.appendChild(particle);
+        const particle = document.createElement("div")
+        particle.className = "particle"
+        particle.style.left = `${Math.random() * 100}%`
+        particle.style.animationDelay = `${Math.random() * 10}s`
+        particle.style.animationDuration = `${10 + Math.random() * 10}s`
+        particlesRef.value.appendChild(particle)
       }
     }
 
     // Set initial states
-    gsap.set([heroContentRef.value], { opacity: 0, scale: 0.9 });
-    gsap.set([greetingRef.value, nameRef.value, titleRef.value], { opacity: 0, y: 30 });
-    gsap.set(socialRef.value, { opacity: 0, y: 20 });
-    gsap.set(scrollRef.value, { opacity: 0 });
+    gsap.set([heroContentRef.value], { opacity: 0, scale: 0.9 })
+    gsap.set([greetingRef.value, nameRef.value, titleRef.value], { opacity: 0, y: 30 })
+    gsap.set(socialRef.value, { opacity: 0, y: 20 })
+    gsap.set(scrollRef.value, { opacity: 0 })
 
     // Create advanced timeline animation
-    const tl = gsap.timeline({ 
-      defaults: { ease: 'power3.out' },
+    const tl = gsap.timeline({
+      defaults: { ease: "power3.out" },
       onComplete: () => {
         // Add hover animations after initial load
         if (titleRef.value) {
-          titleRef.value.classList.add('active');
+          titleRef.value.classList.add("active")
         }
       }
-    });
+    })
 
     // Hero content glass card animation
     tl.to(heroContentRef.value, {
       opacity: 1,
       scale: 1,
       duration: 1.2,
-      ease: 'back.out(1.7)',
+      ease: "back.out(1.7)"
     })
-    // Text animations with stagger
-    .to(greetingRef.value, {
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-    }, '-=0.6')
-    .to(nameRef.value, {
-      opacity: 1,
-      y: 0,
-      duration: 1,
-      ease: 'power4.out',
-    }, '-=0.5')
-    .to(titleRef.value, {
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-    }, '-=0.5')
-    .to(socialRef.value, {
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-    }, '-=0.4')
-    .to(scrollRef.value, {
-      opacity: 1,
-      duration: 1,
-    }, '-=0.2');
+      // Text animations with stagger
+      .to(
+        greetingRef.value,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8
+        },
+        "-=0.6"
+      )
+      .to(
+        nameRef.value,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          ease: "power4.out"
+        },
+        "-=0.5"
+      )
+      .to(
+        titleRef.value,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8
+        },
+        "-=0.5"
+      )
+      .to(
+        socialRef.value,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8
+        },
+        "-=0.4"
+      )
+      .to(
+        scrollRef.value,
+        {
+          opacity: 1,
+          duration: 1
+        },
+        "-=0.2"
+      )
 
     // Morph animations for background
-    gsap.to('.morph-gradient', {
-      x: 'random(-100, 100)',
-      y: 'random(-100, 100)',
+    gsap.to(".morph-gradient", {
+      x: "random(-100, 100)",
+      y: "random(-100, 100)",
       duration: 20,
       repeat: -1,
       yoyo: true,
-      ease: 'sine.inOut',
+      ease: "sine.inOut",
       stagger: {
         each: 5,
-        from: 'random'
+        from: "random"
       }
-    });
-  });
+    })
+  })
 
   return (
-    <section ref={containerRef} class="first-view">
+    <section ref={containerRef} class='first-view'>
       {/* Advanced gradient overlay */}
-      <div class="gradient-overlay" />
-      
+      <div class='gradient-overlay' />
+
       {/* Morphing gradient backgrounds */}
-      <div class="animated-bg">
-        <div class="morph-gradient morph-gradient-1" />
-        <div class="morph-gradient morph-gradient-2" />
-        <div class="morph-gradient morph-gradient-3" />
+      <div class='animated-bg'>
+        <div class='morph-gradient morph-gradient-1' />
+        <div class='morph-gradient morph-gradient-2' />
+        <div class='morph-gradient morph-gradient-3' />
       </div>
 
       {/* Particle effects */}
-      <div ref={particlesRef} class="particles" />
+      <div ref={particlesRef} class='particles' />
 
       {/* Hero section with glass morphism content */}
-      <div class="hero-section">
-        <div class="content-wrapper">
-          <div ref={heroContentRef} class="hero-content">
-            <p ref={greetingRef} class="hero-greeting">
-              {t('app.intro.greeting')}
-            </p>
-            
-            <h1 ref={nameRef} class="hero-name">
-              {t('app.hero.name')}
-            </h1>
-            
-            <p ref={titleRef} class="hero-title">
-              {t('app.hero.role')}
+      <div class='hero-section'>
+        <div class='content-wrapper'>
+          <div ref={heroContentRef} class='hero-content'>
+            <p ref={greetingRef} class='hero-greeting'>
+              {t("app.intro.greeting")}
             </p>
 
-            <div ref={socialRef} class="social-wrapper">
-              <SocialLinks variant="center" size="large" />
+            <h1 ref={nameRef} class='hero-name'>
+              {t("app.hero.name")}
+            </h1>
+
+            <p ref={titleRef} class='hero-title'>
+              {t("app.hero.role")}
+            </p>
+
+            <div ref={socialRef} class='social-wrapper'>
+              <SocialLinks variant='center' size='large' />
             </div>
           </div>
         </div>
 
         {/* Enhanced scroll indicator */}
-        <div ref={scrollRef} class="scroll-indicator-wrapper">
+        <div ref={scrollRef} class='scroll-indicator-wrapper'>
           <ScrollIndicator />
         </div>
       </div>
 
       {/* Introduction sections with enhanced styling */}
-      <div class="intro-sections" id="about">
-        <h2 class="intro-title">{t('app.intro.title')}</h2>
-        <IntroBio/>
-        <IntroSkills/>
-        <IntroCTA/>
+      <div class='intro-sections' id='about'>
+        <h2 class='intro-title'>{t("app.intro.title")}</h2>
+        <IntroBio />
+        <IntroSkills />
+        <IntroCTA />
       </div>
     </section>
-  );
-});
+  )
+})

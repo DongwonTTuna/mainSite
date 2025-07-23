@@ -1,38 +1,30 @@
-import { component$, useSignal, useVisibleTask$, useStyles$ } from '@builder.io/qwik';
-import { inlineTranslate } from 'qwik-speak';
-import type { TimelineEvent } from '~/types/timeline';
+import { component$, useSignal, useStyles$, useVisibleTask$ } from "@builder.io/qwik"
+import { inlineTranslate, useFormatDate } from "qwik-speak"
+import type { TimelineEvent } from "~/types/timeline"
 
 interface EventCarouselProps {
-  events: TimelineEvent[];
-  currentMonth: number;
-  currentYear: number;
+  events: TimelineEvent[]
+  currentMonth: number
+  currentYear: number
 }
 
 export const EventCarousel = component$<EventCarouselProps>(({ events, currentMonth, currentYear }) => {
-  const t = inlineTranslate();
+  const t = inlineTranslate()
 
   const category = {
-    education: t('app.timeline_categories.education'),
-    work: t('app.timeline_categories.work'),
-    project: t('app.timeline_categories.project'),
-    certification: t('app.timeline_categories.certification'),
+    education: t("app.timeline_categories.education"),
+    work: t("app.timeline_categories.work"),
+    project: t("app.timeline_categories.project"),
+    certification: t("app.timeline_categories.certification")
   }
-  
+
+  const fd = useFormatDate()
+
   const formatMonth = (month: number) => {
-    // Get language from pathname
-    const path = typeof window !== 'undefined' ? window.location.pathname : '';
-    const lang = path.split('/')[1] || 'en';
-    
-    if (lang === 'ko') {
-      return `${month}월`;
-    } else if (lang === 'ja') {
-      return `${month}月`;
-    } else {
-      const date = new Date(2022, month - 1);
-      return date.toLocaleDateString('en-US', { month: 'short' });
-    }
-  };
-  
+    const date = new Date(2022, month - 1)
+    return fd(date, { month: "short" })
+  }
+
   useStyles$(`
     .event-carousel {
       position: absolute;
@@ -220,147 +212,113 @@ export const EventCarousel = component$<EventCarouselProps>(({ events, currentMo
         font-size: 1.25rem;
       }
     }
-  `);
+  `)
 
-  const containerRef = useSignal<HTMLElement>();
-  const prevMonthRef = useSignal<number>(currentMonth);
-  const prevYearRef = useSignal<number>(currentYear);
+  const containerRef = useSignal<HTMLElement>()
+  const prevMonthRef = useSignal<number>(currentMonth)
+  const prevYearRef = useSignal<number>(currentYear)
 
   // Filter events for current year - ensure events is defined
-  const yearEvents = events?.filter(event => event.year === currentYear) || [];
+  const yearEvents = events?.filter((event) => event.year === currentYear) || []
 
   useVisibleTask$(({ track }) => {
-    track(() => currentMonth);
-    track(() => currentYear);
-    
-    if (!containerRef.value) return;
-    
+    track(() => currentMonth)
+    track(() => currentYear)
+
+    if (!containerRef.value) return
+
     // Only process if month or year actually changed
-    if (prevMonthRef.value === currentMonth && prevYearRef.value === currentYear) return;
-    prevMonthRef.value = currentMonth;
-    prevYearRef.value = currentYear;
+    if (prevMonthRef.value === currentMonth && prevYearRef.value === currentYear) return
+    prevMonthRef.value = currentMonth
+    prevYearRef.value = currentYear
 
     // Delay to ensure DOM updates
     setTimeout(() => {
-      const highlightedCard = containerRef.value.querySelector('.carousel-card.highlight') as HTMLElement;
-      if (!highlightedCard) return;
+      const highlightedCard = containerRef.value.querySelector(".carousel-card.highlight") as HTMLElement
+      if (!highlightedCard) return
 
-      const container = containerRef.value;
-      const containerRect = container.getBoundingClientRect();
-      const cardRect = highlightedCard.getBoundingClientRect();
-      
+      const container = containerRef.value
+      const containerRect = container.getBoundingClientRect()
+      const cardRect = highlightedCard.getBoundingClientRect()
+
       // Check if card is fully visible
-      const isFullyVisible = 
-        cardRect.left >= containerRect.left && 
-        cardRect.right <= containerRect.right;
-      
+      const isFullyVisible = cardRect.left >= containerRect.left && cardRect.right <= containerRect.right
+
       // Only scroll if card is not fully visible
       if (!isFullyVisible) {
-        const cardOffsetLeft = highlightedCard.offsetLeft;
-        const cardWidth = highlightedCard.offsetWidth;
-        const containerWidth = container.offsetWidth;
-        const currentScroll = container.scrollLeft;
-        
+        const cardOffsetLeft = highlightedCard.offsetLeft
+        const cardWidth = highlightedCard.offsetWidth
+        const containerWidth = container.offsetWidth
+        const _currentScroll = container.scrollLeft
+
         // Calculate minimal scroll needed
         if (cardRect.left < containerRect.left) {
           // Card is hidden on the left - scroll just enough to show it
-          container.scrollTo({ 
+          container.scrollTo({
             left: cardOffsetLeft - 20, // 20px padding
-            behavior: 'smooth' 
-          });
+            behavior: "smooth"
+          })
         } else if (cardRect.right > containerRect.right) {
           // Card is hidden on the right - scroll just enough to show it
-          container.scrollTo({ 
+          container.scrollTo({
             left: cardOffsetLeft - containerWidth + cardWidth + 20, // 20px padding
-            behavior: 'smooth' 
-          });
+            behavior: "smooth"
+          })
         }
       }
-    }, 100);
-  });
+    }, 100)
+  })
 
   return (
-    <div class="event-carousel">
-      <h3 class="carousel-title">
-        {(() => {
-          const path = typeof window !== 'undefined' ? window.location.pathname : '';
-          const lang = path.split('/')[1] || 'en';
-          
-          if (lang === 'ko') {
-            return `${currentYear}년 이벤트`;
-          } else if (lang === 'ja') {
-            return `${currentYear}年のイベント`;
-          } else {
-            return `${currentYear} Events`;
-          }
-        })()}
-      </h3>
+    <div class='event-carousel'>
+      <h3 class='carousel-title'>{t("app.timeline_events_year", { year: currentYear })}</h3>
       {yearEvents.length > 0 ? (
-        <div ref={containerRef} class="carousel-container">
+        <div ref={containerRef} class='carousel-container'>
           {yearEvents.map((event) => {
             // Highlight card when year and month match
-            const isHighlight = event.year === currentYear && event.month === currentMonth;
+            const isHighlight = event.year === currentYear && event.month === currentMonth
 
             return (
-              <div
-                key={event.id}
-                class={`carousel-card ${isHighlight ? 'highlight' : ''}`}
-              >
-                <div class="card-header">
-                  <div class="card-date">{formatMonth(event.month)}</div>
-                  <div
-                    class={`card-category ${event.category}`}
-                  >
-                    {category[event.category]}
-                  </div>
+              <div key={event.id} class={`carousel-card ${isHighlight ? "highlight" : ""}`}>
+                <div class='card-header'>
+                  <div class='card-date'>{formatMonth(event.month)}</div>
+                  <div class={`card-category ${event.category}`}>{category[event.category]}</div>
                 </div>
-                
-                <h4 class="card-title">{event.title}</h4>
-                <p class="card-description">{event.description}</p>
-                
+
+                <h4 class='card-title'>{event.title}</h4>
+                <p class='card-description'>{event.description}</p>
+
                 {event.techStack && event.techStack.length > 0 && (
-                  <div class="card-tech-stack">
+                  <div class='card-tech-stack'>
                     {event.techStack.slice(0, 4).map((tech) => (
-                      <span key={tech} class="tech-tag">
+                      <span key={tech} class='tech-tag'>
                         {tech}
                       </span>
                     ))}
                   </div>
                 )}
-                
+
                 {event.links && (
-                  <div class="card-links">
+                  <div class='card-links'>
                     {event.links.github && (
-                      <a
-                        href={event.links.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="card-link"
-                      >
+                      <a href={event.links.github} target='_blank' rel='noopener noreferrer' class='card-link'>
                         GitHub →
                       </a>
                     )}
                     {event.links.live && (
-                      <a
-                        href={event.links.live}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="card-link"
-                      >
+                      <a href={event.links.live} target='_blank' rel='noopener noreferrer' class='card-link'>
                         Live →
                       </a>
                     )}
                   </div>
                 )}
               </div>
-            );
+            )
           })}
         </div>
       ) : (
-        <div class="no-events">
-          {currentYear}년에는 이벤트가 없습니다.
-        </div>
+        <div class='no-events'>{currentYear}년에는 이벤트가 없습니다.</div>
       )}
     </div>
-  );
-});
+  )
+})

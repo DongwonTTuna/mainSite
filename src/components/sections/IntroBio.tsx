@@ -1,13 +1,13 @@
-import { component$, useVisibleTask$, useSignal, useStyles$ } from '@builder.io/qwik';
-import { inlineTranslate } from 'qwik-speak';
+import { component$, useSignal, useStyles$, useVisibleTask$ } from "@builder.io/qwik"
+import { inlineTranslate } from "qwik-speak"
 
 interface IntroBioProps {
-  class?: string;
+  class?: string
 }
 
 export const IntroBio = component$<IntroBioProps>((props) => {
-  const containerRef = useSignal<HTMLDivElement>();
-  const t = inlineTranslate();
+  const containerRef = useSignal<HTMLDivElement>()
+  const t = inlineTranslate()
 
   useStyles$(`
     .intro-bio {
@@ -48,48 +48,48 @@ export const IntroBio = component$<IntroBioProps>((props) => {
         font-size: 1rem;
       }
     }
-  `);
+  `)
 
   useVisibleTask$(() => {
-    if (!containerRef.value) return;
+    if (!containerRef.value) return
 
     const loadGSAP = async () => {
-      const { gsap } = await import('gsap');
-      
+      const { gsap } = await import("gsap")
+
       // Animate bio lines with stagger
       gsap.fromTo(
-        '.bio-line',
+        ".bio-line",
         {
           y: 20,
-          opacity: 0,
+          opacity: 0
         },
         {
           y: 0,
           opacity: 1,
           duration: 0.8,
           stagger: 0.2,
-          ease: 'power2.out',
+          ease: "power2.out"
         }
-      );
+      )
 
       // Overall content fade in
-      gsap.to('.bio-content', {
+      gsap.to(".bio-content", {
         opacity: 1,
         duration: 1,
-        ease: 'power2.out',
-      });
-    };
+        ease: "power2.out"
+      })
+    }
 
-    loadGSAP();
-  });
+    loadGSAP()
+  })
 
   return (
-    <div ref={containerRef} class={`intro-bio ${props.class || ''}`}>
-      <div class="bio-content">
-        <span class="bio-line">{t('app.intro.bio.line1')}</span>
-        <span class="bio-line">{t('app.intro.bio.line2')}</span>
-        <span class="bio-line">{t('app.intro.bio.line3')}</span>
+    <div ref={containerRef} class={`intro-bio ${props.class || ""}`}>
+      <div class='bio-content'>
+        <span class='bio-line'>{t("app.intro.bio.line1")}</span>
+        <span class='bio-line'>{t("app.intro.bio.line2")}</span>
+        <span class='bio-line'>{t("app.intro.bio.line3")}</span>
       </div>
     </div>
-  );
-});
+  )
+})

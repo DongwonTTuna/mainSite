@@ -1,18 +1,18 @@
-import { component$, useSignal, $, useStyles$ } from '@builder.io/qwik';
-import { Link, useLocation } from '@builder.io/qwik-city';
-import { inlineTranslate } from 'qwik-speak';
-import { LanguageSwitch } from './LanguageSwitch';
+import { $, component$, useSignal, useStyles$ } from "@builder.io/qwik"
+import { Link, useLocation } from "@builder.io/qwik-city"
+import { inlineTranslate } from "qwik-speak"
+import { LanguageSwitch } from "./LanguageSwitch"
 
 interface NavItem {
-  key: string;
-  href: string;
+  key: string
+  href: string
 }
 
 export const Navigation = component$(() => {
-  const t = inlineTranslate();
-  const location = useLocation();
-  const isMenuOpen = useSignal(false);
-  const currentLang = location.url.pathname.split('/')[1] || 'en';
+  const t = inlineTranslate()
+  const location = useLocation()
+  const isMenuOpen = useSignal(false)
+  const currentLang = location.url.pathname.split("/")[1] || "en"
 
   useStyles$(`
     .navigation {
@@ -136,36 +136,36 @@ export const Navigation = component$(() => {
         border-top: 1px solid #eee;
       }
     }
-  `);
+  `)
 
   const navItems: NavItem[] = [
-    { key: 'home', href: `/${currentLang}/` },
-    { key: 'about', href: `/${currentLang}/#about` },
-    { key: 'projects', href: `/${currentLang}/#projects` },
-    { key: 'contact', href: `/${currentLang}/#contact` },
-  ];
+    { key: "home", href: `/${currentLang}/` },
+    { key: "about", href: `/${currentLang}/#about` },
+    { key: "projects", href: `/${currentLang}/#projects` },
+    { key: "contact", href: `/${currentLang}/#contact` }
+  ]
 
   const toggleMenu = $(() => {
-    isMenuOpen.value = !isMenuOpen.value;
-  });
+    isMenuOpen.value = !isMenuOpen.value
+  })
 
   return (
-    <nav class="navigation" role="navigation">
-      <div class="container">
-        <div class="nav-wrapper">
+    <nav class='navigation' role='navigation'>
+      <div class='container'>
+        <div class='nav-wrapper'>
           {/* Logo/Brand */}
-          <Link href={`/${currentLang}/`} class="nav-brand">
-            <span class="brand-text">Lee Dongwon</span>
+          <Link href={`/${currentLang}/`} class='nav-brand'>
+            <span class='brand-text'>Lee Dongwon</span>
           </Link>
 
           {/* Mobile Menu Toggle */}
           <button
-            class="menu-toggle"
+            class='menu-toggle'
             onClick$={toggleMenu}
-            aria-label={t('app.aria.menu_toggle')}
+            aria-label={t("app.aria.menu_toggle")}
             aria-expanded={isMenuOpen.value}
           >
-            <span class="hamburger">
+            <span class='hamburger'>
               <span></span>
               <span></span>
               <span></span>
@@ -173,14 +173,11 @@ export const Navigation = component$(() => {
           </button>
 
           {/* Navigation Menu */}
-          <div class={`nav-menu ${isMenuOpen.value ? 'is-active' : ''}`}>
-            <ul class="nav-list">
-              {navItems.map(item => (
-                <li key={item.key} class="nav-item">
-                  <Link
-                    href={item.href}
-                    class={`nav-link ${location.url.pathname === item.href ? 'is-active' : ''}`}
-                  >
+          <div class={`nav-menu ${isMenuOpen.value ? "is-active" : ""}`}>
+            <ul class='nav-list'>
+              {navItems.map((item) => (
+                <li key={item.key} class='nav-item'>
+                  <Link href={item.href} class={`nav-link ${location.url.pathname === item.href ? "is-active" : ""}`}>
                     {t(`app.nav.${item.key}`)}
                   </Link>
                 </li>
@@ -188,12 +185,12 @@ export const Navigation = component$(() => {
             </ul>
 
             {/* Language Switcher */}
-            <div class="nav-actions">
+            <div class='nav-actions'>
               <LanguageSwitch />
             </div>
           </div>
         </div>
       </div>
     </nav>
-  );
-});
+  )
+})

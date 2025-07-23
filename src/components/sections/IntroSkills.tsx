@@ -1,52 +1,52 @@
-import { component$, useVisibleTask$, useSignal, useStyles$ } from '@builder.io/qwik';
-import { inlineTranslate } from 'qwik-speak';
-import { SkillIcon } from '~/components/icons/skills/SkillIcon';
+import { component$, useSignal, useStyles$, useVisibleTask$ } from "@builder.io/qwik"
+import { inlineTranslate } from "qwik-speak"
+import { SkillIcon } from "~/components/icons/skills/SkillIcon"
 
 interface IntroSkillsProps {
-  class?: string;
+  class?: string
 }
 
-type SkillCategory = 'frontend' | 'backend' | 'cloud' | 'tools';
+type SkillCategory = "frontend" | "backend" | "cloud" | "tools"
 
 interface Skill {
-  key: string;
-  category: SkillCategory;
+  key: string
+  category: SkillCategory
 }
 
 // Skill data with SVG icons for each technology
 const skills: Skill[] = [
   // Frontend Technologies
-  { key: 'react', category: 'frontend' },
-  { key: 'svelte', category: 'frontend' },
-  { key: 'qwik', category: 'frontend' },
-  { key: 'typescript', category: 'frontend' },
+  { key: "react", category: "frontend" },
+  { key: "svelte", category: "frontend" },
+  { key: "qwik", category: "frontend" },
+  { key: "typescript", category: "frontend" },
 
   // Backend Technologies
-  { key: 'python', category: 'backend' },
-  { key: 'nodejs', category: 'backend' },
-  { key: 'nestjs', category: 'backend' },
-  { key: 'scala', category: 'backend' },
-  
+  { key: "python", category: "backend" },
+  { key: "nodejs", category: "backend" },
+  { key: "nestjs", category: "backend" },
+  { key: "scala", category: "backend" },
+
   // Cloud & Infrastructure
-  { key: 'aws', category: 'cloud' },
-  { key: 'docker', category: 'cloud' },
-  { key: 'kubernetes', category: 'cloud' },
+  { key: "aws", category: "cloud" },
+  { key: "docker", category: "cloud" },
+  { key: "kubernetes", category: "cloud" },
 
   // Development Tools
-  { key: 'claudecode', category: 'tools' },
-];
+  { key: "claudecode", category: "tools" }
+]
 
 // Category information with emojis
 const categoryInfo = {
-  frontend: { emoji: '🎨', label: 'Frontend' },
-  backend: { emoji: '⚙️', label: 'Backend' },
-  cloud: { emoji: '☁️', label: 'Cloud & DevOps' },
-  tools: { emoji: '🛠️', label: 'Tools & Testing' },
-};
+  frontend: { emoji: "🎨", label: "Frontend" },
+  backend: { emoji: "⚙️", label: "Backend" },
+  cloud: { emoji: "☁️", label: "Cloud & DevOps" },
+  tools: { emoji: "🛠️", label: "Tools & Testing" }
+}
 
 export const IntroSkills = component$<IntroSkillsProps>((props) => {
-  const containerRef = useSignal<HTMLDivElement>();
-  const t = inlineTranslate();
+  const containerRef = useSignal<HTMLDivElement>()
+  const t = inlineTranslate()
 
   useStyles$(`
     .intro-skills {
@@ -347,123 +347,126 @@ export const IntroSkills = component$<IntroSkillsProps>((props) => {
         right: 12px;
       }
     }
-  `);
+  `)
 
   useVisibleTask$(() => {
-    if (!containerRef.value) return;
+    if (!containerRef.value) return
 
     const loadGSAP = async () => {
-      const { gsap } = await import('gsap');
-      
+      const { gsap } = await import("gsap")
+
       // Animate title
-      gsap.to('.skills-title', {
+      gsap.to(".skills-title", {
         opacity: 1,
         y: 0,
         duration: 0.8,
-        ease: 'power2.out',
-      });
+        ease: "power2.out"
+      })
 
       // Animate skill items with stagger
-      gsap.to('.skill-item', {
+      gsap.to(".skill-item", {
         opacity: 1,
         scale: 1,
         y: 0,
         duration: 0.6,
         stagger: {
           amount: 1,
-          grid: 'auto',
-          from: 'center',
+          grid: "auto",
+          from: "center"
         },
-        ease: 'power2.out',
-        delay: 0.3,
-      });
+        ease: "power2.out",
+        delay: 0.3
+      })
 
       // Floating animation for skill items with varied timing
-      const skillItems = document.querySelectorAll('.skill-item');
+      const skillItems = document.querySelectorAll(".skill-item")
       skillItems.forEach((item, index) => {
         gsap.to(item, {
-          y: '+=15',
+          y: "+=15",
           duration: 3 + Math.random() * 2,
           repeat: -1,
           yoyo: true,
-          ease: 'sine.inOut',
-          delay: index * 0.2,
-        });
-      });
+          ease: "sine.inOut",
+          delay: index * 0.2
+        })
+      })
 
       // Enhanced hover animations
       skillItems.forEach((item) => {
-        const icon = item.querySelector('.skill-icon');
-        const glowBg = item.querySelector('.skill-glow');
-        
-        item.addEventListener('mouseenter', () => {
+        const icon = item.querySelector(".skill-icon")
+        const glowBg = item.querySelector(".skill-glow")
+
+        item.addEventListener("mouseenter", () => {
           gsap.to(icon, {
             scale: 1.2,
             rotation: 10,
             duration: 0.4,
-            ease: 'back.out(2)',
-          });
-          
+            ease: "back.out(2)"
+          })
+
           if (glowBg) {
             gsap.to(glowBg, {
               opacity: 1,
               scale: 1.5,
               duration: 0.6,
-              ease: 'power2.out',
-            });
+              ease: "power2.out"
+            })
           }
-        });
-        
-        item.addEventListener('mouseleave', () => {
+        })
+
+        item.addEventListener("mouseleave", () => {
           gsap.to(icon, {
             scale: 1,
             rotation: 0,
             duration: 0.4,
-            ease: 'power2.out',
-          });
-          
+            ease: "power2.out"
+          })
+
           if (glowBg) {
             gsap.to(glowBg, {
               opacity: 0,
               scale: 1,
               duration: 0.6,
-              ease: 'power2.out',
-            });
+              ease: "power2.out"
+            })
           }
-        });
-      });
-    };
+        })
+      })
+    }
 
-    loadGSAP();
-  });
+    loadGSAP()
+  })
 
   // Group skills by category
-  const skillsByCategory = skills.reduce((acc, skill) => {
-    if (!acc[skill.category]) {
-      acc[skill.category] = [];
-    }
-    acc[skill.category].push(skill);
-    return acc;
-  }, {} as Record<SkillCategory, Skill[]>);
+  const _skillsByCategory = skills.reduce(
+    (acc, skill) => {
+      if (!acc[skill.category]) {
+        acc[skill.category] = []
+      }
+      acc[skill.category].push(skill)
+      return acc
+    },
+    {} as Record<SkillCategory, Skill[]>
+  )
 
   return (
-    <div ref={containerRef} class={`intro-skills ${props.class || ''}`}>
-      <div class="skills-bg-gradient" />
-      <h2 class="skills-title">{t('app.intro.skills.title')}</h2>
-      <div class="skills-grid">
+    <div ref={containerRef} class={`intro-skills ${props.class || ""}`}>
+      <div class='skills-bg-gradient' />
+      <h2 class='skills-title'>{t("app.intro.skills.title")}</h2>
+      <div class='skills-grid'>
         {skills.map((skill) => (
           <div key={skill.key} class={`skill-item category-${skill.category}`}>
-            <div class="skill-glow" />
+            <div class='skill-glow' />
             <span class={`skill-category category-${skill.category}`}>
               {categoryInfo[skill.category].emoji} {t(`app.intro.skills.${skill.category}`)}
             </span>
-            <div class="skill-icon">
-              <SkillIcon name={skill.key} size="large" />
+            <div class='skill-icon'>
+              <SkillIcon name={skill.key} size='large' />
             </div>
-            <span class="skill-name">{t(`app.intro.skills.items.${skill.key}`)}</span>
+            <span class='skill-name'>{t(`app.intro.skills.items.${skill.key}`)}</span>
           </div>
         ))}
       </div>
     </div>
-  );
-});
+  )
+})

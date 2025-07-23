@@ -1,15 +1,15 @@
-import { component$, useVisibleTask$, useSignal, useStyles$, $ } from '@builder.io/qwik';
-import { inlineTranslate } from 'qwik-speak';
-import { useNavigate } from '@builder.io/qwik-city';
+import { $, component$, useSignal, useStyles$, useVisibleTask$ } from "@builder.io/qwik"
+import { useNavigate } from "@builder.io/qwik-city"
+import { inlineTranslate } from "qwik-speak"
 
 interface IntroCTAProps {
-  class?: string;
+  class?: string
 }
 
 export const IntroCTA = component$<IntroCTAProps>((props) => {
-  const containerRef = useSignal<HTMLDivElement>();
-  const t = inlineTranslate();
-  const nav = useNavigate();
+  const containerRef = useSignal<HTMLDivElement>()
+  const t = inlineTranslate()
+  const _nav = useNavigate()
 
   useStyles$(`
     .intro-cta {
@@ -101,89 +101,81 @@ export const IntroCTA = component$<IntroCTAProps>((props) => {
         font-size: 1rem;
       }
     }
-  `);
+  `)
 
   const handleProjectsClick = $(() => {
     // Scroll to projects section
-    const projectsSection = document.getElementById('projects');
+    const projectsSection = document.getElementById("projects")
     if (projectsSection) {
-      projectsSection.scrollIntoView({ behavior: 'smooth' });
+      projectsSection.scrollIntoView({ behavior: "smooth" })
     }
-  });
+  })
 
   const handleContactClick = $(() => {
     // Scroll to contact section
-    const contactSection = document.getElementById('contact');
+    const contactSection = document.getElementById("contact")
     if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth' });
+      contactSection.scrollIntoView({ behavior: "smooth" })
     }
-  });
+  })
 
   useVisibleTask$(() => {
-    if (!containerRef.value) return;
+    if (!containerRef.value) return
 
     const loadGSAP = async () => {
-      const { gsap } = await import('gsap');
-      
+      const { gsap } = await import("gsap")
+
       // Animate container
-      gsap.to('.intro-cta', {
+      gsap.to(".intro-cta", {
         opacity: 1,
         duration: 0.8,
-        ease: 'power2.out',
-      });
+        ease: "power2.out"
+      })
 
       // Animate buttons with stagger
-      gsap.to('.cta-button', {
+      gsap.to(".cta-button", {
         opacity: 1,
         y: 0,
         duration: 0.6,
         stagger: 0.2,
-        ease: 'power2.out',
-        delay: 0.2,
-      });
+        ease: "power2.out",
+        delay: 0.2
+      })
 
       // Add hover animation
-      const buttons = document.querySelectorAll('.cta-button');
-      buttons.forEach(button => {
-        button.addEventListener('mouseenter', () => {
+      const buttons = document.querySelectorAll(".cta-button")
+      buttons.forEach((button) => {
+        button.addEventListener("mouseenter", () => {
           gsap.to(button, {
             scale: 1.05,
             duration: 0.2,
-            ease: 'power2.out',
-          });
-        });
+            ease: "power2.out"
+          })
+        })
 
-        button.addEventListener('mouseleave', () => {
+        button.addEventListener("mouseleave", () => {
           gsap.to(button, {
             scale: 1,
             duration: 0.2,
-            ease: 'power2.out',
-          });
-        });
-      });
-    };
+            ease: "power2.out"
+          })
+        })
+      })
+    }
 
-    loadGSAP();
-  });
+    loadGSAP()
+  })
 
   return (
-    <div ref={containerRef} class={`intro-cta ${props.class || ''}`}>
-      <button 
-        class="cta-button cta-primary"
-        onClick$={handleProjectsClick}
-        aria-label={t('app.intro.cta.primary')}
-      >
-        {t('app.intro.cta.primary')}
-        <span class="cta-icon">→</span>
+    <div ref={containerRef} class={`intro-cta ${props.class || ""}`}>
+      <button class='cta-button cta-primary' onClick$={handleProjectsClick} aria-label={t("app.intro.cta.primary")}>
+        {t("app.intro.cta.primary")}
+        <span class='cta-icon'>→</span>
       </button>
-      <button 
-        class="cta-button cta-secondary"
-        onClick$={handleContactClick}
-        aria-label={t('app.intro.cta.secondary')}
-      >
-        {t('app.intro.cta.secondary')}
-        <span class="cta-icon">→</span>
+      <button class='cta-button cta-secondary' onClick$={handleContactClick} aria-label={t("app.intro.cta.secondary")}>
+        {t("app.intro.cta.secondary")}
+        <span class='cta-icon'>→</span>
       </button>
     </div>
-  );
-});
+  )
+})

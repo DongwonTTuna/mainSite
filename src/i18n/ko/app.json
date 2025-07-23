@@ -124,6 +124,7 @@
       "project": "프로젝트",
       "certification": "자격증"
     },
+    "timeline_events_year": "{{year}}년 이벤트",
     "timeline_events": {
       "tit_2022_04": {
         "title": "도쿄정보크리에이터공학원 입학",

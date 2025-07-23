@@ -124,6 +124,7 @@
       "project": "PROJECT",
       "certification": "CERTIFICATION"
     },
+    "timeline_events_year": "{{year}} Events",
     "timeline_events": {
       "tit_2022_04": {
         "title": "Tokyo IT Creator Engineering College",
