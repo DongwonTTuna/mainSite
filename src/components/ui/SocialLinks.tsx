@@ -27,7 +27,7 @@ export const SocialLinks = component$<SocialLinksProps>(({
     }
 
     .social-link:hover {
-      color: white;
+      color: black;
     }
 
     .social-icon {
