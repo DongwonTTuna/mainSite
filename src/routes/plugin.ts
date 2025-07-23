@@ -1,12 +1,11 @@
 import type { RequestHandler } from '@builder.io/qwik-city';
 import { setSpeakContext, validateLocale } from 'qwik-speak';
 import { config } from '~/lib/i18n/speak-config';
-import { getCSPString } from '~/utils/csp-config';
 
 /**
  * This middleware runs for every request.
  * It sets up the locale based on the URL or browser preferences.
- * Also sets security headers including CSP for non-SSG environments.
+ * Also sets security headers for non-SSG environments.
  */
 export const onRequest: RequestHandler = async ({ locale, url, redirect, request, params, headers }) => {
   const pathname = url.pathname;
@@ -45,10 +44,6 @@ export const onRequest: RequestHandler = async ({ locale, url, redirect, request
   locale(lang || config.defaultLocale.lang);
   
   // Set security headers for non-SSG environments (dev, preview, SSR)
-  const isDev = import.meta.env.DEV;
-  headers.set('Content-Security-Policy', getCSPString(isDev));
-  
-  // Additional security headers
   headers.set('X-Frame-Options', 'DENY');
   headers.set('X-Content-Type-Options', 'nosniff');
   headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');

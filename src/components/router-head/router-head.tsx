@@ -1,6 +1,5 @@
 import { component$ } from '@builder.io/qwik';
 import { useDocumentHead, useLocation } from '@builder.io/qwik-city';
-import { getCSPMetaString } from '~/utils/csp-config';
 
 /**
  * The RouterHead component is placed inside of the document `<head>` element.
@@ -16,12 +15,6 @@ export const RouterHead = component$(() => {
       <link rel="canonical" href={loc.url.href} />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="icon" type="image/png" href="/favicon.png" />
-
-      {/* Content Security Policy */}
-      <meta
-        http-equiv="Content-Security-Policy"
-        content={getCSPMetaString()}
-      />
 
       {head.meta.map((m) => (
         <meta key={m.key} {...m} />
