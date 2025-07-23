@@ -6,8 +6,6 @@ export const languages = [
   { lang: 'ja', currency: 'JPY', timeZone: 'Asia/Tokyo' }
 ];
 
-export const defaultLang = 'en';
-
 export const config: SpeakConfig = {
   defaultLocale: languages[0],
   supportedLocales: languages,
