@@ -1,7 +1,8 @@
 <script lang="ts">
   import ContainerBox from '$lib/components/common/layout/ContainerBox.svelte';
   import PrismaticBurst from '$lib/components/common/effect/PrismaticBurst.svelte';
-  import {resolve} from "$app/paths";
+  import {NavCard, NavPanel, NavPanels} from '$lib/components/ui/navigation';
+  import {Tag} from '$lib/components/ui/tag';
   import type {RouteId} from "$app/types";
 
   type NavigationItem = {
@@ -66,30 +67,29 @@
             <div class="top-nav-content">
                 <div class="nav-grid">
                     {#each navigationItems as item (item.href)}
-                        <a class="nav-card" href={resolve(item.href)}>
-                            <span class="nav-card-title">{item.title}</span>
-                            <p class="nav-card-description">{item.description}</p>
-                        </a>
+                        <NavCard
+                                href={item.href}
+                                label={item.title}
+                                description={item.description}
+                        />
                     {/each}
                 </div>
 
-                <div class="nav-panels">
-                    <div class="stack-panel">
-                        <p class="nav-card-title">Core stack</p>
+                <NavPanels>
+                    <NavPanel heading="Core stack">
                         <div class="tag-row" id="stack">
                             {#each stackTags as tag (tag)}
-                                <span class="tag">{tag}</span>
+                                <Tag>{tag}</Tag>
                             {/each}
                         </div>
-                    </div>
+                    </NavPanel>
 
-                    <div class="contact-panel" id="contact">
-                        <p class="nav-card-title">My History</p>
-                        <p class="content-description">
-                            I build reliable, high-performance products end to end. Let’s talk about your roadmap.
-                        </p>
-                    </div>
-                </div>
+                    <NavPanel
+                            heading="My History"
+                            description="I build reliable, high-performance products end to end. Let’s talk about your roadmap."
+                            id="contact"
+                    />
+                </NavPanels>
             </div>
         </nav>
 
@@ -115,7 +115,7 @@
                             <span class="pill">{item.title}</span>
                         {/each}
                         {#each stackTags as tag (tag)}
-                            <span class="tag">{tag}</span>
+                            <Tag>{tag}</Tag>
                         {/each}
                     </div>
                 </div>
@@ -192,61 +192,6 @@
         gap: 0.5rem;
     }
 
-    .nav-card {
-        display: flex;
-        flex-direction: column;
-        gap: 0.35rem;
-        padding: 0.95rem 1rem;
-        text-decoration: none;
-        color: #ffffff;
-        background: rgba(7, 5, 18, 0.9);
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        border-radius: 12px;
-        transition: border-color 120ms ease, transform 120ms ease;
-    }
-
-    .nav-card:hover,
-    .nav-card:focus-visible {
-        border-color: rgba(255, 255, 255, 0.25);
-        transform: translateY(-2px);
-    }
-
-    .nav-card-title {
-        font-weight: 700;
-        font-size: 1rem;
-    }
-
-    .nav-card-description {
-        margin: 0;
-        color: rgba(255, 255, 255, 0.78);
-        font-size: 0.9rem;
-        line-height: 1.5;
-    }
-
-    .content-description {
-        margin: 0;
-        color: rgba(255, 255, 255, 0.78);
-        font-size: 0.9rem;
-        line-height: 1.5;
-    }
-
-    .nav-panels {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-        gap: 0.75rem;
-    }
-
-    .stack-panel,
-    .contact-panel {
-        padding: 1rem 1.1rem;
-        background: rgba(7, 5, 18, 0.92);
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        border-radius: 12px;
-        display: flex;
-        flex-direction: column;
-        gap: 0.65rem;
-    }
-
     .tag-row {
         display: flex;
         flex-wrap: wrap;
@@ -309,15 +254,6 @@
         border: 1px solid rgba(255, 255, 255, 0.12);
         color: rgba(255, 255, 255, 0.9);
         font-size: 0.9rem;
-    }
-
-    .tag {
-        padding: 0.35rem 0.75rem;
-        background: rgba(255, 255, 255, 0.06);
-        border-radius: 12px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        font-size: 0.9rem;
-        color: rgba(255, 255, 255, 0.85);
     }
 
     .contact-note {
