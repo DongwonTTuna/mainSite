@@ -7,14 +7,12 @@
   type NavCardProps = Omit<HTMLAnchorAttributes, 'href'> & {
     href: RouteId;
     label: string;
-    description?: string;
     children?: Snippet;
   };
 
   let {
     href,
     label,
-    description,
     class: className = '',
     children,
     ...restProps
@@ -27,9 +25,6 @@
   {...restProps}
 >
   <span class="nav-card-title">{label}</span>
-  {#if description}
-    <p class="nav-card-description">{description}</p>
-  {/if}
   {@render children?.()}
 </a>
 
@@ -56,12 +51,23 @@
   .nav-card-title {
     font-weight: 700;
     font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    position: relative;
   }
 
-  .nav-card-description {
-    margin: 0;
-    color: rgba(255, 255, 255, 0.78);
-    font-size: 0.9rem;
-    line-height: 1.5;
+  .nav-card-title::after {
+    content: '→';
+    margin-left: 0.6rem;
+    display: inline-block;
+    transform: translateX(0);
+    transition: transform 180ms ease, opacity 200ms ease;
+    opacity: 1;
+  }
+
+  .nav-card:hover .nav-card-title::after,
+  .nav-card:focus-visible .nav-card-title::after {
+    transform: translateX(1rem);
+    opacity: 0;
   }
 </style>

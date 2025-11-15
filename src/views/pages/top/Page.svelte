@@ -8,24 +8,20 @@
   type NavigationItem = {
     title: string;
     href: RouteId;
-    description: string;
   };
 
   const navigationItems: NavigationItem[] = [
     {
       title: 'Work',
-      href: '/work' as RouteId,
-      description: 'Selected projects with measurable outcomes and end-to-end ownership.'
+      href: '/work' as RouteId
     },
     {
       title: 'Resume',
-      href: '/resume' as RouteId,
-      description: 'Experience, responsibilities, and the teams I support today.'
+      href: '/resume' as RouteId
     },
     {
       title: 'Tech Stack',
-      href: '/stack' as RouteId,
-      description: 'Typescript, Nest.js, SvelteKit, and AWS for reliable delivery.'
+      href: '/stack' as RouteId
     }
   ];
 
@@ -74,7 +70,6 @@
                             <NavCard
                                     href={item.href}
                                     label={item.title}
-                                    description={item.description}
                             />
                         {/each}
                     </div>
