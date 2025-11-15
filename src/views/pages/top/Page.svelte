@@ -85,9 +85,9 @@
                     </NavPanel>
 
                     <NavPanel
-                            heading="My History"
-                            description="I build reliable, high-performance products end to end. Let’s talk about your roadmap."
-                            id="contact"
+                            heading="Work Experience"
+                            description="2 Years at Nextbeat Inc., building scalable web applications and backend services."
+                            id="work-experience"
                     />
                 </NavPanels>
             </div>
