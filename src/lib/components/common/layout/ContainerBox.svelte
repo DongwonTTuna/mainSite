@@ -1,37 +1,23 @@
 <script lang="ts">
   import type { Snippet } from 'svelte'
   type Align = 'left' | 'center' | 'right';
-  type Variant = 'glass' | 'solid';
-
   type ContainerBoxProps = {
     as?: keyof HTMLElementTagNameMap;
-    class?: string;
     style?: string;
     align?: Align;
-    variant?: Variant;
     maxWidth?: string | null;
     padding?: string | null;
-    radius?: string | null;
-    background?: string | null;
-    borderColor?: string | null;
-    blur?: string | null;
-    shadow?: string | null;
+    ariaLabel?: string | null;
     children?: Snippet;
   };
 
   let {
     as = 'div',
-    class: className = '',
     style,
     align = 'left',
-    variant = 'glass',
-    maxWidth = '960px',
-    padding = '2rem',
-    radius = '24px',
-    background = null,
-    borderColor = null,
-    blur = null,
-    shadow = null,
+    maxWidth = null,
+    padding = '1rem 1.25rem',
+    ariaLabel = null,
     children
   }: ContainerBoxProps = $props();
 
@@ -41,23 +27,12 @@
     right: 'container-box--align-right'
   };
 
-  const variantClassMap: Record<Variant, string> = {
-    glass: 'container-box--glass',
-    solid: 'container-box--solid'
-  };
-
   const alignClass = $derived(alignClassMap[align] ?? '');
-  const variantClass = $derived(variantClassMap[variant] ?? variantClassMap.glass);
 
   const computedStyle = $derived(
     [
-      maxWidth ? `--container-box-max-width:${maxWidth}` : '',
-      padding ? `--container-box-padding:${padding}` : '',
-      radius ? `--container-box-radius:${radius}` : '',
-      background ? `--container-box-background:${background}` : '',
-      borderColor ? `--container-box-border:${borderColor}` : '',
-      blur ? `--container-box-blur:${blur}` : '',
-      shadow ? `--container-box-shadow:${shadow}` : ''
+      maxWidth ? `max-width:${maxWidth}` : '',
+      padding ? `padding:${padding}` : ''
     ]
       .filter(Boolean)
       .join('; ')
@@ -68,8 +43,9 @@
 
 <svelte:element
   this={as}
-  class={`container-box ${alignClass} ${variantClass} ${className}`.trim()}
+  class={`container-box ${alignClass}`.trim()}
   style={mergedStyle || undefined}
+  aria-label={ariaLabel || undefined}
 >
   {@render children?.()}
 </svelte:element>
@@ -77,28 +53,18 @@
 <style>
   .container-box {
     width: 100%;
-    max-width: var(--container-box-max-width, 100%);
-    padding: var(--container-box-padding, 1.5rem);
-    border-radius: var(--container-box-radius, 1.5rem);
-    background: var(--container-box-background, rgba(7, 5, 18, 0.95));
-    border: 1px solid var(--container-box-border, transparent);
-    box-shadow: var(--container-box-shadow, none);
+    max-width: min(920px, 100%);
+    padding: 1rem 1.25rem;
+    border-radius: 18px;
+    background: rgba(5, 4, 12, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 18px 60px rgba(0, 0, 0, 0.5);
     color: inherit;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-  }
-
-  .container-box--glass {
-    background: var(--container-box-background, rgba(6, 4, 18, 0.65));
-    border-color: var(--container-box-border, rgba(255, 255, 255, 0.08));
-    backdrop-filter: blur(var(--container-box-blur, 18px));
-    -webkit-backdrop-filter: blur(var(--container-box-blur, 18px));
-    box-shadow: var(--container-box-shadow, 0 25px 80px rgba(0, 0, 0, 0.55));
-  }
-
-  .container-box--solid {
-    background: var(--container-box-background, rgba(6, 4, 18, 0.92));
+    gap: 0.75rem;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
   }
 
   .container-box--align-center {

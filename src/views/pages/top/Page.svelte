@@ -59,74 +59,79 @@
     />
 
     <div class="top-stack">
-        <nav class="top-nav" aria-label="Primary navigation">
-            <div class="nav-header">
-                <p class="eyebrow eyebrow-inline">Navigation</p>
-            </div>
-
-            <div class="top-nav-content">
-                <div class="nav-grid">
-                    {#each navigationItems as item (item.href)}
-                        <NavCard
-                                href={item.href}
-                                label={item.title}
-                                description={item.description}
-                        />
-                    {/each}
+        <div class="top-nav">
+            <ContainerBox
+                    as="nav"
+                    ariaLabel="Primary navigation"
+            >
+                <div class="nav-header">
+                    <p class="eyebrow eyebrow-inline">Navigation</p>
                 </div>
 
-                <NavPanels>
-                    <NavPanel heading="Core stack">
-                        <div class="tag-row" id="stack">
+                <div class="top-nav-content">
+                    <div class="nav-grid">
+                        {#each navigationItems as item (item.href)}
+                            <NavCard
+                                    href={item.href}
+                                    label={item.title}
+                                    description={item.description}
+                            />
+                        {/each}
+                    </div>
+
+                    <NavPanels>
+                        <NavPanel heading="Core stack">
+                            <div class="tag-row" id="stack">
+                                {#each stackTags as tag (tag)}
+                                    <Tag>{tag}</Tag>
+                                {/each}
+                            </div>
+                        </NavPanel>
+
+                        <NavPanel
+                                heading="Work Experience"
+                                description="2 Years at Nextbeat Inc., building scalable web applications and backend services."
+                                id="work-experience"
+                        />
+                    </NavPanels>
+                </div>
+            </ContainerBox>
+        </div>
+
+        <div class="hero-box">
+            <ContainerBox
+                    align="center"
+                    maxWidth="720px"
+                    padding="2rem clamp(1.5rem, 4vw, 3rem)"
+            >
+                <div class="hero-copy">
+                    <p class="eyebrow">Full-Stack Engineer · Tokyo · Nextbeat</p>
+                    <h1>I build, deploy, and scale modern web applications. From scratch.</h1>
+
+                    <p class="subtitle" id="work">
+                        I'm a Full-Stack Engineer based in Tokyo, currently driving innovation at Nextbeat. I specialize in
+                        building high-performance solutions with Typescript, Nest.js, and Sveltekit.
+                    </p>
+                    <div class="work-highlight">
+                        <p class="eyebrow eyebrow-inline">Recent results</p>
+                        <div class="pill-row">
+                            {#each workItems as item (item.title)}
+                                <span class="pill">{item.title}</span>
+                            {/each}
                             {#each stackTags as tag (tag)}
                                 <Tag>{tag}</Tag>
                             {/each}
                         </div>
-                    </NavPanel>
-
-                    <NavPanel
-                            heading="Work Experience"
-                            description="2 Years at Nextbeat Inc., building scalable web applications and backend services."
-                            id="work-experience"
-                    />
-                </NavPanels>
-            </div>
-        </nav>
-
-        <ContainerBox
-                align="center"
-                maxWidth="720px"
-                padding="2rem clamp(1.5rem, 4vw, 3rem)"
-                radius="32px"
-                shadow="0 25px 80px rgba(0, 0, 0, 0.65)"
-        >
-            <div class="hero-copy">
-                <p class="eyebrow">Full-Stack Engineer · Tokyo · Nextbeat</p>
-                <h1>I build, deploy, and scale modern web applications. From scratch.</h1>
-
-                <p class="subtitle" id="work">
-                    I'm a Full-Stack Engineer based in Tokyo, currently driving innovation at Nextbeat. I specialize in
-                    building high-performance solutions with Typescript, Nest.js, and Sveltekit.
-                </p>
-                <div class="work-highlight">
-                    <p class="eyebrow eyebrow-inline">Recent results</p>
-                    <div class="pill-row">
-                        {#each workItems as item (item.title)}
-                            <span class="pill">{item.title}</span>
-                        {/each}
-                        {#each stackTags as tag (tag)}
-                            <Tag>{tag}</Tag>
-                        {/each}
                     </div>
-                </div>
 
-                <p class="contact-note">
-                    Open to collaborating with global teams. Let’s talk about building dependable, high-performance
-                    products end
-                    to end.
-                </p>
-            </div>
-        </ContainerBox>
+                    <p class="contact-note">
+                        Open to collaborating with global teams. Let’s talk about building dependable, high-performance
+                        products end
+                        to end.
+                    </p>
+                </div>
+            </ContainerBox>
+        </div>
     </div>
 </section>
 
@@ -156,17 +161,13 @@
     .top-nav {
         position: relative;
         z-index: 3;
-        padding: 1rem 1.25rem;
-        border-radius: 18px;
-        background: rgba(5, 4, 12, 0.7);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        box-shadow: 0 18px 60px rgba(0, 0, 0, 0.5);
-        backdrop-filter: blur(10px);
         width: min(920px, 100%);
-        display: flex;
-        flex-direction: column;
-        gap: 0.75rem;
     }
+
+    .hero-box {
+        width: 100%;
+    }
+
 
     .nav-header {
         display: flex;
@@ -261,10 +262,6 @@
     }
 
     @media (max-width: 640px) {
-        .top-nav {
-            width: 100%;
-        }
-
         .nav-header {
             flex-direction: column;
             align-items: flex-start;
