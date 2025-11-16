@@ -3,6 +3,8 @@
   import PrismaticBurst from '$lib/components/common/effect/PrismaticBurst.svelte';
   import {NavCard, NavPanel, NavPanels} from '$lib/components/ui/navigation';
   import {Tag} from '$lib/components/ui/tag';
+  import LinkedinIcon from '$lib/assets/icon/Linkedin.svelte';
+  import GithubIcon from '$lib/assets/icon/Github.svelte';
   import type {RouteId} from "$app/types";
 
   type NavigationItem = {
@@ -38,6 +40,19 @@
   ];
 
   const stackTags = ['Typescript', 'Nest.js', 'AWS', 'Svelte + SvelteKit'];
+
+  const socialLinks = [
+    {
+      title: 'LinkedIn',
+      href: 'http://www.linkedin.com/in/dongwonttuna',
+      icon: LinkedinIcon
+    },
+    {
+      title: 'GitHub',
+      href: 'https://github.com/dongwonttuna',
+      icon: GithubIcon
+    }
+  ];
 </script>
 
 <section class="top-page">
@@ -101,6 +116,20 @@
                 <div class="hero-copy">
                     <p class="eyebrow">Full-Stack Engineer · Tokyo · Nextbeat</p>
                     <h1>I build, deploy, and scale modern web applications. From scratch.</h1>
+
+                    <div class="social-links" aria-label="Social links">
+                        {#each socialLinks as link (link.href)}
+                            <a
+                                    class="social-link"
+                                    href={link.href}
+                                    target="_blank"
+                                    rel="noreferrer noopener"
+                                    aria-label={`Open ${link.title} profile in a new tab`}
+                            >
+                                <svelte:component this={link.icon} size="3rem" />
+                            </a>
+                        {/each}
+                    </div>
 
                     <div class="work-highlight">
                         <p class="eyebrow eyebrow-inline">Recent Achievements</p>
@@ -238,6 +267,28 @@
         display: flex;
         flex-wrap: wrap;
         gap: 0.5rem;
+    }
+
+    .social-links {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        gap: 0.75rem;
+        align-items: center;
+    }
+
+    .social-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: #ffffff;
+        transition: transform 150ms ease, opacity 150ms ease;
+    }
+
+    .social-link:focus-visible,
+    .social-link:hover {
+        transform: translateY(-1px) scale(1.05);
+        opacity: 0.85;
     }
 
     .pill {
