@@ -1,5 +1,4 @@
 <script lang="ts">
-  import {resolve} from '$app/paths';
   import type {RouteId} from '$app/types';
   import type {Snippet} from 'svelte';
   import type {HTMLAnchorAttributes} from 'svelte/elements';
@@ -21,7 +20,7 @@
 
 <a
   class={`nav-card ${className}`.trim()}
-  href={resolve(href)}
+  href={href}
   {...restProps}
 >
   <span class="nav-card-title">{label}</span>

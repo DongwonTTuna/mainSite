@@ -1,6 +1,5 @@
 <script lang="ts">
   import { gsap } from 'gsap';
-  import {resolve} from "$app/paths"
 
   type FlowingMenuItem = {
     link: string;
@@ -78,7 +77,7 @@
       <div class="menu__item" bind:this={itemRefs[idx]}>
         <a
           class="menu__item-link"
-          href={resolve(item.link)}
+          href={item.link}
           aria-label={item.text}
           onmouseenter={(event) => runEnterAnimation(idx, event)}
           onmouseleave={(event) => runLeaveAnimation(idx, event)}
@@ -89,7 +88,7 @@
         <div class="marquee" bind:this={marqueeRefs[idx]}>
           <div class="marquee__inner-wrap" bind:this={marqueeInnerRefs[idx]}>
             <div class="marquee__inner" aria-hidden="true">
-              {#each repeatedIndices as repeatIdx}
+              {#each repeatedIndices as repeatIdx (repeatIdx)}
                 <span>{item.text}</span>
                 <div
                   class="marquee__img"
