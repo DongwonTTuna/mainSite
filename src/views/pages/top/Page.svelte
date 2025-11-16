@@ -102,10 +102,6 @@
                     <p class="eyebrow">Full-Stack Engineer · Tokyo · Nextbeat</p>
                     <h1>I build, deploy, and scale modern web applications. From scratch.</h1>
 
-                    <p class="subtitle" id="work">
-                        I'm a Full-Stack Engineer based in Tokyo, currently driving innovation at Nextbeat. I specialize in
-                        building high-performance solutions with Typescript, Nest.js, and Sveltekit.
-                    </p>
                     <div class="work-highlight">
                         <p class="eyebrow eyebrow-inline">Recent Achievements</p>
                         <div class="pill-row">
