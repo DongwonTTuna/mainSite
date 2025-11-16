@@ -30,14 +30,14 @@
       title: 'Authentication architecture overhaul'
     },
     {
-      title: 'AWS SAM migration'
-    },
-    {
-      title: 'Core Web Vitals uplift'
+      title: 'Serverless　→　AWS SAM migration'
     },
     {
       title: 'Multilingual site delivery'
-    }
+    },
+    {
+      title: 'Core Web Vitals uplift by 30%'
+    },
   ];
 
   const stackTags = ['Typescript', 'Nest.js', 'AWS', 'Svelte + SvelteKit'];
@@ -108,13 +108,10 @@
                         building high-performance solutions with Typescript, Nest.js, and Sveltekit.
                     </p>
                     <div class="work-highlight">
-                        <p class="eyebrow eyebrow-inline">Recent results</p>
+                        <p class="eyebrow eyebrow-inline">Recent Achievements</p>
                         <div class="pill-row">
                             {#each workItems as item (item.title)}
                                 <span class="pill">{item.title}</span>
-                            {/each}
-                            {#each stackTags as tag (tag)}
-                                <Tag>{tag}</Tag>
                             {/each}
                         </div>
                     </div>
