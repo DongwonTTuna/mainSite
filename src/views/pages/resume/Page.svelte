@@ -1,4 +1,4 @@
-<script lang="ts">
+<script lang="ts" module>
   import ContainerBox from '$lib/components/common/layout/ContainerBox.svelte';
   import BackLink from '$lib/components/navigation/BackLink.svelte';
   import { Tag } from '$lib/components/ui/tag';
@@ -186,6 +186,8 @@
     }
   ];
 </script>
+
+<script lang="ts"></script>
 
 <section class="resume-page">
   <div class="resume-page__back-link">

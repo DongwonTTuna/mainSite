@@ -1,39 +1,6 @@
-<script lang="ts">
-  import { onMount } from 'svelte';
-  import { Renderer, Program, Mesh, Triangle, Texture } from 'ogl';
-
-  type Offset = {
-    x?: number | string;
-    y?: number | string;
-  };
-
-  const {
-    className = '',
-    style,
-    intensity = 2,
-    speed = 0.5,
-    animationType = 'rotate3d',
-    colors,
-    distort = 0,
-    paused = false,
-    offset = { x: 0, y: 0 },
-    hoverDampness = 0,
-    rayCount,
-    mixBlendMode = 'lighten'
-  } = $props<{
-    className?: string;
-    style?: string;
-    intensity?: number;
-    speed?: number;
-    animationType?: 'rotate' | 'rotate3d' | 'hover';
-    colors?: string[];
-    distort?: number;
-    paused?: boolean;
-    offset?: Offset;
-    hoverDampness?: number;
-    rayCount?: number;
-    mixBlendMode?: string;
-  }>();
+<script lang="ts" module>
+  import {onMount} from 'svelte';
+  import {Renderer, Program, Mesh, Triangle, Texture} from 'ogl';
 
   type UniformInputs = {
     intensity: number;
@@ -46,6 +13,17 @@
     program: Program | null;
     renderer: Renderer | null;
     gradientTexture: Texture | null;
+  };
+
+  type Offset = {
+    x?: number | string;
+    y?: number | string;
+  };
+
+  type WindowWithOptionalApis = Window &
+    typeof globalThis & {
+    ResizeObserver?: typeof ResizeObserver;
+    IntersectionObserver?: typeof IntersectionObserver;
   };
 
   const vertexShader = `#version 300 es
@@ -220,6 +198,38 @@ void main(){
 
     fragColor = vec4(clamp(col, 0.0, 1.0), 1.0);
 }`;
+</script>
+
+<script lang="ts">
+
+
+  const {
+    className = '',
+    style,
+    intensity = 2,
+    speed = 0.5,
+    animationType = 'rotate3d',
+    colors,
+    distort = 0,
+    paused = false,
+    offset = {x: 0, y: 0},
+    hoverDampness = 0,
+    rayCount,
+    mixBlendMode = 'lighten'
+  } = $props<{
+    className?: string;
+    style?: string;
+    intensity?: number;
+    speed?: number;
+    animationType?: 'rotate' | 'rotate3d' | 'hover';
+    colors?: string[];
+    distort?: number;
+    paused?: boolean;
+    offset?: Offset;
+    hoverDampness?: number;
+    rayCount?: number;
+    mixBlendMode?: string;
+  }>();
 
   let container: HTMLDivElement | null = null;
   let renderer: Renderer | null = null;
@@ -240,12 +250,6 @@ void main(){
   const isPaused = $derived(paused);
   const hoverDamp = $derived(hoverDampness);
   const canvasBlendMode = $derived(mixBlendMode && mixBlendMode !== 'none' ? mixBlendMode : '');
-
-  type WindowWithOptionalApis = Window &
-    typeof globalThis & {
-      ResizeObserver?: typeof ResizeObserver;
-      IntersectionObserver?: typeof IntersectionObserver;
-    };
 
   const clamp = (v: number, min = 0, max = 1) => Math.min(Math.max(v, min), max);
 
@@ -272,17 +276,17 @@ void main(){
   };
 
   const updateUniforms = ({
-    intensity,
-    speed,
-    animationType,
-    colors,
-    distort,
-    offset,
-    rayCount,
-    program,
-    renderer,
-    gradientTexture
-  }: UniformInputs) => {
+                            intensity,
+                            speed,
+                            animationType,
+                            colors,
+                            distort,
+                            offset,
+                            rayCount,
+                            program,
+                            renderer,
+                            gradientTexture
+                          }: UniformInputs) => {
     if (!program || !renderer || !gradientTexture) return;
 
     program.uniforms.uIntensity.value = intensity ?? 1;
@@ -371,7 +375,7 @@ void main(){
     program.uniforms.uMouse.value = mouseSmooth;
     program.uniforms.uTime.value = accumTime;
 
-    renderer.render({ scene: mesh });
+    renderer.render({scene: mesh});
     raf = requestAnimationFrame(animate);
   };
 
@@ -406,7 +410,7 @@ void main(){
       canvas: canvasElement
     });
     renderer = createdRenderer;
-    const { gl } = createdRenderer;
+    const {gl} = createdRenderer;
 
     const white = new Uint8Array([255, 255, 255, 255]);
     gradientTexture = new Texture(gl, {
@@ -425,23 +429,23 @@ void main(){
       vertex: vertexShader,
       fragment: fragmentShader,
       uniforms: {
-        uResolution: { value: [1, 1] },
-        uTime: { value: 0 },
-        uIntensity: { value: 1 },
-        uSpeed: { value: 1 },
-        uAnimType: { value: 0 },
-        uMouse: { value: [0.5, 0.5] },
-        uColorCount: { value: 0 },
-        uDistort: { value: 0 },
-        uOffset: { value: [0, 0] },
-        uGradient: { value: gradientTexture },
-        uNoiseAmount: { value: 0.8 },
-        uRayCount: { value: 0 }
+        uResolution: {value: [1, 1]},
+        uTime: {value: 0},
+        uIntensity: {value: 1},
+        uSpeed: {value: 1},
+        uAnimType: {value: 0},
+        uMouse: {value: [0.5, 0.5]},
+        uColorCount: {value: 0},
+        uDistort: {value: 0},
+        uOffset: {value: [0, 0]},
+        uGradient: {value: gradientTexture},
+        uNoiseAmount: {value: 0.8},
+        uRayCount: {value: 0}
       }
     });
 
     triangle = new Triangle(gl);
-    mesh = new Mesh(gl, { geometry: triangle, program });
+    mesh = new Mesh(gl, {geometry: triangle, program});
 
     resizeRenderer();
     if (win.ResizeObserver) {
@@ -452,7 +456,7 @@ void main(){
       usingWindowResizeFallback = true;
     }
 
-    const pointerOptions: AddEventListenerOptions = { passive: true };
+    const pointerOptions: AddEventListenerOptions = {passive: true};
     container.addEventListener('pointermove', updateMouseTarget, pointerOptions);
 
     if (win.IntersectionObserver) {
@@ -462,7 +466,7 @@ void main(){
             isVisible = entries[0].isIntersecting;
           }
         },
-        { root: null, threshold: 0.01 }
+        {root: null, threshold: 0.01}
       );
       intersectionObserver.observe(container);
     }
@@ -515,32 +519,32 @@ void main(){
 </script>
 
 <div
-  class={`prismatic-burst-container ${className}`.trim()}
-  style={style}
-  bind:this={container}
+        class={`prismatic-burst-container ${className}`.trim()}
+        style={style}
+        bind:this={container}
 >
-  <canvas
-    class="prismatic-burst-canvas"
-    aria-hidden="true"
-    style={canvasBlendMode ? `mix-blend-mode: ${canvasBlendMode};` : undefined}
-    bind:this={canvasElement}
-  ></canvas>
+    <canvas
+            class="prismatic-burst-canvas"
+            aria-hidden="true"
+            style={canvasBlendMode ? `mix-blend-mode: ${canvasBlendMode};` : undefined}
+            bind:this={canvasElement}
+    ></canvas>
 </div>
 
 <style>
-  .prismatic-burst-container {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-  }
+    .prismatic-burst-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
 
-  .prismatic-burst-canvas {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    display: block;
-  }
+    .prismatic-burst-canvas {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
 
 </style>

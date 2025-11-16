@@ -1,4 +1,4 @@
-<script lang="ts">
+<script lang="ts" module>
   import type { Snippet } from 'svelte'
   type Align = 'left' | 'center' | 'right';
   type ContainerBoxProps = {
@@ -10,7 +10,9 @@
     ariaLabel?: string | null;
     children?: Snippet;
   };
+</script>
 
+<script lang="ts">
   let {
     as = 'div',
     style,

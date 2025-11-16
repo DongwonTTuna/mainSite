@@ -8,8 +8,8 @@ declare global {
     // interface PageState {}
     // interface Platform {}
   }
-  declare module '*&image' {
-    import type { Picture } from 'vite-imagetools';
+  declare module "*&image" {
+    import type { Picture } from "vite-imagetools";
 
     const value: Picture;
     export default value;

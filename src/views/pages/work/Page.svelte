@@ -1,4 +1,4 @@
-<script lang="ts">
+<script lang="ts" module>
   import BackLink from '$lib/components/navigation/BackLink.svelte';
   import FlowingMenu from '$lib/components/ui/text/FlowingMenu.svelte';
   import BiodenKRImage from './_images/bioden.png?w=200&format=webp&image';
@@ -9,6 +9,8 @@
     {link: 'https://omotenashi.work', text: 'Omotenashi HR', image: OmotenashiImage}
   ];
 </script>
+
+<script lang="ts"></script>
 
 <section class="work-page">
     <div class="page-back-link">

@@ -1,4 +1,4 @@
-<script lang="ts">
+<script lang="ts" module>
   import ContainerBox from '$lib/components/common/layout/ContainerBox.svelte';
   import PrismaticBurst from '$lib/components/common/effect/PrismaticBurst.svelte';
   import {NavCard, NavPanel, NavPanels} from '$lib/components/ui/navigation';
@@ -54,6 +54,8 @@
     }
   ];
 </script>
+
+<script lang="ts"></script>
 
 <section class="top-page">
     <PrismaticBurst
