@@ -7,18 +7,33 @@
     y?: number | string;
   };
 
-  export let className: string = '';
-  export let style: string | undefined = undefined;
-  export let intensity = 2;
-  export let speed = 0.5;
-  export let animationType: 'rotate' | 'rotate3d' | 'hover' = 'rotate3d';
-  export let colors: string[] | undefined = undefined;
-  export let distort = 0;
-  export let paused = false;
-  export let offset: Offset = { x: 0, y: 0 };
-  export let hoverDampness = 0;
-  export let rayCount: number | undefined = undefined;
-  export let mixBlendMode = 'lighten';
+  const {
+    className = '',
+    style,
+    intensity = 2,
+    speed = 0.5,
+    animationType = 'rotate3d',
+    colors,
+    distort = 0,
+    paused = false,
+    offset = { x: 0, y: 0 },
+    hoverDampness = 0,
+    rayCount,
+    mixBlendMode = 'lighten'
+  } = $props<{
+    className?: string;
+    style?: string;
+    intensity?: number;
+    speed?: number;
+    animationType?: 'rotate' | 'rotate3d' | 'hover';
+    colors?: string[];
+    distort?: number;
+    paused?: boolean;
+    offset?: Offset;
+    hoverDampness?: number;
+    rayCount?: number;
+    mixBlendMode?: string;
+  }>();
 
   type UniformInputs = {
     intensity: number;
@@ -221,20 +236,16 @@ void main(){
   let accumTime = 0;
   let resizeObserver: ResizeObserver | null = null;
   let intersectionObserver: IntersectionObserver | null = null;
-  let isPaused = paused;
-  let hoverDamp = hoverDampness;
   let usingWindowResizeFallback = false;
-  let canvasBlendMode = '';
+  const isPaused = $derived(paused);
+  const hoverDamp = $derived(hoverDampness);
+  const canvasBlendMode = $derived(mixBlendMode && mixBlendMode !== 'none' ? mixBlendMode : '');
 
   type WindowWithOptionalApis = Window &
     typeof globalThis & {
       ResizeObserver?: typeof ResizeObserver;
       IntersectionObserver?: typeof IntersectionObserver;
     };
-
-  $: isPaused = paused;
-  $: hoverDamp = hoverDampness;
-  $: canvasBlendMode = mixBlendMode && mixBlendMode !== 'none' ? mixBlendMode : '';
 
   const clamp = (v: number, min = 0, max = 1) => Math.min(Math.max(v, min), max);
 
@@ -487,17 +498,19 @@ void main(){
     };
   });
 
-  $: updateUniforms({
-    intensity,
-    speed,
-    animationType,
-    colors,
-    distort,
-    offset,
-    rayCount,
-    program,
-    renderer,
-    gradientTexture
+  $effect(() => {
+    updateUniforms({
+      intensity,
+      speed,
+      animationType,
+      colors,
+      distort,
+      offset,
+      rayCount,
+      program,
+      renderer,
+      gradientTexture
+    });
   });
 </script>
 

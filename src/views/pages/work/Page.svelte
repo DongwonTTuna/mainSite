@@ -25,7 +25,6 @@
         <p class="menu-description">Hover to preview the touchpoints before heading into each dedicated work stream.</p>
     </div>
     <section class="flowing-menu">
-
         <FlowingMenu items={flowingMenuItems}/>
     </section>
 </section>
@@ -66,6 +65,7 @@
         gap: 0.5rem;
         margin-inline: calc(var(--page-padding) * -1);
         width: calc(100% + var(--page-padding) * 2);
+        background-color: rgba(244, 244, 245, 0.1);
     }
 
     .menu-description {
