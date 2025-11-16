@@ -23,7 +23,7 @@
     },
     {
       title: 'Tech Stack',
-      href: '/stack' as RouteId
+      href: '/tech' as RouteId
     }
   ];
 

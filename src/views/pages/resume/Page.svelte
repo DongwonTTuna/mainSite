@@ -193,7 +193,7 @@
 
       <div class="hero-heading">
         <div class="identity">
-          <h1>Lee Dongwon</h1>
+          <h1>Dongwon Lee</h1>
           <p class="hero-summary">
             Full-Stack Engineer building dependable SaaS experiences for global hospitality clients. Currently at
             Nextbeat, shipping end-to-end features across Typescript, Nest.js, SvelteKit, and AWS.
