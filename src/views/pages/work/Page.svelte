@@ -1,4 +1,5 @@
 <script lang="ts">
+  import BackLink from '$lib/components/navigation/BackLink.svelte';
   import FlowingMenu from '$lib/components/ui/text/FlowingMenu.svelte';
   import BiodenKRImage from './_images/bioden.png?w=200&format=webp&image';
   import OmotenashiImage from './_images/omotenashi.png?w=200&format=webp&image';
@@ -10,6 +11,9 @@
 </script>
 
 <section class="work-page">
+    <div class="page-back-link">
+        <BackLink/>
+    </div>
     <div class="hero">
         <p class="eyebrow">Selected Work</p>
         <div class="hero-copy">
@@ -38,6 +42,10 @@
         display: flex;
         flex-direction: column;
         gap: clamp(2rem, 3vw, 3.5rem);
+    }
+
+    .page-back-link {
+        align-self: flex-start;
     }
 
     .hero {

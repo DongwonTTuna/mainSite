@@ -1,5 +1,6 @@
 <script lang="ts">
   import ContainerBox from '$lib/components/common/layout/ContainerBox.svelte';
+  import BackLink from '$lib/components/navigation/BackLink.svelte';
   import { Tag } from '$lib/components/ui/tag';
 
   type HeroHighlight = {
@@ -187,6 +188,9 @@
 </script>
 
 <section class="resume-page">
+  <div class="resume-page__back-link">
+    <BackLink/>
+  </div>
   <div class="resume-hero">
     <ContainerBox maxWidth="100%" padding="2.5rem clamp(1.5rem, 4vw, 3rem)">
       <p class="eyebrow">Resume</p>
@@ -359,6 +363,10 @@
     display: flex;
     flex-direction: column;
     gap: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  .resume-page__back-link {
+    align-self: flex-start;
   }
 
   .resume-hero {

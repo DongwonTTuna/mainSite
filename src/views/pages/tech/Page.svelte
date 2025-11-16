@@ -36,21 +36,6 @@
     margin: 0;
   }
 
-  .eyebrow {
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: rgba(244, 244, 245, 0.65);
-    margin: 0;
-  }
-
-  .description {
-    font-size: 1.05rem;
-    color: rgba(244, 244, 245, 0.85);
-    line-height: 1.65;
-    margin: 0;
-  }
-
   .status {
     border: 1px solid rgba(244, 244, 245, 0.25);
     border-radius: 1rem;

@@ -119,6 +119,7 @@
 
                     <div class="social-links" aria-label="Social links">
                         {#each socialLinks as link (link.href)}
+                            {@const IconComponent = link.icon}
                             <a
                                     class="social-link"
                                     href={link.href}
@@ -126,7 +127,7 @@
                                     rel="noreferrer noopener"
                                     aria-label={`Open ${link.title} profile in a new tab`}
                             >
-                                <svelte:component this={link.icon} size="3rem" />
+                                <IconComponent size="3rem"/>
                             </a>
                         {/each}
                     </div>
@@ -236,12 +237,8 @@
     }
 
     .worked-years {
-      font-size: 24px;
-      font-weight: 600;
-    }
-
-    .subtitle {
-        font-size: 1.05rem;
+        font-size: 24px;
+        font-weight: 600;
     }
 
     .eyebrow {
