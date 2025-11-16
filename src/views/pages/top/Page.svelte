@@ -141,9 +141,9 @@
                     </div>
 
                     <p class="contact-note">
-                        Open to collaborating with global teams. Let’s talk about building dependable, high-performance
-                        products end
-                        to end.
+                        Open to collaborating with global teams.
+                        <br/>
+                        Let’s talk about building dependable, high-performance products end to end.
                     </p>
                 </div>
             </ContainerBox>
