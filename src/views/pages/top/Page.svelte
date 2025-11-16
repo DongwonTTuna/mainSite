@@ -85,9 +85,11 @@
 
                         <NavPanel
                                 heading="Work Experience"
-                                description="2 Years at Nextbeat Inc., building scalable web applications and backend services."
                                 id="work-experience"
-                        />
+                        >
+                            <span class="worked-years">2 Years</span>
+                            <p>2 Years at Nextbeat Inc.</p>
+                        </NavPanel>
                     </NavPanels>
                 </div>
             </ContainerBox>
@@ -209,6 +211,11 @@
         margin: 0;
         color: rgba(255, 255, 255, 0.8);
         line-height: 1.6;
+    }
+
+    .worked-years {
+      font-size: 24px;
+      font-weight: 600;
     }
 
     .subtitle {
