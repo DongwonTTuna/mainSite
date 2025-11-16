@@ -11,7 +11,6 @@
   type ContactDetail = {
     label: string;
     value: string;
-    note?: string;
     href?: string;
   };
 
@@ -228,9 +227,6 @@
             {:else}
               <p class="contact-value">{detail.value}</p>
             {/if}
-            {#if detail.note}
-              <span class="contact-note">{detail.note}</span>
-            {/if}
           </div>
         {/each}
       </div>
@@ -419,6 +415,11 @@
     color: rgba(244, 244, 245, 0.75);
     font-size: 0.95rem;
   }
+  .resume-main {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
 
   .contact-grid {
     margin-top: clamp(1.5rem, 3vw, 2.5rem);
@@ -458,19 +459,10 @@
     text-decoration: underline;
   }
 
-  .contact-note {
-    font-size: 0.9rem;
-    color: rgba(244, 244, 245, 0.7);
-  }
-
   .resume-content {
     display: grid;
     grid-template-columns: minmax(0, 3fr) minmax(0, 1.4fr);
     gap: clamp(1.25rem, 3vw, 2.5rem);
-  }
-
-  .resume-card :global(.container-box) {
-    height: 100%;
   }
 
   .eyebrow {
@@ -547,6 +539,12 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 1rem;
+  }
+
+  .resume-side {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
   }
 
   .project-card {
@@ -658,12 +656,6 @@
     justify-content: space-between;
     font-size: 0.9rem;
     color: rgba(244, 244, 245, 0.75);
-  }
-
-  .resume-side :global(.tag),
-  .experience-stack :global(.tag),
-  .project-tags :global(.tag) {
-    background: rgba(255, 255, 255, 0.06);
   }
 
   @media (max-width: 960px) {

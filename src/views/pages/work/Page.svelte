@@ -4,8 +4,8 @@
   import OmotenashiImage from './_images/omotenashi.png?w=200&format=webp&image';
 
   const flowingMenuItems = [
-    {link: '/work/biodenkr', text: 'BiodenKR', image: BiodenKRImage},
-    {link: '/work/omotenashi', text: 'Omotenashi HR', image: OmotenashiImage}
+    {link: 'https://biodenkr.com', text: 'BiodenKR', image: BiodenKRImage},
+    {link: 'https://omotenashi.work', text: 'Omotenashi HR', image: OmotenashiImage}
   ];
 </script>
 
