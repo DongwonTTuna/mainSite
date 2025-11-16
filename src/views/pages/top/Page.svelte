@@ -27,9 +27,6 @@
 
   const workItems = [
     {
-      title: 'Authentication architecture overhaul'
-    },
-    {
       title: 'Serverless　→　AWS SAM migration'
     },
     {
