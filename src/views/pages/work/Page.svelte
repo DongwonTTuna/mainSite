@@ -1,12 +1,14 @@
 <script lang="ts">
   import FlowingMenu from "$lib/components/ui/text/FlowingMenu.svelte";
-  import BiodenKRImage from './_images/bioden.png?w=400&format=webp;avif;png&image';
+  import BiodenKRImage from './_images/bioden.png?w=200&format=webp&image';
+  import OmotenashiImage from './_images/omotenashi.png?w=200&format=webp&image'
 
   const demoItems = [
     { link: '#', text: 'BiodenKR', image: BiodenKRImage },
-    { link: '#', text: 'Omotenashi HR', image: 'https://picsum.photos/600/400?random=2' },
+    { link: '#', text: 'Omotenashi HR', image: OmotenashiImage },
   ];
 
+  console.log(BiodenKRImage)
 </script>
 
 <div class="dark">
