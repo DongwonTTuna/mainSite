@@ -100,6 +100,8 @@
         <a
           class="menu__item-link"
           href={item.link}
+          target="_blank"
+          rel="noreferrer noopener"
           aria-label={item.text}
           onmouseenter={(event) => runEnterAnimation(idx, event)}
           onmouseleave={(event) => runLeaveAnimation(idx, event)}
