@@ -81,7 +81,7 @@
     },
     {
       label: 'Languages',
-      value: 'Korean (Native) · Japanese (JLPT N1) · English (TOEIC ~700)'
+      value: 'Korean (Native) · Japanese (JLPT N1) · English'
     }
   ];
 
@@ -92,11 +92,11 @@
       period: 'Apr 2024 – Present',
       location: 'Tokyo, Japan',
       summary:
-        'Joined Nextbeat in Apr 2024 to support Hoikushibank, then transitioned in Oct 2024 to lead engineering for Omotenashi HR. I design and deliver features across Nest.js APIs, SvelteKit front-ends, and AWS infrastructure.',
+        'Joined Nextbeat in Apr 2024 to support Hoikushibank, then transitioned in Oct 2024 to engineering for Omotenashi HR. I design and deliver features across Nest.js APIs, SvelteKit front-ends, and AWS infrastructure.',
       achievements: [
         'Maintained Hoikushibank\'s recruiting platform through Oct 2024, owning bug triage, feature delivery, and release ops before pivoting to Omotenashi HR.',
         'Migrated AWS Lambda deployments from the Serverless Framework to AWS SAM, standardizing templates and reducing deployment time by roughly 30%.',
-        'Raised Lighthouse SEO and Core Web Vitals scores by 20+ points through SSR tuning, modern image formats, and bundle-level code-splitting in SvelteKit.',
+        'Raised Lighthouse SEO and Core Web Vitals scores by 10+ points through SSR tuning, modern image formats, and bundle-level code-splitting in SvelteKit.',
         'Planned and executed a zero-downtime upgrade to Node.js across services with rollback coverage to meet security baselines.'
       ],
       stack: ['Nest.js', 'Typescript', 'AWS SAM', 'AWS Lambda', 'SvelteKit', 'Node.js']
