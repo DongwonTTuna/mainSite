@@ -129,14 +129,14 @@
       name: 'Core Web Vitals uplift',
       role: 'Nextbeat · Omotenashi HR',
       description: 'Audited SSR, images, and routes to modernise delivery and reduce blocking assets.',
-      impact: 'Boosted Lighthouse SEO scores by 20+ points, improving organic acquisition.',
+      impact: 'Boosted Lighthouse SEO scores by 10+ points, improving organic acquisition.',
       stack: ['SvelteKit', 'SSR Tuning', 'Performance']
     },
     {
       name: 'BiodenKR multi-language launch',
       role: 'Bioden Corp. · Contract',
       description: 'A-to-Z website build with responsive layouts and localisation for five languages.',
-      impact: 'Launched on Cloudflare Pages with a fast, globally cached experience for worldwide visitors.',
+      impact: 'Launched on Cloudflare Pages with a fast experience for worldwide visitors.',
       stack: ['SvelteKit', 'Cloudflare Pages', 'i18n']
     }
   ];
