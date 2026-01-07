@@ -1,15 +1,16 @@
 <script lang="ts">
   import {resolve} from "$app/paths"
+  import {m} from "$lib/paraglide/messages"
 </script>
 
 <section class="tech-page">
     <div class="content">
-        <h1>Tech Stack</h1>
+        <h1>{m.tech_hero_title()}</h1>
         <div class="status">
-            <span class="status-label">Status</span>
-            <p>This section is currently under construction.</p>
+            <span class="status-label">{m.tech_status_label()}</span>
+            <p>{m.tech_status_description()}</p>
         </div>
-        <a href={resolve("/")} class="back-link">Back to TOP</a>
+        <a href={resolve("/")} class="back-link">{m.tech_back_to_top()}</a>
     </div>
 </section>
 

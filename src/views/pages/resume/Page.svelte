@@ -2,6 +2,7 @@
   import ContainerBox from '$lib/components/common/layout/ContainerBox.svelte';
   import BackLink from '$lib/components/navigation/BackLink.svelte';
   import { Tag } from '$lib/components/ui/tag';
+  import { m } from '$lib/paraglide/messages';
 
   type HeroHighlight = {
     label: string;
@@ -51,140 +52,138 @@
     items: string[];
   };
 
-  const heroHighlights: HeroHighlight[] = [
+  const heroHighlights = $derived.by(() => [
     {
-      label: 'Current Role',
-      value: 'Full-Stack Engineer · Nextbeat Inc.',
-      detail: 'Omotenashi HR\'s  experience since Apr 2024.'
+      label: m.resume_highlight_current_role_label(),
+      value: m.resume_highlight_current_role_value(),
+      detail: m.resume_highlight_current_role_detail()
     },
     {
-      label: 'Impact Areas',
-      value: 'DevOps · Performance',
-      detail: 'AWS SAM delivery, Core Web Vitals, SEO uplift.'
+      label: m.resume_highlight_impact_areas_label(),
+      value: m.resume_highlight_impact_areas_value(),
+      detail: m.resume_highlight_impact_areas_detail()
     },
     {
-      label: 'Toolbox',
-      value: 'Typescript · Nest.js · SvelteKit · AWS',
-      detail: 'Cloud-native builds with multi-language delivery.'
+      label: m.resume_highlight_toolbox_label(),
+      value: m.resume_highlight_toolbox_value(),
+      detail: m.resume_highlight_toolbox_detail()
     }
-  ];
+  ]);
 
-  const contactDetails: ContactDetail[] = [
+  const contactDetails = $derived.by(() => [
     {
-      label: 'Current Base',
-      value: 'Ebisu, Shibuya-ku, Tokyo',
+      label: m.resume_contact_base_label(),
+      value: m.resume_contact_base_value(),
       href: 'https://www.google.com/maps/place/Ebisu,+Shibuya+City,+Tokyo+150-0013'
     },
     {
-      label: 'Nationality',
-      value: 'Republic of Korea'
+      label: m.resume_contact_nationality_label(),
+      value: m.resume_contact_nationality_value()
     },
     {
-      label: 'Languages',
-      value: 'Korean (Native) · Japanese (JLPT N1) · English'
+      label: m.resume_contact_languages_label(),
+      value: m.resume_contact_languages_value()
     }
-  ];
+  ]);
 
-  const experiences: Experience[] = [
+  const experiences = $derived.by(() => [
     {
-      company: 'Nextbeat Inc.',
-      title: 'Full-Stack Engineer · Hoikushibank → Omotenashi HR',
-      period: 'Apr 2024 – Present',
-      location: 'Tokyo, Japan',
-      summary:
-        'Joined Nextbeat in Apr 2024 to support Hoikushibank, then transitioned in Oct 2024 to engineering for Omotenashi HR. I design and deliver features across Nest.js APIs, SvelteKit front-ends, and AWS infrastructure.',
+      company: m.resume_experience_1_company(),
+      title: m.resume_experience_1_title(),
+      period: m.resume_experience_1_period(),
+      location: m.resume_experience_1_location(),
+      summary: m.resume_experience_1_summary(),
       achievements: [
-        'Maintained Hoikushibank\'s recruiting platform through Oct 2024, owning bug triage, feature delivery, and release ops before pivoting to Omotenashi HR.',
-        'Migrated AWS Lambda deployments from the Serverless Framework to AWS SAM, standardizing templates and reducing deployment time by roughly 30%.',
-        'Raised Lighthouse SEO and Core Web Vitals scores by 10+ points through SSR tuning, modern image formats, and bundle-level code-splitting in SvelteKit.',
-        'Planned and executed a zero-downtime upgrade to Node.js across services with rollback coverage to meet security baselines.'
+        m.resume_experience_1_achievement_1(),
+        m.resume_experience_1_achievement_2(),
+        m.resume_experience_1_achievement_3(),
+        m.resume_experience_1_achievement_4()
       ],
       stack: ['Nest.js', 'Typescript', 'AWS SAM', 'AWS Lambda', 'SvelteKit', 'Node.js']
     },
     {
-      company: 'Bioden Corp.',
-      title: 'Contract Full-Stack Engineer',
-      period: 'Jul 2024',
-      location: 'Remote · Tokyo',
-      summary:
-        'End-to-end delivery of BiodenKR, a corporate marketing site that needed fast global performance and native-level copy across five languages.',
+      company: m.resume_experience_2_company(),
+      title: m.resume_experience_2_title(),
+      period: m.resume_experience_2_period(),
+      location: m.resume_experience_2_location(),
+      summary: m.resume_experience_2_summary(),
       achievements: [
-        'Architected and built the site from scratch in SvelteKit with a static SSR pipeline tailored to content updates.',
-        'Localised every view for five languages to match regional brand guidelines without duplicating layouts.',
-        'Deployed via Cloudflare Pages for world-wide edge rendering and automated CI so the client can publish independently.'
+        m.resume_experience_2_achievement_1(),
+        m.resume_experience_2_achievement_2(),
+        m.resume_experience_2_achievement_3()
       ],
-      stack: ['SvelteKit', 'Typescript', 'Cloudflare Pages', 'i18n']
+      stack: ['SvelteKit', 'Typescript', 'Cloudflare Pages', m.resume_experience_stack_i18n()]
     }
-  ];
+  ]);
 
-  const selectedProjects: Project[] = [
+  const selectedProjects = $derived.by(() => [
     {
-      name: 'Serverless → AWS SAM migration',
-      role: 'Nextbeat · Omotenashi HR',
-      description: 'Rebuilt Lambda deployment workflows on AWS SAM to adopt native tooling and shared templates.',
-      impact: 'Cut deployment times by about 30% while simplifying CI/CD for the team.',
-      stack: ['AWS SAM', 'AWS Lambda', 'Infrastructure as Code']
+      name: m.resume_project_1_name(),
+      role: m.resume_project_1_role(),
+      description: m.resume_project_1_description(),
+      impact: m.resume_project_1_impact(),
+      stack: ['AWS SAM', 'AWS Lambda', m.resume_experience_stack_iac()]
     },
     {
-      name: 'Core Web Vitals uplift',
-      role: 'Nextbeat · Omotenashi HR',
-      description: 'Audited SSR, images, and routes to modernise delivery and reduce blocking assets.',
-      impact: 'Boosted Lighthouse SEO scores by 10+ points, improving organic acquisition.',
-      stack: ['SvelteKit', 'SSR Tuning', 'Performance']
+      name: m.resume_project_2_name(),
+      role: m.resume_project_2_role(),
+      description: m.resume_project_2_description(),
+      impact: m.resume_project_2_impact(),
+      stack: ['SvelteKit', m.resume_project_stack_ssr(), m.resume_project_stack_performance()]
     },
     {
-      name: 'BiodenKR multi-language launch',
-      role: 'Bioden Corp. · Contract',
-      description: 'A-to-Z website build with responsive layouts and localisation for five languages.',
-      impact: 'Launched on Cloudflare Pages with a fast experience for worldwide visitors.',
-      stack: ['SvelteKit', 'Cloudflare Pages', 'i18n']
+      name: m.resume_project_3_name(),
+      role: m.resume_project_3_role(),
+      description: m.resume_project_3_description(),
+      impact: m.resume_project_3_impact(),
+      stack: ['SvelteKit', 'Cloudflare Pages', m.resume_experience_stack_i18n()]
     }
-  ];
+  ]);
 
-  const educationHistory: EducationEntry[] = [
+  const educationHistory = $derived.by(() => [
     {
-      institution: 'Tokyo Communication University',
-      program: 'Undergraduate studies',
-      period: 'Apr 2024 – Present'
+      institution: m.resume_education_1_institution(),
+      program: m.resume_education_1_program(),
+      period: m.resume_education_1_period()
     },
     {
-      institution: 'Tokyo Information Creator College',
-      program: 'Information technology program',
-      period: 'Graduated Mar 2024'
+      institution: m.resume_education_2_institution(),
+      program: m.resume_education_2_program(),
+      period: m.resume_education_2_period()
     }
-  ];
+  ]);
 
-  const certifications: Certification[] = [
+  const certifications = $derived.by(() => [
     {
-      title: 'JLPT N1',
-      issuer: 'Japan Foundation',
-      issued: 'Dec 2016'
+      title: m.resume_certification_1_title(),
+      issuer: m.resume_certification_1_issuer(),
+      issued: m.resume_certification_1_issued()
     },
     {
-      title: 'Fundamental Information Technology Engineer (FE)',
-      issuer: 'Information-technology Promotion Agency (IPA)',
-      issued: 'Dec 2022'
+      title: m.resume_certification_2_title(),
+      issuer: m.resume_certification_2_issuer(),
+      issued: m.resume_certification_2_issued()
     }
-  ];
+  ]);
 
-  const skillGroups: SkillGroup[] = [
+  const skillGroups = $derived.by(() => [
     {
-      label: 'Core Stack',
+      label: m.resume_skill_group_1_label(),
       items: ['Typescript', 'Nest.js', 'SvelteKit', 'Node.js']
     },
     {
-      label: 'Cloud & DevOps',
-      items: ['AWS Lambda', 'AWS SAM', 'Cloudflare Pages', 'Infrastructure as Code']
+      label: m.resume_skill_group_2_label(),
+      items: ['AWS Lambda', 'AWS SAM', 'Cloudflare Pages', m.resume_experience_stack_iac()]
     },
     {
-      label: 'Product Focus',
-      items: ['B2B SaaS UX', 'Performance & SEO', 'Multi-language delivery']
+      label: m.resume_skill_group_3_label(),
+      items: [m.resume_skill_3_item_1(), m.resume_skill_3_item_2(), m.resume_skill_3_item_3()]
     },
     {
-      label: 'Collaboration',
-      items: ['Requirement discovery', 'Client communication', 'Zero-downtime releases']
+      label: m.resume_skill_group_4_label(),
+      items: [m.resume_skill_4_item_1(), m.resume_skill_4_item_2(), m.resume_skill_4_item_3()]
     }
-  ];
+  ]);
 </script>
 
 <script lang="ts"></script>
@@ -195,14 +194,13 @@
   </div>
   <div class="resume-hero">
     <ContainerBox maxWidth="100%" padding="2.5rem clamp(1.5rem, 4vw, 3rem)">
-      <p class="eyebrow">Resume</p>
+      <p class="eyebrow">{m.resume_hero_eyebrow()}</p>
 
       <div class="hero-heading">
         <div class="identity">
-          <h1>Dongwon Lee</h1>
+          <h1>{m.resume_hero_title()}</h1>
           <p class="hero-summary">
-            Full-Stack Engineer building dependable SaaS experiences for global hospitality clients. Currently at
-            Nextbeat, shipping end-to-end features across Typescript, Nest.js, SvelteKit, and AWS.
+            {m.resume_hero_summary()}
           </p>
         </div>
 
@@ -243,8 +241,8 @@
     <div class="resume-main">
       <div class="resume-card">
         <ContainerBox maxWidth="100%" padding="2rem clamp(1.25rem, 3vw, 2rem)">
-          <p class="eyebrow">Experience</p>
-          <h2>Hands-on delivery</h2>
+          <p class="eyebrow">{m.resume_experience_eyebrow()}</p>
+          <h2>{m.resume_experience_title()}</h2>
           <div class="experience-list">
             {#each experiences as experience (experience.company)}
               <article class="experience">
@@ -274,8 +272,8 @@
 
       <div class="resume-card">
         <ContainerBox maxWidth="100%" padding="2rem clamp(1.25rem, 3vw, 2rem)">
-          <p class="eyebrow">Selected Projects</p>
-          <h2>Case studies</h2>
+          <p class="eyebrow">{m.resume_projects_eyebrow()}</p>
+          <h2>{m.resume_projects_title()}</h2>
           <div class="project-grid">
             {#each selectedProjects as project (project.name)}
               <article class="project-card">
@@ -298,8 +296,8 @@
     <div class="resume-side">
       <div class="resume-card">
         <ContainerBox maxWidth="100%" padding="1.75rem">
-          <p class="eyebrow">Skills</p>
-          <h2>How I work</h2>
+          <p class="eyebrow">{m.resume_skills_eyebrow()}</p>
+          <h2>{m.resume_skills_title()}</h2>
           <div class="skills">
             {#each skillGroups as group (group.label)}
               <div class="skill-group">
@@ -317,8 +315,8 @@
 
       <div class="resume-card">
         <ContainerBox maxWidth="100%" padding="1.75rem">
-          <p class="eyebrow">Education</p>
-          <h2>Academic</h2>
+          <p class="eyebrow">{m.resume_education_eyebrow()}</p>
+          <h2>{m.resume_education_title()}</h2>
           <div class="timeline">
             {#each educationHistory as education (education.institution)}
               <article>
@@ -336,8 +334,8 @@
 
       <div class="resume-card">
         <ContainerBox maxWidth="100%" padding="1.75rem">
-          <p class="eyebrow">Certifications</p>
-          <h2>Proof points</h2>
+          <p class="eyebrow">{m.resume_certifications_eyebrow()}</p>
+          <h2>{m.resume_certifications_title()}</h2>
           <dl class="cert-list">
             {#each certifications as certification (certification.title)}
               <div>

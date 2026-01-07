@@ -1,6 +1,7 @@
 <script lang="ts" module>
   import BackLink from '$lib/components/navigation/BackLink.svelte';
   import FlowingMenu from '$lib/components/ui/text/FlowingMenu.svelte';
+  import {m} from '$lib/paraglide/messages';
   import BiodenKRImage from './_images/bioden.png?w=200&format=webp&image';
   import OmotenashiImage from './_images/omotenashi.png?w=200&format=webp&image';
 
@@ -17,17 +18,16 @@
         <BackLink/>
     </div>
     <div class="hero">
-        <p class="eyebrow">Selected Work</p>
+        <p class="eyebrow">{m.work_hero_eyebrow()}</p>
         <div class="hero-copy">
-            <h1>My works</h1>
+            <h1>{m.work_hero_title()}</h1>
             <p>
-                A curated selection of projects that showcase my expertise in building scalable web applications and
-                delivering impactful user experiences.
+                {m.work_hero_description()}
             </p>
         </div>
     </div>
     <div class="menu-copy">
-        <p class="eyebrow eyebrow-inline">Quick jump</p>
+        <p class="eyebrow eyebrow-inline">{m.work_quick_jump()}</p>
     </div>
     <section class="flowing-menu">
         <FlowingMenu items={flowingMenuItems}/>

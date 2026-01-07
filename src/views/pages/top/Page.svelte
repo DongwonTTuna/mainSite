@@ -5,6 +5,7 @@
   import {Tag} from '$lib/components/ui/tag';
   import LinkedinIcon from '$lib/assets/icon/Linkedin.svelte';
   import GithubIcon from '$lib/assets/icon/Github.svelte';
+  import {m} from '$lib/paraglide/messages';
   import type {RouteId} from "$app/types";
 
   type NavigationItem = {
@@ -12,47 +13,47 @@
     href: RouteId;
   };
 
-  const navigationItems: NavigationItem[] = [
+  const navigationItems = $derived.by(() => [
     {
-      title: 'Work',
+      title: m.nav_work(),
       href: '/work' as RouteId
     },
     {
-      title: 'Resume',
+      title: m.nav_resume(),
       href: '/resume' as RouteId
     },
     {
-      title: 'Tech Stack',
+      title: m.nav_tech(),
       href: '/tech' as RouteId
     }
-  ];
+  ]);
 
-  const workItems = [
+  const workItems = $derived.by(() => [
     {
-      title: 'Serverless　→　AWS SAM migration'
+      title: m.achievement_serverless_sam()
     },
     {
-      title: 'Multilingual site delivery'
+      title: m.achievement_multilingual()
     },
     {
-      title: 'Core Web Vitals uplift by 30%'
+      title: m.achievement_core_web_vitals()
     },
-  ];
+  ]);
 
-  const stackTags = ['Typescript', 'Nest.js', 'AWS', 'Svelte + SvelteKit'];
+  const stackTags = ['Typescript', 'Nest.js', 'AWS', m.top_stack_svelte()];
 
-  const socialLinks = [
+  const socialLinks = $derived.by(() => [
     {
-      title: 'LinkedIn',
+      title: m.social_linkedin(),
       href: 'http://www.linkedin.com/in/dongwonttuna',
       icon: LinkedinIcon
     },
     {
-      title: 'GitHub',
+      title: m.social_github(),
       href: 'https://github.com/dongwonttuna',
       icon: GithubIcon
     }
-  ];
+  ]);
 </script>
 
 <script lang="ts"></script>
@@ -75,7 +76,7 @@
                     ariaLabel="Primary navigation"
             >
                 <div class="nav-header">
-                    <p class="eyebrow eyebrow-inline">Navigation</p>
+                    <p class="eyebrow eyebrow-inline">{m.nav_eyebrow()}</p>
                 </div>
 
                 <div class="top-nav-content">
@@ -89,7 +90,7 @@
                     </div>
 
                     <NavPanels>
-                        <NavPanel heading="Core stack">
+                        <NavPanel heading={m.core_stack()}>
                             <div class="tag-row" id="stack">
                                 {#each stackTags as tag (tag)}
                                     <Tag>{tag}</Tag>
@@ -98,11 +99,11 @@
                         </NavPanel>
 
                         <NavPanel
-                                heading="Work Experience"
+                                heading={m.work_experience_heading()}
                                 id="work-experience"
                         >
-                            <span class="worked-years">2 Years</span>
-                            <p>2 Years at Nextbeat Inc.</p>
+                            <span class="worked-years">{m.work_experience_years()}</span>
+                            <p>{m.work_experience_detail()}</p>
                         </NavPanel>
                     </NavPanels>
                 </div>
@@ -116,8 +117,8 @@
                     padding="2rem clamp(1.5rem, 4vw, 3rem)"
             >
                 <div class="hero-copy">
-                    <p class="eyebrow">Full-Stack Engineer · Tokyo · Nextbeat</p>
-                    <h1>I build, deploy, and scale modern web applications. From scratch.</h1>
+                    <p class="eyebrow">{m.hero_eyebrow()}</p>
+                    <h1>{m.hero_title()}</h1>
 
                     <div class="social-links" aria-label="Social links">
                         {#each socialLinks as link (link.href)}
@@ -135,7 +136,7 @@
                     </div>
 
                     <div class="work-highlight">
-                        <p class="eyebrow eyebrow-inline">Recent Achievements</p>
+                        <p class="eyebrow eyebrow-inline">{m.achievements_eyebrow()}</p>
                         <div class="pill-row">
                             {#each workItems as item (item.title)}
                                 <span class="pill">{item.title}</span>
@@ -144,9 +145,9 @@
                     </div>
 
                     <p class="contact-note">
-                        Open to collaborating with global teams.
+                        {m.contact_note_global()}
                         <br/>
-                        Let’s talk about building dependable, high-performance products end to end.
+                        {m.contact_note_talk()}
                     </p>
                 </div>
             </ContainerBox>
