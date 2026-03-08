@@ -526,7 +526,7 @@
 
   .section-icon {
     display: inline-flex;
-    color: #7f8894;
+    color: #b7c0cc;
     padding-top: 0.1rem;
     flex-shrink: 0;
   }
@@ -559,7 +559,7 @@
   }
 
   .fact-label :global(svg) {
-    color: #6b7280;
+    color: #a5b0bd;
     flex-shrink: 0;
   }
 
@@ -597,13 +597,29 @@
   .entry {
     display: grid;
     gap: 0.8rem;
-    padding: 1rem 0;
+    position: relative;
+    padding: 1rem 0 1rem 1rem;
     border-top: 1px solid #262b31;
+  }
+
+  .entry::before {
+    content: '-';
+    position: absolute;
+    top: 1rem;
+    left: 0;
+    color: #cfd8e3;
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1;
   }
 
   .entry:first-child {
     padding-top: 0;
     border-top: none;
+  }
+
+  .entry:first-child::before {
+    top: 0;
   }
 
   .entry:last-child {
@@ -619,9 +635,26 @@
 
   ul {
     margin: 0;
-    padding-left: 1.1rem;
+    padding-left: 0;
+    list-style: none;
     display: grid;
     gap: 0.45rem;
+  }
+
+  li {
+    position: relative;
+    padding-left: 1rem;
+  }
+
+  li::before {
+    content: '-';
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #cfd8e3;
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1;
   }
 
   .skill-list {
@@ -632,13 +665,30 @@
   .skill-row {
     display: grid;
     gap: 0.25rem;
+    position: relative;
     padding-top: 0.9rem;
+    padding-left: 1rem;
     border-top: 1px solid #262b31;
+  }
+
+  .skill-row::before {
+    content: '-';
+    position: absolute;
+    top: 0.9rem;
+    left: 0;
+    color: #cfd8e3;
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1;
   }
 
   .skill-row:first-child {
     padding-top: 0;
     border-top: none;
+  }
+
+  .skill-row:first-child::before {
+    top: 0;
   }
 
   @media (max-width: 720px) {
