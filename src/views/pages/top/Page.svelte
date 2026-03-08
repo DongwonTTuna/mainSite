@@ -1,321 +1,551 @@
-<script lang="ts" module>
-  import ContainerBox from '$lib/components/common/layout/ContainerBox.svelte';
-  import PrismaticBurst from '$lib/components/common/effect/PrismaticBurst.svelte';
-  import {NavCard, NavPanel, NavPanels} from '$lib/components/ui/navigation';
-  import {Tag} from '$lib/components/ui/tag';
-  import LinkedinIcon from '$lib/assets/icon/Linkedin.svelte';
-  import GithubIcon from '$lib/assets/icon/Github.svelte';
-  import {m} from '$lib/paraglide/messages';
-  import type {RouteId} from "$app/types";
+<script lang="ts">
+  import { m } from '$lib/paraglide/messages';
 
-  type NavigationItem = {
-    title: string;
-    href: RouteId;
+  type SectionLink = {
+    target: string;
+    label: string;
   };
 
-  const navigationItems = $derived.by(() => [
-    {
-      title: m.nav_work(),
-      href: '/work' as RouteId
-    },
-    {
-      title: m.nav_resume(),
-      href: '/resume' as RouteId
-    },
-    {
-      title: m.nav_tech(),
-      href: '/tech' as RouteId
-    }
-  ]);
+  type Fact = {
+    label: string;
+    value: string;
+  };
 
-  const workItems = $derived.by(() => [
-    {
-      title: m.achievement_serverless_sam()
-    },
-    {
-      title: m.achievement_multilingual()
-    },
-    {
-      title: m.achievement_core_web_vitals()
-    },
-  ]);
+  type Experience = {
+    company: string;
+    role: string;
+    period: string;
+    summary: string;
+    bullets: string[];
+  };
 
-  const stackTags = ['Typescript', 'Nest.js', 'AWS', m.top_stack_svelte()];
+  type Project = {
+    name: string;
+    context: string;
+    summary: string;
+    outcome: string;
+  };
 
-  const socialLinks = $derived.by(() => [
-    {
-      title: m.social_linkedin(),
-      href: 'http://www.linkedin.com/in/dongwonttuna',
-      icon: LinkedinIcon
-    },
-    {
-      title: m.social_github(),
-      href: 'https://github.com/dongwonttuna',
-      icon: GithubIcon
-    }
-  ]);
+  type SkillGroup = {
+    label: string;
+    value: string;
+  };
+
+  type SocialLink = {
+    label: string;
+    href: string;
+  };
+
+  const sectionLinks = $derived.by(
+    (): SectionLink[] => [
+      { target: 'experience', label: m.nav_resume() },
+      { target: 'projects', label: m.nav_work() },
+      { target: 'skills', label: m.nav_tech() }
+    ]
+  );
+
+  const facts = $derived.by(
+    (): Fact[] => [
+      {
+        label: m.resume_highlight_current_role_label(),
+        value: m.resume_highlight_current_role_value()
+      },
+      { label: m.resume_contact_base_label(), value: m.resume_contact_base_value() },
+      {
+        label: m.resume_contact_languages_label(),
+        value: m.resume_contact_languages_value()
+      },
+      {
+        label: m.resume_highlight_toolbox_label(),
+        value: m.resume_highlight_toolbox_value()
+      }
+    ]
+  );
+
+  const experiences = $derived.by(
+    (): Experience[] => [
+      {
+        company: m.resume_experience_1_company(),
+        role: m.resume_experience_1_title(),
+        period: m.resume_experience_1_period(),
+        summary: m.resume_experience_1_summary(),
+        bullets: [
+          m.resume_experience_1_achievement_2(),
+          m.resume_experience_1_achievement_3(),
+          m.resume_experience_1_achievement_4()
+        ]
+      },
+      {
+        company: m.resume_experience_2_company(),
+        role: m.resume_experience_2_title(),
+        period: m.resume_experience_2_period(),
+        summary: m.resume_experience_2_summary(),
+        bullets: [
+          m.resume_experience_2_achievement_1(),
+          m.resume_experience_2_achievement_2(),
+          m.resume_experience_2_achievement_3()
+        ]
+      }
+    ]
+  );
+
+  const projects = $derived.by(
+    (): Project[] => [
+      {
+        name: m.resume_project_1_name(),
+        context: m.resume_project_1_role(),
+        summary: m.resume_project_1_description(),
+        outcome: m.resume_project_1_impact()
+      },
+      {
+        name: m.resume_project_2_name(),
+        context: m.resume_project_2_role(),
+        summary: m.resume_project_2_description(),
+        outcome: m.resume_project_2_impact()
+      },
+      {
+        name: m.resume_project_3_name(),
+        context: m.resume_project_3_role(),
+        summary: m.resume_project_3_description(),
+        outcome: m.resume_project_3_impact()
+      },
+      {
+        name: m.resume_project_4_name(),
+        context: m.resume_project_4_role(),
+        summary: m.resume_project_4_description(),
+        outcome: m.resume_project_4_impact()
+      }
+    ]
+  );
+
+  const skillGroups = $derived.by(
+    (): SkillGroup[] => [
+      {
+        label: m.resume_skill_group_1_label(),
+        value: ['Typescript', 'SvelteKit', 'Nest.js', 'Node.js', m.top_stack_svelte()].join(', ')
+      },
+      {
+        label: m.resume_skill_group_2_label(),
+        value: ['AWS Lambda', 'AWS SAM', m.resume_experience_stack_iac(), 'CI/CD'].join(', ')
+      },
+      {
+        label: m.resume_skill_group_3_label(),
+        value: [
+          m.resume_project_stack_ssr(),
+          m.resume_project_stack_performance(),
+          m.resume_experience_stack_i18n()
+        ].join(', ')
+      },
+      {
+        label: m.resume_skill_group_4_label(),
+        value: [
+          m.resume_skill_4_item_1(),
+          m.resume_skill_4_item_2(),
+          m.resume_skill_4_item_3()
+        ].join(', ')
+      }
+    ]
+  );
+
+  const socialLinks = $derived.by(
+    (): SocialLink[] => [
+      { label: m.social_linkedin(), href: 'https://www.linkedin.com/in/dongwonttuna' },
+      { label: m.social_github(), href: 'https://github.com/dongwonttuna' }
+    ]
+  );
 </script>
 
-<script lang="ts"></script>
+<section class="home-page">
+  <div class="shell">
+    <header class="masthead">
+      <div class="masthead-copy">
+        <p class="section-label">{m.hero_eyebrow()}</p>
+        <h1>{m.resume_hero_title()}</h1>
+        <p class="role">{m.resume_highlight_current_role_value()}</p>
+        <p class="summary">{m.resume_hero_summary()}</p>
+      </div>
 
-<section class="top-page">
-    <PrismaticBurst
-            intensity={2}
-            speed={0.6}
-            style="position: absolute; inset: 0; width: 100dvw; height: 100dwh; pointer-events: none;"
-            animationType="rotate3d"
-            distort={8}
-            hoverDampness={0.4}
-            mixBlendMode="screen"
-    />
+      <nav class="section-nav" aria-label={m.nav_eyebrow()}>
+        {#each sectionLinks as link (link.target)}
+          <button type="button" onclick={() => document.getElementById(link.target)?.scrollIntoView()}>
+            {link.label}
+          </button>
+        {/each}
+      </nav>
+    </header>
 
-    <div class="top-stack">
-        <div class="top-nav">
-            <ContainerBox
-                    as="nav"
-                    ariaLabel="Primary navigation"
-            >
-                <div class="nav-header">
-                    <p class="eyebrow eyebrow-inline">{m.nav_eyebrow()}</p>
-                </div>
-
-                <div class="top-nav-content">
-                    <div class="nav-grid">
-                        {#each navigationItems as item (item.href)}
-                            <NavCard
-                                    href={item.href}
-                                    label={item.title}
-                            />
-                        {/each}
-                    </div>
-
-                    <NavPanels>
-                        <NavPanel heading={m.core_stack()}>
-                            <div class="tag-row" id="stack">
-                                {#each stackTags as tag (tag)}
-                                    <Tag>{tag}</Tag>
-                                {/each}
-                            </div>
-                        </NavPanel>
-
-                        <NavPanel
-                                heading={m.work_experience_heading()}
-                                id="work-experience"
-                        >
-                            <span class="worked-years">{m.work_experience_years()}</span>
-                            <p>{m.work_experience_detail()}</p>
-                        </NavPanel>
-                    </NavPanels>
-                </div>
-            </ContainerBox>
+    <main class="document">
+      <section class="panel" id="intro">
+        <div class="section-header">
+          <div>
+            <p class="section-label">{m.hero_eyebrow()}</p>
+            <h2>{m.resume_hero_title()}</h2>
+          </div>
         </div>
 
-        <div class="hero-box">
-            <ContainerBox
-                    align="center"
-                    maxWidth="720px"
-                    padding="2rem clamp(1.5rem, 4vw, 3rem)"
-            >
-                <div class="hero-copy">
-                    <p class="eyebrow">{m.hero_eyebrow()}</p>
-                    <h1>{m.hero_title()}</h1>
+        <div class="intro-grid">
+          <dl class="facts">
+            {#each facts as fact (fact.label)}
+              <div class="fact-row">
+                <dt>{fact.label}</dt>
+                <dd>{fact.value}</dd>
+              </div>
+            {/each}
+          </dl>
 
-                    <div class="social-links" aria-label="Social links">
-                        {#each socialLinks as link (link.href)}
-                            {@const IconComponent = link.icon}
-                            <a
-                                    class="social-link"
-                                    href={link.href}
-                                    target="_blank"
-                                    rel="noreferrer noopener"
-                                    aria-label={`Open ${link.title} profile in a new tab`}
-                            >
-                                <IconComponent size="3rem"/>
-                            </a>
-                        {/each}
-                    </div>
-
-                    <div class="work-highlight">
-                        <p class="eyebrow eyebrow-inline">{m.achievements_eyebrow()}</p>
-                        <div class="pill-row">
-                            {#each workItems as item (item.title)}
-                                <span class="pill">{item.title}</span>
-                            {/each}
-                        </div>
-                    </div>
-
-                    <p class="contact-note">
-                        {m.contact_note_global()}
-                        <br/>
-                        {m.contact_note_talk()}
-                    </p>
-                </div>
-            </ContainerBox>
+          <div class="links-block">
+            <p>{m.contact_note_global()}</p>
+            <div class="link-row">
+              {#each socialLinks as link (link.href)}
+                <!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
+                <a href={link.href} target="_blank" rel="noreferrer noopener">
+                  {link.label}
+                </a>
+              {/each}
+            </div>
+          </div>
         </div>
-    </div>
+      </section>
+
+      <section class="panel" id="experience">
+        <div class="section-header">
+          <div>
+            <p class="section-label">{m.resume_experience_eyebrow()}</p>
+            <h2>{m.resume_experience_title()}</h2>
+          </div>
+        </div>
+
+        <div class="entry-list">
+          {#each experiences as experience (experience.company + experience.role)}
+            <article class="entry">
+              <div class="entry-header">
+                <div>
+                  <h3>{experience.role}</h3>
+                  <p class="entry-meta">{experience.company}</p>
+                </div>
+                <p class="entry-period">{experience.period}</p>
+              </div>
+
+              <p class="entry-summary">{experience.summary}</p>
+
+              <ul>
+                {#each experience.bullets as bullet (bullet)}
+                  <li>{bullet}</li>
+                {/each}
+              </ul>
+            </article>
+          {/each}
+        </div>
+      </section>
+
+      <section class="panel" id="projects">
+        <div class="section-header">
+          <div>
+            <p class="section-label">{m.resume_projects_eyebrow()}</p>
+            <h2>{m.resume_projects_title()}</h2>
+          </div>
+        </div>
+
+        <div class="entry-list">
+          {#each projects as project (project.name)}
+            <article class="entry">
+              <div class="entry-header">
+                <div>
+                  <h3>{project.name}</h3>
+                  <p class="entry-meta">{project.context}</p>
+                </div>
+              </div>
+
+              <p class="entry-summary">{project.summary}</p>
+              <p class="entry-outcome">{project.outcome}</p>
+            </article>
+          {/each}
+        </div>
+      </section>
+
+      <section class="panel" id="skills">
+        <div class="section-header">
+          <div>
+            <p class="section-label">{m.resume_skills_eyebrow()}</p>
+            <h2>{m.resume_skills_title()}</h2>
+          </div>
+        </div>
+
+        <div class="skill-list">
+          {#each skillGroups as group (group.label)}
+            <div class="skill-row">
+              <p>{group.label}</p>
+              <p>{group.value}</p>
+            </div>
+          {/each}
+        </div>
+      </section>
+
+      <section class="panel" id="contact">
+        <div class="section-header">
+          <div>
+            <p class="section-label">{m.resume_certifications_eyebrow()}</p>
+            <h2>{m.resume_certifications_title()}</h2>
+          </div>
+        </div>
+
+        <div class="contact-block">
+          <p>{m.contact_note_talk()}</p>
+          <div class="link-row">
+            {#each socialLinks as link (link.href)}
+              <!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
+              <a href={link.href} target="_blank" rel="noreferrer noopener">
+                {link.label}
+              </a>
+            {/each}
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
 </section>
 
 <style>
-    .top-page {
-        position: relative;
-        min-height: 100dvh;
-        width: 100dvw;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: clamp(2rem, 5vw, 4rem);
-        color: #ffffff;
-        overflow: hidden;
-        background: radial-gradient(circle at top, rgba(11, 5, 24, 0.9), #020111 60%);
+  .home-page {
+    min-height: 100dvh;
+    padding: clamp(1.5rem, 4vw, 3rem);
+    background: #0b0d10;
+    color: #e5e7eb;
+    font-family:
+      'SFMono-Regular',
+      'Menlo',
+      'Monaco',
+      'Consolas',
+      'Liberation Mono',
+      monospace;
+  }
+
+  .shell {
+    width: min(920px, 100%);
+    margin: 0 auto;
+    border: 1px solid #262b31;
+    background: #101318;
+  }
+
+  .masthead {
+    display: grid;
+    gap: 1rem;
+    padding: 1.25rem;
+    border-bottom: 1px solid #262b31;
+  }
+
+  .masthead-copy {
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  h1,
+  h2,
+  h3,
+  p {
+    margin: 0;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    line-height: 1.1;
+    color: #f9fafb;
+  }
+
+  h2 {
+    font-size: 1.15rem;
+    line-height: 1.4;
+    color: #f9fafb;
+  }
+
+  h3 {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #f3f4f6;
+  }
+
+  .role,
+  .entry-meta,
+  .entry-period,
+  .skill-row p:first-child,
+  .fact-row dt {
+    color: #8b949e;
+  }
+
+  .summary,
+  .entry-summary,
+  .entry-outcome,
+  .links-block p,
+  .contact-block p,
+  .fact-row dd,
+  li,
+  .skill-row p:last-child {
+    color: #d1d5db;
+  }
+
+  .summary,
+  .entry-summary,
+  .entry-outcome,
+  .links-block p,
+  .contact-block p,
+  li,
+  .fact-row dd,
+  .skill-row p:last-child {
+    line-height: 1.7;
+  }
+
+  .section-label {
+    font-size: 0.76rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #8b949e;
+  }
+
+  .section-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    padding-top: 0.25rem;
+  }
+
+  .section-nav button,
+  .link-row a {
+    color: #f3f4f6;
+    border-bottom: 1px solid #39414a;
+    background: transparent;
+    border-inline: none;
+    border-top: none;
+    padding-bottom: 0.1rem;
+    padding-inline: 0;
+    font: inherit;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .section-nav button:hover,
+  .section-nav button:focus-visible,
+  .link-row a:hover,
+  .link-row a:focus-visible {
+    color: #ffffff;
+    border-color: #9ca3af;
+    outline: none;
+  }
+
+  .document {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .panel {
+    padding: 1.25rem;
+    border-top: 1px solid #262b31;
+  }
+
+  .panel:first-child {
+    border-top: none;
+  }
+
+  .section-header {
+    margin-bottom: 1rem;
+  }
+
+  .intro-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(240px, 0.8fr);
+    gap: 1.25rem;
+  }
+
+  .facts {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .fact-row {
+    display: grid;
+    gap: 0.2rem;
+  }
+
+  .links-block,
+  .contact-block {
+    display: grid;
+    gap: 1rem;
+    align-content: start;
+  }
+
+  .link-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1rem;
+  }
+
+  .entry-list {
+    display: grid;
+  }
+
+  .entry {
+    display: grid;
+    gap: 0.8rem;
+    padding: 1rem 0;
+    border-top: 1px solid #262b31;
+  }
+
+  .entry:first-child {
+    padding-top: 0;
+    border-top: none;
+  }
+
+  .entry:last-child {
+    padding-bottom: 0;
+  }
+
+  .entry-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: baseline;
+  }
+
+  ul {
+    margin: 0;
+    padding-left: 1.1rem;
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  .skill-list {
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .skill-row {
+    display: grid;
+    gap: 0.25rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid #262b31;
+  }
+
+  .skill-row:first-child {
+    padding-top: 0;
+    border-top: none;
+  }
+
+  @media (max-width: 720px) {
+    .home-page {
+      padding: 1rem;
     }
 
-    .top-stack {
-        position: relative;
-        z-index: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 1.25rem;
+    .masthead,
+    .panel {
+      padding: 1rem;
     }
 
-    .top-nav {
-        position: relative;
-        z-index: 3;
-        width: min(920px, 100%);
+    .intro-grid {
+      grid-template-columns: 1fr;
     }
 
-    .hero-box {
-        width: 100%;
+    .entry-header {
+      flex-direction: column;
+      align-items: flex-start;
     }
-
-
-    .nav-header {
-        display: flex;
-        gap: 0.65rem;
-        align-items: center;
-    }
-
-    .top-nav-content {
-        width: 100%;
-        padding: 0.25rem;
-        background: transparent;
-        display: flex;
-        flex-direction: column;
-        gap: 0.75rem;
-    }
-
-    .nav-grid {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-        gap: 0.5rem;
-    }
-
-    .tag-row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-    }
-
-    .hero-copy {
-        position: relative;
-        gap: 2rem;
-        display: flex;
-        flex-direction: column;
-        word-break: break-word;
-    }
-
-    .hero-copy h1 {
-        font-size: clamp(2.25rem, 3.5vw, 3.5rem);
-        line-height: 1.15;
-        margin: 0;
-    }
-
-    .hero-copy p {
-        margin: 0;
-        color: rgba(255, 255, 255, 0.8);
-        line-height: 1.6;
-    }
-
-    .worked-years {
-        font-size: 24px;
-        font-weight: 600;
-    }
-
-    .eyebrow {
-        font-size: 0.875rem;
-        letter-spacing: 0.3em;
-        text-transform: uppercase;
-        color: rgba(255, 255, 255, 0.7);
-    }
-
-    .eyebrow-inline {
-        display: inline-flex;
-        letter-spacing: 0.18em;
-        font-size: 0.8rem;
-    }
-
-    .work-highlight {
-        display: flex;
-        flex-direction: column;
-        gap: 0.65rem;
-    }
-
-    .pill-row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-    }
-
-    .social-links {
-        display: flex;
-        width: 100%;
-        justify-content: center;
-        gap: 0.75rem;
-        align-items: center;
-    }
-
-    .social-link {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        color: #ffffff;
-        transition: transform 150ms ease, opacity 150ms ease;
-    }
-
-    .social-link:focus-visible,
-    .social-link:hover {
-        transform: translateY(-1px) scale(1.05);
-        opacity: 0.85;
-    }
-
-    .pill {
-        padding: 0.4rem 0.75rem;
-        border-radius: 999px;
-        background: rgba(255, 255, 255, 0.08);
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        color: rgba(255, 255, 255, 0.9);
-        font-size: 0.9rem;
-    }
-
-    .contact-note {
-        color: rgba(255, 255, 255, 0.7);
-    }
-
-    @media (max-width: 640px) {
-        .nav-header {
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        .hero-copy h1 {
-            font-size: clamp(2rem, 8vw, 3rem);
-        }
-
-        .pill {
-            width: 100%;
-        }
-    }
+  }
 </style>

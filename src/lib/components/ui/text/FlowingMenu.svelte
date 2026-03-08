@@ -99,17 +99,16 @@
     <nav class="menu">
         {#each menuItems as item, idx (item.link ?? `${item.text}-${idx}`)}
             <div class="menu__item" bind:this={itemRefs[idx]}>
-                <a
+                <button
+                        type="button"
                         class="menu__item-link"
-                        href={item.link}
-                        target="_blank"
-                        rel="noreferrer noopener"
                         aria-label={item.text}
+                        onclick={() => item.link && window.open(item.link, '_blank', 'noopener,noreferrer')}
                         onmouseenter={(event) => runEnterAnimation(idx, event)}
                         onmouseleave={(event) => runLeaveAnimation(idx, event)}
                 >
                     {item.text}
-                </a>
+                </button>
 
                 <div class="marquee" bind:this={marqueeRefs[idx]}>
                     <div class="marquee__inner-wrap" bind:this={marqueeInnerRefs[idx]}>

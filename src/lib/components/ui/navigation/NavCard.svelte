@@ -12,6 +12,8 @@
 </script>
 
 <script lang="ts">
+  import {resolve} from '$app/paths';
+
   let {
     href,
     label,
@@ -23,7 +25,7 @@
 
 <a
   class={`nav-card ${className}`.trim()}
-  href={href}
+  href={resolve(href)}
   {...restProps}
 >
   <span class="nav-card-title">{label}</span>
