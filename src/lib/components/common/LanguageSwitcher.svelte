@@ -1,11 +1,32 @@
 <script lang="ts">
-  import { getLocale, locales, setLocale } from '$lib/paraglide/runtime';
+  import { page } from '$app/state';
+  import {
+    getLocale,
+    localizeUrl,
+    locales
+  } from '$lib/paraglide/runtime';
 
   type Locale = (typeof locales)[number];
 
-  function handleLanguageChange(lang: Locale) {
-    if (lang === getLocale()) return;
-    setLocale(lang);
+  function getLanguageSwitchUrl(lang: Locale, redirectTo = page.url.href) {
+    const switcherUrl = localizeUrl(new URL('/locale', page.url.origin), {
+      locale: getLocale()
+    });
+
+    switcherUrl.searchParams.set('lang', lang);
+    switcherUrl.searchParams.set('redirectTo', redirectTo);
+
+    return `${switcherUrl.pathname}${switcherUrl.search}`;
+  }
+
+  function handleLanguageChange(event: MouseEvent, lang: Locale) {
+    if (lang === getLocale()) {
+      event.preventDefault();
+      return;
+    }
+
+    event.preventDefault();
+    window.location.href = getLanguageSwitchUrl(lang, window.location.href);
   }
 
   const langLabels: Record<string, string> = {
@@ -17,14 +38,16 @@
 
 <div class="lang-switcher">
   {#each locales as lang (lang)}
-    <button
+    <a
       class="lang-btn"
       class:active={lang === getLocale()}
-      onclick={() => handleLanguageChange(lang)}
+      href={getLanguageSwitchUrl(lang)}
+      onclick={(event) => handleLanguageChange(event, lang)}
       aria-label="Change language to {langLabels[lang]}"
+      aria-current={lang === getLocale() ? 'page' : undefined}
     >
       {langLabels[lang]}
-    </button>
+    </a>
   {/each}
 </div>
 
@@ -38,11 +61,13 @@
   }
 
   .lang-btn {
-    border: none;
+    display: inline-flex;
+    align-items: center;
     background: transparent;
     color: rgba(226, 232, 240, 0.72);
     padding: 0.25rem 0.5rem;
     font-size: 0.72rem;
+    line-height: 1;
     font-family:
       'SFMono-Regular',
       'Menlo',
@@ -51,6 +76,7 @@
       'Liberation Mono',
       monospace;
     cursor: pointer;
+    text-decoration: none;
   }
 
   .lang-btn:hover,

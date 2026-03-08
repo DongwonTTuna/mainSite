@@ -14,14 +14,6 @@ function isDocumentRequest(request: Request) {
   return request.headers.get("Sec-Fetch-Dest") === "document";
 }
 
-function extractLocaleCookie(request: Request) {
-  const cookie = request.headers.get("cookie");
-  return cookie
-    ?.split("; ")
-    .find((entry) => entry.startsWith(`${cookieName}=`))
-    ?.split("=")[1];
-}
-
 function hasExplicitLocalePrefix(url: URL) {
   const firstSegment = url.pathname.split("/").filter(Boolean)[0];
   return localizedSegments.some((locale) => locale === firstSegment);
@@ -35,7 +27,7 @@ function getInitialLocaleRedirectResponse(event: RequestEvent) {
     return null;
   }
 
-  const cookieLocale = extractLocaleCookie(request);
+  const cookieLocale = event.cookies.get(cookieName);
   const preferredLocale =
     cookieLocale ?? extractLocaleFromHeader(request) ?? baseLocale;
 
