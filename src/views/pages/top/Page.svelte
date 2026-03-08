@@ -218,7 +218,7 @@
           </div>
         </div>
 
-        <div class="intro-grid">
+        <div class="section-content intro-grid">
           <dl class="facts">
             {#each facts as fact (fact.label)}
               {@const FactIcon = fact.icon}
@@ -263,7 +263,7 @@
           </div>
         </div>
 
-        <div class="entry-list">
+        <div class="section-content entry-list">
           {#each experiences as experience (experience.company + experience.role)}
             <article class="entry">
               <div class="entry-header">
@@ -299,7 +299,7 @@
           </div>
         </div>
 
-        <div class="entry-list">
+        <div class="section-content entry-list">
           {#each projects as project (project.name)}
             <article class="entry">
               <div class="entry-header">
@@ -329,7 +329,7 @@
           </div>
         </div>
 
-        <div class="skill-list">
+        <div class="section-content skill-list">
           {#each skillGroups as group (group.label)}
             <div class="skill-row">
               <p>{group.label}</p>
@@ -352,7 +352,7 @@
           </div>
         </div>
 
-        <div class="contact-block">
+        <div class="section-content contact-block">
           <p>{m.contact_note_talk()}</p>
           <div class="link-row">
             {#each socialLinks as link (link.href)}
@@ -518,9 +518,10 @@
   }
 
   .section-heading {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.7rem;
+    display: grid;
+    grid-template-columns: 0.95rem minmax(0, 1fr);
+    align-items: start;
+    column-gap: 0.6rem;
   }
 
   .section-icon {
@@ -528,6 +529,10 @@
     color: #7f8894;
     padding-top: 0.1rem;
     flex-shrink: 0;
+  }
+
+  .section-content {
+    padding-left: calc(0.95rem + 0.6rem);
   }
 
   .intro-grid {
@@ -547,14 +552,19 @@
   }
 
   .fact-label {
-    display: inline-flex;
+    display: grid;
+    grid-template-columns: 0.82rem minmax(0, auto);
     align-items: center;
-    gap: 0.45rem;
+    column-gap: 0.45rem;
   }
 
   .fact-label :global(svg) {
     color: #6b7280;
     flex-shrink: 0;
+  }
+
+  .fact-row dd {
+    padding-left: calc(0.82rem + 0.45rem);
   }
 
   .links-block,
@@ -643,6 +653,10 @@
 
     .intro-grid {
       grid-template-columns: 1fr;
+    }
+
+    .section-content {
+      padding-left: 0;
     }
 
     .entry-header {
