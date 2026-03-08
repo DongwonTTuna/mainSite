@@ -1,20 +1,11 @@
 <script lang="ts">
-  import { locales, getLocale } from '$lib/paraglide/runtime';
-  import { base } from '$app/paths';
-  import { page } from '$app/state';
+  import { getLocale, locales, setLocale } from '$lib/paraglide/runtime';
 
-  function handleLanguageChange(lang: string) {
+  type Locale = (typeof locales)[number];
+
+  function handleLanguageChange(lang: Locale) {
     if (lang === getLocale()) return;
-
-    const currentPath = page.url.pathname;
-    const segments = currentPath.split('/').filter(Boolean);
-    const isFirstSegmentLocale = (locales as readonly string[]).includes(segments[0]);
-
-    const newPath = isFirstSegmentLocale
-      ? '/' + [lang, ...segments.slice(1)].join('/')
-      : '/' + lang + currentPath;
-
-    window.location.href = base + newPath + page.url.search + page.url.hash;
+    setLocale(lang);
   }
 
   const langLabels: Record<string, string> = {
