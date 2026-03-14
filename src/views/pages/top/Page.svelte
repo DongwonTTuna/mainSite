@@ -1,5 +1,18 @@
 <script lang="ts">
+  import type { Component } from 'svelte';
+  import Github from '$lib/assets/icon/Github.svelte';
+  import Linkedin from '$lib/assets/icon/Linkedin.svelte';
+  import BriefcaseIcon from '$lib/assets/icon/line/BriefcaseIcon.svelte';
+  import FolderIcon from '$lib/assets/icon/line/FolderIcon.svelte';
+  import LanguagesIcon from '$lib/assets/icon/line/LanguagesIcon.svelte';
+  import LayersIcon from '$lib/assets/icon/line/LayersIcon.svelte';
+  import MailIcon from '$lib/assets/icon/line/MailIcon.svelte';
+  import MapPinIcon from '$lib/assets/icon/line/MapPinIcon.svelte';
+  import UserIcon from '$lib/assets/icon/line/UserIcon.svelte';
+  import WrenchIcon from '$lib/assets/icon/line/WrenchIcon.svelte';
   import { m } from '$lib/paraglide/messages';
+
+  type IconComponent = Component<{ size?: string }>;
 
   type SectionLink = {
     target: string;
@@ -7,6 +20,7 @@
   };
 
   type Fact = {
+    icon: IconComponent;
     label: string;
     value: string;
   };
@@ -32,6 +46,7 @@
   };
 
   type SocialLink = {
+    icon: IconComponent;
     label: string;
     href: string;
   };
@@ -47,15 +62,22 @@
   const facts = $derived.by(
     (): Fact[] => [
       {
+        icon: BriefcaseIcon,
         label: m.resume_highlight_current_role_label(),
         value: m.resume_highlight_current_role_value()
       },
-      { label: m.resume_contact_base_label(), value: m.resume_contact_base_value() },
       {
+        icon: MapPinIcon,
+        label: m.resume_contact_base_label(),
+        value: m.resume_contact_base_value()
+      },
+      {
+        icon: LanguagesIcon,
         label: m.resume_contact_languages_label(),
         value: m.resume_contact_languages_value()
       },
       {
+        icon: LayersIcon,
         label: m.resume_highlight_toolbox_label(),
         value: m.resume_highlight_toolbox_value()
       }
@@ -149,8 +171,16 @@
 
   const socialLinks = $derived.by(
     (): SocialLink[] => [
-      { label: m.social_linkedin(), href: 'https://www.linkedin.com/in/dongwonttuna' },
-      { label: m.social_github(), href: 'https://github.com/dongwonttuna' }
+      {
+        icon: Linkedin,
+        label: m.social_linkedin(),
+        href: 'https://www.linkedin.com/in/dongwonttuna'
+      },
+      {
+        icon: Github,
+        label: m.social_github(),
+        href: 'https://github.com/dongwonttuna'
+      }
     ]
   );
 </script>
@@ -177,17 +207,28 @@
     <main class="document">
       <section class="panel" id="intro">
         <div class="section-header">
-          <div>
-            <p class="section-label">{m.hero_eyebrow()}</p>
-            <h2>{m.resume_hero_title()}</h2>
+          <div class="section-heading">
+            <span class="section-icon">
+              <UserIcon size="0.95rem" />
+            </span>
+            <div>
+              <p class="section-label">{m.hero_eyebrow()}</p>
+              <h2>{m.resume_hero_title()}</h2>
+            </div>
           </div>
         </div>
 
-        <div class="intro-grid">
+        <div class="section-content intro-grid">
           <dl class="facts">
             {#each facts as fact (fact.label)}
+              {@const FactIcon = fact.icon}
               <div class="fact-row">
-                <dt>{fact.label}</dt>
+                <dt>
+                  <span class="fact-label">
+                    <FactIcon size="0.82rem" />
+                    <span>{fact.label}</span>
+                  </span>
+                </dt>
                 <dd>{fact.value}</dd>
               </div>
             {/each}
@@ -197,9 +238,11 @@
             <p>{m.contact_note_global()}</p>
             <div class="link-row">
               {#each socialLinks as link (link.href)}
+                {@const SocialIcon = link.icon}
                 <!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
                 <a href={link.href} target="_blank" rel="noreferrer noopener">
-                  {link.label}
+                  <SocialIcon size="0.9rem" />
+                  <span>{link.label}</span>
                 </a>
               {/each}
             </div>
@@ -209,13 +252,18 @@
 
       <section class="panel" id="experience">
         <div class="section-header">
-          <div>
-            <p class="section-label">{m.resume_experience_eyebrow()}</p>
-            <h2>{m.resume_experience_title()}</h2>
+          <div class="section-heading">
+            <span class="section-icon">
+              <BriefcaseIcon size="0.95rem" />
+            </span>
+            <div>
+              <p class="section-label">{m.resume_experience_eyebrow()}</p>
+              <h2>{m.resume_experience_title()}</h2>
+            </div>
           </div>
         </div>
 
-        <div class="entry-list">
+        <div class="section-content entry-list">
           {#each experiences as experience (experience.company + experience.role)}
             <article class="entry">
               <div class="entry-header">
@@ -240,13 +288,18 @@
 
       <section class="panel" id="projects">
         <div class="section-header">
-          <div>
-            <p class="section-label">{m.resume_projects_eyebrow()}</p>
-            <h2>{m.resume_projects_title()}</h2>
+          <div class="section-heading">
+            <span class="section-icon">
+              <FolderIcon size="0.95rem" />
+            </span>
+            <div>
+              <p class="section-label">{m.resume_projects_eyebrow()}</p>
+              <h2>{m.resume_projects_title()}</h2>
+            </div>
           </div>
         </div>
 
-        <div class="entry-list">
+        <div class="section-content entry-list">
           {#each projects as project (project.name)}
             <article class="entry">
               <div class="entry-header">
@@ -265,13 +318,18 @@
 
       <section class="panel" id="skills">
         <div class="section-header">
-          <div>
-            <p class="section-label">{m.resume_skills_eyebrow()}</p>
-            <h2>{m.resume_skills_title()}</h2>
+          <div class="section-heading">
+            <span class="section-icon">
+              <WrenchIcon size="0.95rem" />
+            </span>
+            <div>
+              <p class="section-label">{m.resume_skills_eyebrow()}</p>
+              <h2>{m.resume_skills_title()}</h2>
+            </div>
           </div>
         </div>
 
-        <div class="skill-list">
+        <div class="section-content skill-list">
           {#each skillGroups as group (group.label)}
             <div class="skill-row">
               <p>{group.label}</p>
@@ -283,19 +341,26 @@
 
       <section class="panel" id="contact">
         <div class="section-header">
-          <div>
-            <p class="section-label">{m.resume_certifications_eyebrow()}</p>
-            <h2>{m.resume_certifications_title()}</h2>
+          <div class="section-heading">
+            <span class="section-icon">
+              <MailIcon size="0.95rem" />
+            </span>
+            <div>
+              <p class="section-label">{m.resume_certifications_eyebrow()}</p>
+              <h2>{m.resume_certifications_title()}</h2>
+            </div>
           </div>
         </div>
 
-        <div class="contact-block">
+        <div class="section-content contact-block">
           <p>{m.contact_note_talk()}</p>
           <div class="link-row">
             {#each socialLinks as link (link.href)}
+              {@const SocialIcon = link.icon}
               <!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
               <a href={link.href} target="_blank" rel="noreferrer noopener">
-                {link.label}
+                <SocialIcon size="0.9rem" />
+                <span>{link.label}</span>
               </a>
             {/each}
           </div>
@@ -410,6 +475,9 @@
 
   .section-nav button,
   .link-row a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
     color: #f3f4f6;
     border-bottom: 1px solid #39414a;
     background: transparent;
@@ -449,6 +517,24 @@
     margin-bottom: 1rem;
   }
 
+  .section-heading {
+    display: grid;
+    grid-template-columns: 0.95rem minmax(0, 1fr);
+    align-items: start;
+    column-gap: 0.6rem;
+  }
+
+  .section-icon {
+    display: inline-flex;
+    color: #b7c0cc;
+    padding-top: 0.1rem;
+    flex-shrink: 0;
+  }
+
+  .section-content {
+    padding-left: calc(0.95rem + 0.6rem);
+  }
+
   .intro-grid {
     display: grid;
     grid-template-columns: minmax(0, 1.2fr) minmax(240px, 0.8fr);
@@ -465,6 +551,22 @@
     gap: 0.2rem;
   }
 
+  .fact-label {
+    display: grid;
+    grid-template-columns: 0.82rem minmax(0, auto);
+    align-items: center;
+    column-gap: 0.45rem;
+  }
+
+  .fact-label :global(svg) {
+    color: #a5b0bd;
+    flex-shrink: 0;
+  }
+
+  .fact-row dd {
+    padding-left: calc(0.82rem + 0.45rem);
+  }
+
   .links-block,
   .contact-block {
     display: grid;
@@ -478,6 +580,16 @@
     gap: 0.75rem 1rem;
   }
 
+  .link-row a :global(svg) {
+    color: #8b949e;
+    transition: color 160ms ease;
+  }
+
+  .link-row a:hover :global(svg),
+  .link-row a:focus-visible :global(svg) {
+    color: #d1d5db;
+  }
+
   .entry-list {
     display: grid;
   }
@@ -485,13 +597,29 @@
   .entry {
     display: grid;
     gap: 0.8rem;
-    padding: 1rem 0;
+    position: relative;
+    padding: 1rem 0 1rem 1rem;
     border-top: 1px solid #262b31;
+  }
+
+  .entry::before {
+    content: '-';
+    position: absolute;
+    top: 1rem;
+    left: 0;
+    color: #cfd8e3;
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1;
   }
 
   .entry:first-child {
     padding-top: 0;
     border-top: none;
+  }
+
+  .entry:first-child::before {
+    top: 0;
   }
 
   .entry:last-child {
@@ -507,9 +635,26 @@
 
   ul {
     margin: 0;
-    padding-left: 1.1rem;
+    padding-left: 0;
+    list-style: none;
     display: grid;
     gap: 0.45rem;
+  }
+
+  li {
+    position: relative;
+    padding-left: 1rem;
+  }
+
+  li::before {
+    content: '-';
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #cfd8e3;
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1;
   }
 
   .skill-list {
@@ -520,13 +665,30 @@
   .skill-row {
     display: grid;
     gap: 0.25rem;
+    position: relative;
     padding-top: 0.9rem;
+    padding-left: 1rem;
     border-top: 1px solid #262b31;
+  }
+
+  .skill-row::before {
+    content: '-';
+    position: absolute;
+    top: 0.9rem;
+    left: 0;
+    color: #cfd8e3;
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1;
   }
 
   .skill-row:first-child {
     padding-top: 0;
     border-top: none;
+  }
+
+  .skill-row:first-child::before {
+    top: 0;
   }
 
   @media (max-width: 720px) {
@@ -541,6 +703,10 @@
 
     .intro-grid {
       grid-template-columns: 1fr;
+    }
+
+    .section-content {
+      padding-left: 0;
     }
 
     .entry-header {
