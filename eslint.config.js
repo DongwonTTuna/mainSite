@@ -1,5 +1,4 @@
 import prettier from "eslint-config-prettier";
-import { fileURLToPath } from "node:url";
 import { includeIgnoreFile } from "@eslint/compat";
 import js from "@eslint/js";
 import svelte from "eslint-plugin-svelte";
@@ -8,7 +7,7 @@ import globals from "globals";
 import ts from "typescript-eslint";
 import svelteConfig from "./svelte.config.js";
 
-const gitignorePath = fileURLToPath(new URL("./.gitignore", import.meta.url));
+const gitignorePath = new URL("./.gitignore", import.meta.url).pathname;
 
 export default defineConfig(
   includeIgnoreFile(gitignorePath),
@@ -19,7 +18,7 @@ export default defineConfig(
   ...svelte.configs.prettier,
   {
     languageOptions: {
-      globals: { ...globals.browser, ...globals.node },
+      globals: globals.browser,
     },
     rules: {
       // typescript-eslint strongly recommend that you do not use the no-undef lint rule on TypeScript projects.
