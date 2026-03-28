@@ -40,7 +40,6 @@ export type LocalizedProfile = {
   role: string;
   heroSummary: string;
   introNote: string;
-  contactNote: string;
   facts: LocalizedFactRow[];
   experiences: LocalizedExperience[];
   projects: LocalizedProject[];

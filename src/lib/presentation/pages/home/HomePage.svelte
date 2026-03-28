@@ -1,6 +1,5 @@
 <script lang="ts">
   import type { HomePageViewModel } from "#application/home/types";
-  import ContactSection from "#presentation/sections/ContactSection.svelte";
   import ExperienceSection from "#presentation/sections/ExperienceSection.svelte";
   import HeroSection from "#presentation/sections/HeroSection.svelte";
   import HighlightsSection from "#presentation/sections/HighlightsSection.svelte";
@@ -19,7 +18,6 @@
       <ExperienceSection section={model.experience} />
       <ProjectsSection section={model.projects} />
       <SkillsSection section={model.skills} />
-      <ContactSection section={model.contact} />
     </main>
   </div>
 </section>

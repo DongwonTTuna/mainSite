@@ -6,6 +6,7 @@ describe("buildHomePageModel", () => {
     const model = buildHomePageModel("ko");
 
     expect(model.hero.title).toBe("이동원");
+    expect(model.intro.title).toBe("개요");
     expect(model.navigation.items).toEqual([
       { id: "experience", label: "경력", href: "#experience" },
       { id: "projects", label: "프로젝트", href: "#projects" },
@@ -14,7 +15,7 @@ describe("buildHomePageModel", () => {
     expect(model.experience.entries).toHaveLength(2);
     expect(model.projects.entries).toHaveLength(4);
     expect(model.skills.groups).toHaveLength(4);
-    expect(model.contact.links).toHaveLength(2);
+    expect(model.intro.links).toHaveLength(2);
   });
 
   test("keeps the same information shape across locales", () => {
@@ -27,7 +28,7 @@ describe("buildHomePageModel", () => {
         experiences: model.experience.entries.length,
         projects: model.projects.entries.length,
         skills: model.skills.groups.length,
-        links: model.contact.links.length,
+        links: model.intro.links.length,
       };
     });
 

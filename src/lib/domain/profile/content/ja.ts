@@ -6,9 +6,7 @@ export const jaProfileLocalization: ProfileLocalization = {
     roleTitle: "フルスタックエンジニア",
     heroSummary:
       "Webサービスのフロントエンド、API、デプロイをまとめて扱っています。最近はTypescript、SvelteKit、Nest.js、AWSを主に使っています。",
-    introNote: "最近の作業とリンクを下にまとめています。",
-    contactNote:
-      "仕事の話であればLinkedInが一番見やすいです。GitHubには最近のコードと作業履歴があります。",
+    introNote: "連絡先",
     locationName: "東京・恵比寿",
   },
   factLabels: {

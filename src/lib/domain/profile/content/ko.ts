@@ -6,9 +6,7 @@ export const koProfileLocalization: ProfileLocalization = {
     roleTitle: "풀스택 엔지니어",
     heroSummary:
       "웹 서비스의 프론트엔드, API, 배포를 함께 다룹니다. 최근에는 Typescript, SvelteKit, Nest.js, AWS를 주로 사용했습니다.",
-    introNote: "최근 작업과 링크를 아래에 정리했습니다.",
-    contactNote:
-      "일이 맞는 경우 LinkedIn으로 연락 주시면 됩니다. GitHub에는 최근 코드와 작업 이력이 있습니다.",
+    introNote: "연락처",
     locationName: "도쿄 에비스",
   },
   factLabels: {

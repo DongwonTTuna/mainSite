@@ -23,7 +23,6 @@ export type ProfileLocalization = {
     roleTitle: string;
     heroSummary: string;
     introNote: string;
-    contactNote: string;
     locationName: string;
   };
   factLabels: {

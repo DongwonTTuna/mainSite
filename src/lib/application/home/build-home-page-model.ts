@@ -38,7 +38,7 @@ export function buildHomePageModel(locale: AppLocale): HomePageViewModel {
     intro: {
       id: "intro",
       eyebrow: ui.introEyebrow,
-      title: profile.name,
+      title: ui.introTitle,
       facts: profile.facts,
       note: profile.introNote,
       links: profile.contactLinks,
@@ -60,13 +60,6 @@ export function buildHomePageModel(locale: AppLocale): HomePageViewModel {
       eyebrow: ui.skillsEyebrow,
       title: ui.skillsTitle,
       groups: profile.skillGroups,
-    },
-    contact: {
-      id: "contact",
-      eyebrow: ui.contactEyebrow,
-      title: ui.contactTitle,
-      note: profile.contactNote,
-      links: profile.contactLinks,
     },
   };
 }

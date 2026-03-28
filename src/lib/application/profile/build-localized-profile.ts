@@ -22,7 +22,6 @@ export function buildLocalizedProfile(locale: AppLocale): LocalizedProfile {
     role: `${localization.identity.roleTitle} / ${profile.snapshot.currentOrganizationName}`,
     heroSummary: localization.identity.heroSummary,
     introNote: localization.identity.introNote,
-    contactNote: localization.identity.contactNote,
     facts: [
       {
         id: "currentRole",

@@ -6,9 +6,7 @@ export const enProfileLocalization: ProfileLocalization = {
     roleTitle: "Full-stack engineer",
     heroSummary:
       "I work across frontend, API, and deployment for web services. Most of my recent work is in Typescript, SvelteKit, Nest.js, and AWS.",
-    introNote: "Recent work and links are below.",
-    contactNote:
-      "If the work fits, LinkedIn is the easiest way to reach me. GitHub has recent code and project history.",
+    introNote: "Contact",
     locationName: "Ebisu, Tokyo",
   },
   factLabels: {

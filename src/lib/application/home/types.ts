@@ -78,11 +78,4 @@ export type HomePageViewModel = {
     title: string;
     groups: HomeSkillGroup[];
   };
-  contact: {
-    id: "contact";
-    eyebrow: string;
-    title: string;
-    note: string;
-    links: HomeContactLink[];
-  };
 };

@@ -23,7 +23,7 @@
     </dl>
 
     <div class="links-block">
-      <p>{section.note}</p>
+      <p class="links-label">{section.note}</p>
       <div class="link-row">
         {#each section.links as link (link.href)}
           <!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
@@ -74,8 +74,7 @@
     color: var(--text-muted);
   }
 
-  dd,
-  .links-block p {
+  dd {
     color: var(--text-body);
     line-height: 1.7;
   }
@@ -86,8 +85,16 @@
 
   .links-block {
     display: grid;
-    gap: 1rem;
+    gap: 0.75rem;
     align-content: start;
+  }
+
+  .links-label {
+    color: var(--text-muted);
+    font-size: 0.76rem;
+    letter-spacing: 0.08em;
+    line-height: 1.4;
+    text-transform: uppercase;
   }
 
   .link-row {
