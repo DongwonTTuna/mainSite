@@ -1,3 +1,4 @@
-import { deLocalizeUrl } from "$lib/paraglide/runtime";
+import { stripLocalePrefix } from "#infrastructure/i18n/locale";
 
-export const reroute = (request) => deLocalizeUrl(request.url).pathname;
+export const reroute = ({ url }: { url: URL }) =>
+  stripLocalePrefix(url.pathname);

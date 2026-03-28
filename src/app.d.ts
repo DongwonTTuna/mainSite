@@ -3,8 +3,12 @@
 declare global {
   namespace App {
     // interface Error {}
-    // interface Locals {}
-    // interface PageData {}
+    interface Locals {
+      locale: import("#infrastructure/i18n/locale").AppLocale;
+    }
+    interface PageData {
+      locale: import("#infrastructure/i18n/locale").AppLocale;
+    }
     // interface PageState {}
     // interface Platform {}
   }
