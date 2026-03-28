@@ -1,12 +1,12 @@
 import type { HomePageViewModel } from "#application/home/types";
-import { getProfileContent } from "#application/profile/get-profile-content";
+import { buildLocalizedProfile } from "#application/profile/build-localized-profile";
+import { getHomeSectionText } from "#infrastructure/i18n/home-section-text";
 import type { AppLocale } from "#infrastructure/i18n/locale";
-import { getUiCopy } from "#infrastructure/i18n/ui-copy";
 import { getHomeSectionHref } from "#infrastructure/routing/anchors";
 
 export function buildHomePageModel(locale: AppLocale): HomePageViewModel {
-  const profile = getProfileContent(locale);
-  const ui = getUiCopy(locale);
+  const profile = buildLocalizedProfile(locale);
+  const ui = getHomeSectionText(locale);
 
   return {
     hero: {

@@ -2,7 +2,7 @@
 
 ## Project Structure & Module Organization
 
-The app is a Bun-based SvelteKit application. Primary client code lives under `src`, with layout shells in `src/routes`, shared code in `src/lib`, and global styles in `src/app.css`. Static assets (favicons, fonts, images) belong in `static`, which Vite serves verbatim. Localization resources reside in `messages` and are wired through `project.inlang`, so add new language bundles there to keep translations centralized.
+The app is a Bun-based SvelteKit application. Primary client code lives under `src`, with layout shells in `src/routes`, shared code in `src/lib`, and global styles in `src/app.css`. Static assets (favicons, fonts, images) belong in `static`, which Vite serves verbatim. Locale-specific content lives in typed modules under `src/lib/domain/profile/content` and UI copy lives under `src/lib/infrastructure/i18n`.
 
 ## Build, Test, and Development Commands
 

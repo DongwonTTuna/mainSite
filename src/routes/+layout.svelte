@@ -4,9 +4,10 @@
 </script>
 
 <script lang="ts">
+  import type { LayoutData } from './$types';
   import LanguageSwitcher from "#presentation/components/LanguageSwitcher.svelte";
 
-  let { children } = $props();
+  let { children, data }: { children: import('svelte').Snippet; data: LayoutData } = $props();
 </script>
 
 <svelte:head>
@@ -15,7 +16,7 @@
 
 <div class="layout-container">
   <div class="switcher-wrapper">
-    <LanguageSwitcher />
+    <LanguageSwitcher locale={data.locale} />
   </div>
   {@render children()}
 </div>

@@ -1,6 +1,6 @@
 # mainSite
 
-Portfolio site built with SvelteKit, Bun, and Cloudflare adapter.
+Portfolio site built with SvelteKit, Bun, typed locale content modules, and Cloudflare adapter.
 
 ## Setup
 

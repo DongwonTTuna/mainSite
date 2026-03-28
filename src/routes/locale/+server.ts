@@ -1,11 +1,11 @@
 import { redirect } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
 import {
-  cookieMaxAge,
-  cookieName,
-  localizeUrl,
-} from "#infrastructure/i18n/paraglide";
-import { isAppLocale } from "#infrastructure/i18n/locale";
+  isAppLocale,
+  localeCookieMaxAge,
+  localeCookieName,
+  localizePath,
+} from "#infrastructure/i18n/locale";
 
 export const GET: RequestHandler = ({ cookies, request, url }) => {
   const locale = url.searchParams.get("lang");
@@ -15,19 +15,17 @@ export const GET: RequestHandler = ({ cookies, request, url }) => {
     throw redirect(303, "/");
   }
 
-  const redirectUrl = localizeUrl(new URL(redirectTo, request.url), {
-    locale,
-  });
+  const targetUrl = new URL(redirectTo, request.url);
 
-  cookies.set(cookieName, locale, {
+  cookies.set(localeCookieName, locale, {
     path: "/",
-    maxAge: cookieMaxAge,
+    maxAge: localeCookieMaxAge,
     sameSite: "lax",
     secure: url.protocol === "https:",
   });
 
   throw redirect(
     303,
-    `${redirectUrl.pathname}${redirectUrl.search}${redirectUrl.hash}`,
+    localizePath(targetUrl, locale, targetUrl.pathname, targetUrl.hash),
   );
 };

@@ -1,22 +1,41 @@
-import { enProfileContent } from "#domain/profile/content/en";
-import { jaProfileContent } from "#domain/profile/content/ja";
-import { koProfileContent } from "#domain/profile/content/ko";
-import type { ProfileContent } from "#domain/profile/types";
+import { enProfileLocalization } from "#domain/profile/content/en";
+import { jaProfileLocalization } from "#domain/profile/content/ja";
+import { koProfileLocalization } from "#domain/profile/content/ko";
+import type { ProfileLocalization } from "#domain/profile/localization";
+import { portfolioProfile } from "#domain/profile/portfolio-profile";
 
-export const profileContentByLocale: Record<
+export const profileLocalizationByLocale: Record<
   "en" | "ko" | "ja",
-  ProfileContent
+  ProfileLocalization
 > = {
-  en: enProfileContent,
-  ko: koProfileContent,
-  ja: jaProfileContent,
+  en: enProfileLocalization,
+  ko: koProfileLocalization,
+  ja: jaProfileLocalization,
 };
 
+export { portfolioProfile };
+
 export type {
-  ContactLink,
-  ExperienceEntry,
-  ProfileContent,
-  ProfileFact,
-  ProjectEntry,
-  SkillGroup,
+  LocalizedExperienceText,
+  LocalizedProjectText,
+  ProfileLocalization,
+} from "#domain/profile/localization";
+export type {
+  AppLanguage,
+  ContactChannel,
+  ContactChannelKind,
+  EmploymentPeriod,
+  ExperienceId,
+  ExperienceRecord,
+  LocationId,
+  PortfolioProfile,
+  ProfileIdentity,
+  ProfileSnapshot,
+  ProjectId,
+  ProjectRecord,
+  SkillCategory,
+  SkillCategoryId,
+  SkillCategoryKind,
+  SkillId,
+  YearMonth,
 } from "#domain/profile/types";

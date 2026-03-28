@@ -1,10 +1,8 @@
 <script lang="ts">
   import { page } from "$app/state";
-  import {
-    getAppLocale,
-    type AppLocale,
-    locales,
-  } from "#infrastructure/i18n/locale";
+  import { type AppLocale, locales } from "#infrastructure/i18n/locale";
+
+  let { locale: currentLocale }: { locale: AppLocale } = $props();
 
   function getLanguageSwitchUrl(locale: AppLocale, redirectTo = page.url.href) {
     const query = new URLSearchParams({
@@ -16,7 +14,7 @@
   }
 
   function handleLanguageChange(locale: AppLocale) {
-    if (locale === getAppLocale()) {
+    if (locale === currentLocale) {
       return;
     }
 
@@ -35,10 +33,10 @@
     <button
       type="button"
       class="lang-button"
-      class:active={locale === getAppLocale()}
+      class:active={locale === currentLocale}
       onclick={() => handleLanguageChange(locale)}
       aria-label={`Change language to ${localeLabels[locale]}`}
-      aria-pressed={locale === getAppLocale()}
+      aria-pressed={locale === currentLocale}
     >
       {localeLabels[locale]}
     </button>

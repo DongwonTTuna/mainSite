@@ -1,9 +1,9 @@
-import { getProfileContent } from "#application/profile/get-profile-content";
+import { buildLocalizedProfile } from "#application/profile/build-localized-profile";
 import type { AppLocale } from "#infrastructure/i18n/locale";
 import { createPageMeta, type PageMeta } from "#infrastructure/meta/head";
 
 export function buildHomeMeta(locale: AppLocale): PageMeta {
-  const profile = getProfileContent(locale);
+  const profile = buildLocalizedProfile(locale);
 
   return createPageMeta({
     title: profile.name,

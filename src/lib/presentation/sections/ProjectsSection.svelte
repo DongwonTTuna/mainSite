@@ -13,7 +13,7 @@
   </div>
 
   <div class="entry-list">
-    {#each section.entries as entry (entry.name)}
+    {#each section.entries as entry (entry.id)}
       <article class="entry">
         <div class="entry-header">
           <div>

@@ -1,6 +1,6 @@
 import type { AppLocale } from "#infrastructure/i18n/locale";
 
-export type UiCopy = {
+export type HomeSectionText = {
   metaTitle: string;
   navAriaLabel: string;
   heroEyebrow: string;
@@ -20,7 +20,7 @@ export type UiCopy = {
   };
 };
 
-const uiCopyByLocale: Record<AppLocale, UiCopy> = {
+const homeSectionTextByLocale: Record<AppLocale, HomeSectionText> = {
   en: {
     metaTitle: "Dongwon Lee",
     navAriaLabel: "Sections",
@@ -80,6 +80,6 @@ const uiCopyByLocale: Record<AppLocale, UiCopy> = {
   },
 };
 
-export function getUiCopy(locale: AppLocale): UiCopy {
-  return uiCopyByLocale[locale];
+export function getHomeSectionText(locale: AppLocale): HomeSectionText {
+  return homeSectionTextByLocale[locale];
 }

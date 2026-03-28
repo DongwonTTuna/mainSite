@@ -1,16 +1,42 @@
-import type {
-  ContactLink,
-  ExperienceEntry,
-  ProfileFact,
-  ProjectEntry,
-  SkillGroup,
-} from "#domain/profile/index";
 import type { HomeSectionAnchor } from "#infrastructure/routing/anchors";
 
 export type HomeNavigationItem = {
   id: HomeSectionAnchor;
   label: string;
   href: `#${string}`;
+};
+
+export type HomeFactRow = {
+  label: string;
+  value: string;
+};
+
+export type HomeContactLink = {
+  label: string;
+  href: string;
+};
+
+export type HomeExperienceEntry = {
+  id: string;
+  company: string;
+  role: string;
+  periodLabel: string;
+  summary: string;
+  bullets: string[];
+};
+
+export type HomeProjectEntry = {
+  id: string;
+  name: string;
+  context: string;
+  summary: string;
+  outcome: string;
+};
+
+export type HomeSkillGroup = {
+  id: string;
+  label: string;
+  items: string[];
 };
 
 export type HomePageViewModel = {
@@ -28,33 +54,33 @@ export type HomePageViewModel = {
     id: "intro";
     eyebrow: string;
     title: string;
-    facts: ProfileFact[];
+    facts: HomeFactRow[];
     note: string;
-    links: ContactLink[];
+    links: HomeContactLink[];
   };
   experience: {
     id: "experience";
     eyebrow: string;
     title: string;
-    entries: ExperienceEntry[];
+    entries: HomeExperienceEntry[];
   };
   projects: {
     id: "projects";
     eyebrow: string;
     title: string;
-    entries: ProjectEntry[];
+    entries: HomeProjectEntry[];
   };
   skills: {
     id: "skills";
     eyebrow: string;
     title: string;
-    groups: SkillGroup[];
+    groups: HomeSkillGroup[];
   };
   contact: {
     id: "contact";
     eyebrow: string;
     title: string;
     note: string;
-    links: ContactLink[];
+    links: HomeContactLink[];
   };
 };

@@ -1,42 +1,94 @@
-export type ProfileFact = {
-  label: string;
-  value: string;
+export type AppLanguage = "en" | "ko" | "ja";
+
+export type YearMonth = {
+  year: number;
+  month: number;
 };
 
-export type ExperienceEntry = {
-  company: string;
-  role: string;
-  period: string;
-  summary: string;
-  bullets: string[];
+export type EmploymentPeriod = {
+  start: YearMonth;
+  end?: YearMonth;
+  isCurrent: boolean;
 };
 
-export type ProjectEntry = {
+export type ExperienceId = "nextbeat" | "bioden";
+
+export type ProjectId =
+  | "aws-sam-migration"
+  | "core-web-vitals"
+  | "biodenkr-launch"
+  | "admin-auth-migration";
+
+export type SkillCategoryKind =
+  | "application"
+  | "infrastructure"
+  | "delivery"
+  | "work-style";
+
+export type SkillCategoryId = SkillCategoryKind;
+
+export type SkillId =
+  | "typescript"
+  | "sveltekit"
+  | "nestjs"
+  | "nodejs"
+  | "svelte"
+  | "aws-lambda"
+  | "aws-sam"
+  | "iac"
+  | "cicd"
+  | "ssr-tuning"
+  | "performance-optimization"
+  | "localization"
+  | "requirement-discovery"
+  | "client-communication"
+  | "release-operations";
+
+export type ContactChannelKind = "linkedin" | "github";
+
+export type LocationId = "tokyo-ebisu";
+
+export type ProfileIdentity = {
+  id: "dongwon-lee";
+};
+
+export type ProfileSnapshot = {
+  currentExperienceId: ExperienceId;
+  currentOrganizationName: string;
+  locationId: LocationId;
+  languages: AppLanguage[];
+  primarySkillIds: SkillId[];
+};
+
+export type ExperienceRecord = {
+  id: ExperienceId;
+  companyName: string;
+  period: EmploymentPeriod;
+  relatedProjectIds: ProjectId[];
+};
+
+export type ProjectRecord = {
+  id: ProjectId;
   name: string;
   context: string;
-  summary: string;
-  outcome: string;
 };
 
-export type SkillGroup = {
-  label: string;
-  items: string[];
+export type SkillCategory = {
+  id: SkillCategoryId;
+  kind: SkillCategoryKind;
+  skillIds: SkillId[];
 };
 
-export type ContactLink = {
-  label: string;
+export type ContactChannel = {
+  kind: ContactChannelKind;
   href: string;
 };
 
-export type ProfileContent = {
-  name: string;
-  role: string;
-  heroSummary: string;
-  introNote: string;
-  contactNote: string;
-  facts: ProfileFact[];
-  experiences: ExperienceEntry[];
-  projects: ProjectEntry[];
-  skillGroups: SkillGroup[];
-  contactLinks: ContactLink[];
+export type PortfolioProfile = {
+  identity: ProfileIdentity;
+  snapshot: ProfileSnapshot;
+  experiences: ExperienceRecord[];
+  projects: ProjectRecord[];
+  skillCategories: SkillCategory[];
+  contacts: ContactChannel[];
 };

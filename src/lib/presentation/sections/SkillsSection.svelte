@@ -13,7 +13,7 @@
   </div>
 
   <div class="skill-list">
-    {#each section.groups as group (group.label)}
+    {#each section.groups as group (group.id)}
       <div class="skill-row">
         <p class="skill-label">{group.label}</p>
         <p class="skill-values">{group.items.join(", ")}</p>

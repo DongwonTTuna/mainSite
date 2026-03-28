@@ -13,14 +13,14 @@
   </div>
 
   <div class="entry-list">
-    {#each section.entries as entry (entry.company + entry.role)}
+    {#each section.entries as entry (entry.id)}
       <article class="entry">
         <div class="entry-header">
           <div>
             <h3>{entry.role}</h3>
             <p class="entry-meta">{entry.company}</p>
           </div>
-          <p class="entry-period">{entry.period}</p>
+          <p class="entry-period">{entry.periodLabel}</p>
         </div>
 
         <p class="entry-summary">{entry.summary}</p>
