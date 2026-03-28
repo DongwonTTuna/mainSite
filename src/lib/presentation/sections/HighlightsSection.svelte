@@ -1,22 +1,22 @@
 <script lang="ts">
   import type { HomePageViewModel } from "#application/home/types";
+  import InlineItemIcon from "#presentation/components/InlineItemIcon.svelte";
+  import SectionHeading from "#presentation/components/SectionHeading.svelte";
 
   let { section }: { section: HomePageViewModel["intro"] } = $props();
 </script>
 
 <section class="panel" id={section.id}>
-  <div class="section-header">
-    <div>
-      <p class="section-label">{section.eyebrow}</p>
-      <h2>{section.title}</h2>
-    </div>
-  </div>
+  <SectionHeading eyebrow={section.eyebrow} title={section.title} icon={section.id} />
 
-  <div class="intro-grid">
+  <div class="section-body intro-grid">
     <dl class="facts">
       {#each section.facts as fact (fact.label)}
         <div class="fact-row">
-          <dt>{fact.label}</dt>
+          <dt>
+            <InlineItemIcon name={fact.id} />
+            <span>{fact.label}</span>
+          </dt>
           <dd>{fact.value}</dd>
         </div>
       {/each}
@@ -42,31 +42,15 @@
     border-top: 1px solid var(--surface-border);
   }
 
-  .section-header {
-    margin-bottom: 1rem;
+  .section-body {
+    padding-left: 2.1rem;
   }
 
-  .section-label {
-    margin: 0;
-    font-size: 0.76rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-  }
-
-  h2,
   p,
   dt,
   dd {
     margin: 0;
   }
-
-  h2 {
-    font-size: 1.15rem;
-    line-height: 1.4;
-    color: var(--text-strong);
-  }
-
   .intro-grid {
     display: grid;
     grid-template-columns: minmax(0, 1.2fr) minmax(240px, 0.8fr);
@@ -84,6 +68,9 @@
   }
 
   dt {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
     color: var(--text-muted);
   }
 
@@ -91,6 +78,10 @@
   .links-block p {
     color: var(--text-body);
     line-height: 1.7;
+  }
+
+  dd {
+    padding-left: 1.55rem;
   }
 
   .links-block {
@@ -125,6 +116,14 @@
   @media (max-width: 720px) {
     .panel {
       padding: 1rem;
+    }
+
+    .section-body {
+      padding-left: 1.2rem;
+    }
+
+    dd {
+      padding-left: 1.35rem;
     }
 
     .intro-grid {

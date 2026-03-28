@@ -1,4 +1,9 @@
+import type { ExperienceId } from "#domain/profile/types";
+
+export type ProfileFactId = "currentRole" | "location" | "languages" | "stack";
+
 export type LocalizedFactRow = {
+  id: ProfileFactId;
   label: string;
   value: string;
 };
@@ -9,7 +14,7 @@ export type LocalizedContactLink = {
 };
 
 export type LocalizedExperience = {
-  id: string;
+  id: ExperienceId;
   company: string;
   role: string;
   periodLabel: string;

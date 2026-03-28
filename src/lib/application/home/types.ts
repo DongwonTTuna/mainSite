@@ -1,3 +1,5 @@
+import type { ProfileFactId } from "#application/profile/types";
+import type { ExperienceId } from "#domain/profile/types";
 import type { HomeSectionAnchor } from "#infrastructure/routing/anchors";
 
 export type HomeNavigationItem = {
@@ -7,6 +9,7 @@ export type HomeNavigationItem = {
 };
 
 export type HomeFactRow = {
+  id: ProfileFactId;
   label: string;
   value: string;
 };
@@ -17,7 +20,7 @@ export type HomeContactLink = {
 };
 
 export type HomeExperienceEntry = {
-  id: string;
+  id: ExperienceId;
   company: string;
   role: string;
   periodLabel: string;

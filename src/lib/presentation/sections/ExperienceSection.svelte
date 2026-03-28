@@ -1,24 +1,24 @@
 <script lang="ts">
   import type { HomePageViewModel } from "#application/home/types";
+  import InlineItemIcon from "#presentation/components/InlineItemIcon.svelte";
+  import SectionHeading from "#presentation/components/SectionHeading.svelte";
 
   let { section }: { section: HomePageViewModel["experience"] } = $props();
 </script>
 
 <section class="panel" id={section.id}>
-  <div class="section-header">
-    <div>
-      <p class="section-label">{section.eyebrow}</p>
-      <h2>{section.title}</h2>
-    </div>
-  </div>
+  <SectionHeading eyebrow={section.eyebrow} title={section.title} icon={section.id} />
 
-  <div class="entry-list">
+  <div class="section-body entry-list">
     {#each section.entries as entry (entry.id)}
       <article class="entry">
         <div class="entry-header">
           <div>
             <h3>{entry.role}</h3>
-            <p class="entry-meta">{entry.company}</p>
+            <p class="entry-meta">
+              <InlineItemIcon name={entry.id} />
+              <span>{entry.company}</span>
+            </p>
           </div>
           <p class="entry-period">{entry.periodLabel}</p>
         </div>
@@ -41,34 +41,20 @@
     border-top: 1px solid var(--surface-border);
   }
 
-  .section-header {
-    margin-bottom: 1rem;
+  .section-body {
+    padding-left: 2.1rem;
   }
 
-  .section-label,
   .entry-meta,
   .entry-period {
     margin: 0;
     color: var(--text-muted);
   }
 
-  .section-label {
-    font-size: 0.76rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  h2,
   h3,
   p,
   ul {
     margin: 0;
-  }
-
-  h2 {
-    font-size: 1.15rem;
-    line-height: 1.4;
-    color: var(--text-strong);
   }
 
   h3 {
@@ -110,6 +96,17 @@
     line-height: 1.7;
   }
 
+  .entry-summary,
+  ul {
+    margin-left: 1.5rem;
+  }
+
+  .entry-meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
   ul {
     padding-left: 1.1rem;
     display: grid;
@@ -121,9 +118,18 @@
       padding: 1rem;
     }
 
+    .section-body {
+      padding-left: 1.2rem;
+    }
+
     .entry-header {
       flex-direction: column;
       align-items: flex-start;
+    }
+
+    .entry-summary,
+    ul {
+      margin-left: 1.3rem;
     }
   }
 </style>

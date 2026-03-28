@@ -38,6 +38,11 @@ export const portfolioProfile: PortfolioProfile = {
   ],
   projects: [
     {
+      id: "admin-auth-migration",
+      name: "Internal admin tool auth migration",
+      context: "Nextbeat / internal admin tool",
+    },
+    {
       id: "aws-sam-migration",
       name: "AWS SAM migration",
       context: "Nextbeat / Omotenashi HR",
@@ -51,11 +56,6 @@ export const portfolioProfile: PortfolioProfile = {
       id: "biodenkr-launch",
       name: "BiodenKR launch",
       context: "Bioden Corp.",
-    },
-    {
-      id: "admin-auth-migration",
-      name: "Internal admin tool auth migration",
-      context: "Nextbeat / internal admin tool",
     },
   ],
   skillCategories: [

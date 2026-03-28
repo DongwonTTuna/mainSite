@@ -25,20 +25,24 @@ export function buildLocalizedProfile(locale: AppLocale): LocalizedProfile {
     contactNote: localization.identity.contactNote,
     facts: [
       {
+        id: "currentRole",
         label: localization.factLabels.currentRole,
         value: `${localization.identity.roleTitle} / ${profile.snapshot.currentOrganizationName}`,
       },
       {
+        id: "location",
         label: localization.factLabels.location,
         value: localization.identity.locationName,
       },
       {
+        id: "languages",
         label: localization.factLabels.languages,
         value: profile.snapshot.languages
           .map((language) => localization.languageLabels[language])
           .join(", "),
       },
       {
+        id: "stack",
         label: localization.factLabels.stack,
         value: profile.snapshot.primarySkillIds
           .map((skillId) => localization.skillLabels[skillId])
