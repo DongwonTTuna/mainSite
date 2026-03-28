@@ -1,6 +1,6 @@
 import {
-  profileLocalizationByLocale,
   type ProfileLocalization,
+  profileLocalizationByLocale,
 } from "#domain/profile/index";
 import type { AppLocale } from "#infrastructure/i18n/locale";
 

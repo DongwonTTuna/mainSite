@@ -1,11 +1,11 @@
 <script lang="ts">
   import type { HomePageViewModel } from "#application/home/types";
+  import ContactSection from "#presentation/sections/ContactSection.svelte";
+  import ExperienceSection from "#presentation/sections/ExperienceSection.svelte";
   import HeroSection from "#presentation/sections/HeroSection.svelte";
   import HighlightsSection from "#presentation/sections/HighlightsSection.svelte";
-  import ExperienceSection from "#presentation/sections/ExperienceSection.svelte";
   import ProjectsSection from "#presentation/sections/ProjectsSection.svelte";
   import SkillsSection from "#presentation/sections/SkillsSection.svelte";
-  import ContactSection from "#presentation/sections/ContactSection.svelte";
 
   let { model }: { model: HomePageViewModel } = $props();
 </script>

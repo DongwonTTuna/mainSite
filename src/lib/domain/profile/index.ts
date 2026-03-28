@@ -13,8 +13,6 @@ export const profileLocalizationByLocale: Record<
   ja: jaProfileLocalization,
 };
 
-export { portfolioProfile };
-
 export type {
   LocalizedExperienceText,
   LocalizedProjectText,
@@ -39,3 +37,4 @@ export type {
   SkillId,
   YearMonth,
 } from "#domain/profile/types";
+export { portfolioProfile };

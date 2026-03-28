@@ -1,11 +1,11 @@
 import { redirect } from "@sveltejs/kit";
-import type { RequestHandler } from "./$types";
 import {
   isAppLocale,
   localeCookieMaxAge,
   localeCookieName,
   localizePath,
 } from "#infrastructure/i18n/locale";
+import type { RequestHandler } from "./$types";
 
 export const GET: RequestHandler = ({ cookies, request, url }) => {
   const locale = url.searchParams.get("lang");

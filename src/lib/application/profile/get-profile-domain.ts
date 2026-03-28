@@ -1,4 +1,4 @@
-import { portfolioProfile, type PortfolioProfile } from "#domain/profile/index";
+import { type PortfolioProfile, portfolioProfile } from "#domain/profile/index";
 
 export function getProfileDomain(): PortfolioProfile {
   return portfolioProfile;

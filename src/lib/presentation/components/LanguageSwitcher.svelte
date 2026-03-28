@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { page } from "$app/state";
   import { type AppLocale, locales } from "#infrastructure/i18n/locale";
+  import { page } from "$app/state";
 
   let { locale: currentLocale }: { locale: AppLocale } = $props();
 
@@ -62,7 +62,7 @@
     padding: 0.25rem 0.5rem;
     font-size: 0.72rem;
     line-height: 1;
-    font: inherit;
+    font-family: inherit;
     cursor: pointer;
     text-decoration: none;
     transition:

@@ -1,7 +1,7 @@
-import type { LocalizedProfile } from "#application/profile/types";
+import { formatEmploymentPeriod } from "#application/profile/format-employment-period";
 import { getProfileDomain } from "#application/profile/get-profile-domain";
 import { getProfileLocalization } from "#application/profile/get-profile-localization";
-import { formatEmploymentPeriod } from "#application/profile/format-employment-period";
+import type { LocalizedProfile } from "#application/profile/types";
 import type { AppLocale } from "#infrastructure/i18n/locale";
 
 export function buildLocalizedProfile(locale: AppLocale): LocalizedProfile {
