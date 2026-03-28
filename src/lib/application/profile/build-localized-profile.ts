@@ -55,7 +55,6 @@ export function buildLocalizedProfile(locale: AppLocale): LocalizedProfile {
       role: localization.experienceText[experience.id].roleTitle,
       periodLabel: formatEmploymentPeriod(experience.period, locale),
       summary: localization.experienceText[experience.id].summary,
-      bullets: localization.experienceText[experience.id].bullets,
     })),
     projects: profile.projects.map((project) => ({
       id: project.id,

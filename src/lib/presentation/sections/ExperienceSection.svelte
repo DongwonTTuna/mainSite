@@ -24,12 +24,6 @@
         </div>
 
         <p class="entry-summary">{entry.summary}</p>
-
-        <ul>
-          {#each entry.bullets as bullet (bullet)}
-            <li>{bullet}</li>
-          {/each}
-        </ul>
       </article>
     {/each}
   </div>
@@ -52,8 +46,7 @@
   }
 
   h3,
-  p,
-  ul {
+  p {
     margin: 0;
   }
 
@@ -90,14 +83,12 @@
     align-items: baseline;
   }
 
-  .entry-summary,
-  li {
+  .entry-summary {
     color: var(--text-body);
     line-height: 1.7;
   }
 
-  .entry-summary,
-  ul {
+  .entry-summary {
     margin-left: 1.5rem;
   }
 
@@ -105,12 +96,6 @@
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-  }
-
-  ul {
-    padding-left: 1.1rem;
-    display: grid;
-    gap: 0.45rem;
   }
 
   @media (max-width: 720px) {
@@ -127,8 +112,7 @@
       align-items: flex-start;
     }
 
-    .entry-summary,
-    ul {
+    .entry-summary {
       margin-left: 1.3rem;
     }
   }

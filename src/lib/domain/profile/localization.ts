@@ -10,7 +10,6 @@ import type {
 export type LocalizedExperienceText = {
   roleTitle: string;
   summary: string;
-  bullets: string[];
 };
 
 export type LocalizedProjectText = {

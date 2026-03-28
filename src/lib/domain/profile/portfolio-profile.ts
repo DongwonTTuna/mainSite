@@ -19,11 +19,6 @@ export const portfolioProfile: PortfolioProfile = {
         start: { year: 2024, month: 4 },
         isCurrent: true,
       },
-      relatedProjectIds: [
-        "aws-sam-migration",
-        "core-web-vitals",
-        "admin-auth-migration",
-      ],
     },
     {
       id: "bioden",
@@ -33,7 +28,6 @@ export const portfolioProfile: PortfolioProfile = {
         end: { year: 2024, month: 7 },
         isCurrent: false,
       },
-      relatedProjectIds: ["biodenkr-launch"],
     },
   ],
   projects: [

@@ -25,7 +25,6 @@ export type HomeExperienceEntry = {
   role: string;
   periodLabel: string;
   summary: string;
-  bullets: string[];
 };
 
 export type HomeProjectEntry = {

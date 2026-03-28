@@ -27,20 +27,10 @@ export const enProfileLocalization: ProfileLocalization = {
       roleTitle: "Full-stack engineer",
       summary:
         "I joined Nextbeat in April 2024. After working on Hoikushibank, I moved to Omotenashi HR.",
-      bullets: [
-        "Moved Lambda deployments from Serverless Framework to AWS SAM and reduced deployment time by about 30%.",
-        "Improved Lighthouse SEO and Core Web Vitals with SSR and asset delivery changes.",
-        "Migrated the internal admin tool's authentication setup from Azure AD to Amazon Cognito.",
-      ],
     },
     bioden: {
       roleTitle: "Contract full-stack engineer",
       summary: "I built the BiodenKR site as a short contract project.",
-      bullets: [
-        "Built the site in SvelteKit with a content-friendly static SSR setup.",
-        "Shipped five-language support without duplicating layouts.",
-        "Deployed it on Cloudflare Pages with automated publishing.",
-      ],
     },
   },
   projectText: {

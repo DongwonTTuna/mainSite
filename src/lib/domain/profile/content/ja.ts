@@ -27,20 +27,10 @@ export const jaProfileLocalization: ProfileLocalization = {
       roleTitle: "フルスタックエンジニア",
       summary:
         "2024年4月からNextbeatで働いています。Hoikushibankを担当した後、現在はOmotenashi HRの開発に参加しています。",
-      bullets: [
-        "LambdaのデプロイをServerless FrameworkからAWS SAMへ移し、デプロイ時間を約30%短縮しました。",
-        "SSRと静的アセット配信を調整し、Lighthouse SEOとCore Web Vitalsを改善しました。",
-        "社内管理ツールの認証構成をAzure ADからAmazon Cognitoベースへ移行しました。",
-      ],
     },
     bioden: {
       roleTitle: "業務委託フルスタックエンジニア",
       summary: "BiodenKRサイトを短期の業務委託で開発しました。",
-      bullets: [
-        "SvelteKitでサイトを構築し、静的SSR構成を整えました。",
-        "レイアウトを分けずに5言語対応を実装しました。",
-        "Cloudflare Pagesへデプロイし、公開作業を自動化しました。",
-      ],
     },
   },
   projectText: {

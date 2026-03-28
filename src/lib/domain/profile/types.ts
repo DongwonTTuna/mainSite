@@ -64,7 +64,6 @@ export type ExperienceRecord = {
   id: ExperienceId;
   companyName: string;
   period: EmploymentPeriod;
-  relatedProjectIds: ProjectId[];
 };
 
 export type ProjectRecord = {

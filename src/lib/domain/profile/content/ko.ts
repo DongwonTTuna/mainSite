@@ -27,20 +27,10 @@ export const koProfileLocalization: ProfileLocalization = {
       roleTitle: "풀스택 엔지니어",
       summary:
         "2024년 4월부터 Nextbeat에서 일하고 있습니다. Hoikushibank를 거쳐 현재 Omotenashi HR 개발에 참여하고 있습니다.",
-      bullets: [
-        "Lambda 배포를 Serverless Framework에서 AWS SAM으로 옮겨 배포 시간을 약 30% 줄였습니다.",
-        "SSR과 정적 자산 구성을 조정해 Lighthouse SEO와 Core Web Vitals를 개선했습니다.",
-        "사내 관리툴의 인증 구성을 Azure AD에서 Amazon Cognito 기반으로 마이그레이션했습니다.",
-      ],
     },
     bioden: {
       roleTitle: "계약 풀스택 엔지니어",
       summary: "BiodenKR 사이트를 계약 형태로 개발했습니다.",
-      bullets: [
-        "SvelteKit 기반으로 사이트를 만들고 정적 SSR 구성을 잡았습니다.",
-        "레이아웃 중복 없이 5개 언어를 적용했습니다.",
-        "Cloudflare Pages에 배포하고 게시 흐름을 자동화했습니다.",
-      ],
     },
   },
   projectText: {

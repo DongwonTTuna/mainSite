@@ -19,7 +19,6 @@ export type LocalizedExperience = {
   role: string;
   periodLabel: string;
   summary: string;
-  bullets: string[];
 };
 
 export type LocalizedProject = {
