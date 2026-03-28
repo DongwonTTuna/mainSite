@@ -39,6 +39,6 @@ export default defineConfig(
     },
   },
   {
-    ignores: ["src/lib/paraglide/**"],
+    ignores: ["src/generated/paraglide/**"],
   },
 );

@@ -5,8 +5,8 @@ import {
   extractLocaleFromHeader,
   localizeUrl,
   locales,
-} from "$lib/paraglide/runtime";
-import { paraglideMiddleware } from "$lib/paraglide/server";
+} from "#infrastructure/i18n/paraglide";
+import { paraglideMiddleware } from "#infrastructure/i18n/paraglide";
 
 const localizedSegments = locales.filter((locale) => locale !== baseLocale);
 

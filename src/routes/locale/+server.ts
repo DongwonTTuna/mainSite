@@ -4,18 +4,14 @@ import {
   cookieMaxAge,
   cookieName,
   localizeUrl,
-  locales,
-} from "$lib/paraglide/runtime";
-
-function isLocale(value: string): value is (typeof locales)[number] {
-  return locales.includes(value as (typeof locales)[number]);
-}
+} from "#infrastructure/i18n/paraglide";
+import { isAppLocale } from "#infrastructure/i18n/locale";
 
 export const GET: RequestHandler = ({ cookies, request, url }) => {
   const locale = url.searchParams.get("lang");
   const redirectTo = url.searchParams.get("redirectTo") ?? "/";
 
-  if (!locale || !isLocale(locale)) {
+  if (!locale || !isAppLocale(locale)) {
     throw redirect(303, "/");
   }
 
