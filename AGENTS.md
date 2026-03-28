@@ -2,16 +2,17 @@
 
 ## Project Structure & Module Organization
 
-The app is a SvelteKit monorepo managed with pnpm workspaces. Primary client code lives under `src`, with layout shells in `src/routes`, shared UI in `src/lib`, and global styles in `src/app.css`. Static assets (favicons, fonts, images) belong in `static`, which Vite serves verbatim. Localization resources reside in `messages` and are wired through `project.inlang`, so add new language bundles there to keep translations centralized.
+The app is a Bun-based SvelteKit application. Primary client code lives under `src`, with layout shells in `src/routes`, shared code in `src/lib`, and global styles in `src/app.css`. Static assets (favicons, fonts, images) belong in `static`, which Vite serves verbatim. Localization resources reside in `messages` and are wired through `project.inlang`, so add new language bundles there to keep translations centralized.
 
 ## Build, Test, and Development Commands
 
-- `pnpm install`: syncs dependencies across the workspace; always run after pulling.
-- `pnpm run dev`: launches Vite + SvelteKit with hot module reload on `localhost:5173`.
-- `pnpm run build`: produces the optimized adapter output under `build/` for deployment.
-- `pnpm run preview`: serves the production build locally to verify runtime behavior.
-- `pnpm run check`: executes `svelte-check` with the repo TS config for type, accessibility, and slot safety validation.
-- `pnpm run lint` / `pnpm run format`: enforce ESLint + Prettier (with the Svelte and Tailwind plugins) to guarantee consistent style.
+- `bun install`: syncs dependencies and updates `bun.lock`; always run after pulling.
+- `bun run dev`: launches Vite + SvelteKit with hot module reload on `localhost:5173`.
+- `bun run build`: produces the optimized adapter output under `build/` for deployment.
+- `bun run preview`: serves the production build locally to verify runtime behavior.
+- `bun run check`: executes `svelte-check` with the repo TS config for type, accessibility, and slot safety validation.
+- `bun run lint` / `bun run format`: enforce ESLint + Prettier (with the Svelte and Tailwind plugins) to guarantee consistent style.
+- `bun run test`: runs the Bun test suite.
 
 ## Coding Style & Naming Conventions
 
@@ -26,11 +27,11 @@ Use TypeScript for all modules and prefer Svelte single-file components for UI. 
 
 ## Testing Guidelines
 
-This repo currently relies on static analysis instead of a full test harness. Run `pnpm run check` before every commit and add exploratory Playwright or Vitest suites inside `src/lib/__tests__` when features demand regression coverage. Name test files after the unit they exercise (e.g., `HeroSection.spec.ts`) and document any mocked data fixtures inside the same folder for clarity.
+This repo uses Bun's built-in test runner for unit-level regression coverage. Run `bun run check`, `bun run lint`, and `bun run test` before every commit. Keep tests in `tests/` or alongside modules when a feature benefits from tight locality. Name test files after the unit they exercise (e.g., `build-home-page-model.test.ts`) and prefer application/domain-layer tests unless UI behavior specifically needs browser coverage.
 
 ## Commit & Pull Request Guidelines
 
-Adopt Conventional Commits (`feat:`, `fix:`, `chore:`) so releases can be auto-generated later. Keep commit scopes aligned with directories (`feat(routes): add hero layout`). Pull requests should summarize intent, list key changes, mention related issues, and include screenshots or video clips for UI-facing updates. Always confirm `pnpm run lint` and `pnpm run check` pass before requesting review.
+Adopt Conventional Commits (`feat:`, `fix:`, `chore:`) so releases can be auto-generated later. Keep commit scopes aligned with directories (`feat(routes): add hero layout`). Pull requests should summarize intent, list key changes, mention related issues, and include screenshots or video clips for UI-facing updates. Always confirm `bun run lint`, `bun run check`, and `bun run test` pass before requesting review.
 
 ## Security & Configuration Notes
 
