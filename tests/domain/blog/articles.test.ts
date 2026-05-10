@@ -32,13 +32,21 @@ describe("blog articles", () => {
     });
   });
 
-  test("uses the final v2 article body", () => {
+  test("uses the final v3 article body", () => {
     const article = getBlogArticleBySlug("japan-korea-dev-culture-lean");
     const finalBlock = article?.blocks[article.blocks.length - 1];
 
     expect(article?.blocks).toContainEqual({
       type: "paragraph",
-      text: "실패 비용을 키우는 것은 문화만이 아니다. 평가 지표도 영향을 준다. 품질, 비용, 납기, 안전을 관리하자는 취지 자체는 당연히 중요하다. 하지만 그것이 “인시던트 0건”처럼 절대적인 목표로 운영되기 시작하면 사람들의 행동은 달라진다.",
+      text: "이런 분위기가 평가 지표와 결합하면 문제는 더 커진다.",
+    });
+    expect(article?.blocks).toContainEqual({
+      type: "paragraph",
+      text: "최근 AI 도입에서도 비슷한 장면을 직접 경험했다.",
+    });
+    expect(article?.blocks).toContainEqual({
+      type: "paragraph",
+      text: "그런데도 레거시는 쉽게 사라지지 않는다. 이유는 간단하다. **레거시를 바꾸는 리스크는 눈에 잘 보이지만, 레거시를 유지하는 비용은 잘 보이지 않기 때문이다.**",
     });
     expect(finalBlock).toEqual({
       type: "paragraph",
