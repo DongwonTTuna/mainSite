@@ -3,9 +3,9 @@ import type { ExperienceId } from "#domain/profile/types";
 import type { HomeSectionAnchor } from "#infrastructure/routing/anchors";
 
 export type HomeNavigationItem = {
-  id: HomeSectionAnchor;
+  id: HomeSectionAnchor | "blog";
   label: string;
-  href: `#${string}`;
+  href: string;
 };
 
 export type HomeFactRow = {

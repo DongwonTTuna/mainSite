@@ -16,6 +16,7 @@ export type HomeSectionText = {
     experience: string;
     projects: string;
     skills: string;
+    blog: string;
   };
 };
 
@@ -36,6 +37,7 @@ const homeSectionTextByLocale: Record<AppLocale, HomeSectionText> = {
       experience: "Experience",
       projects: "Projects",
       skills: "Skills",
+      blog: "Blog",
     },
   },
   ko: {
@@ -54,6 +56,7 @@ const homeSectionTextByLocale: Record<AppLocale, HomeSectionText> = {
       experience: "경력",
       projects: "프로젝트",
       skills: "기술",
+      blog: "블로그",
     },
   },
   ja: {
@@ -72,6 +75,7 @@ const homeSectionTextByLocale: Record<AppLocale, HomeSectionText> = {
       experience: "経験",
       projects: "プロジェクト",
       skills: "技術",
+      blog: "ブログ",
     },
   },
 };
