@@ -11,6 +11,7 @@ describe("buildHomePageModel", () => {
       { id: "experience", label: "경력", href: "#experience" },
       { id: "projects", label: "프로젝트", href: "#projects" },
       { id: "skills", label: "기술", href: "#skills" },
+      { id: "blog", label: "블로그", href: "/ko/blog" },
     ]);
     expect(model.experience.entries).toHaveLength(2);
     expect(model.projects.entries).toHaveLength(4);

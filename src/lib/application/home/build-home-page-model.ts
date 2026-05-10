@@ -33,6 +33,11 @@ export function buildHomePageModel(locale: AppLocale): HomePageViewModel {
           label: ui.nav.skills,
           href: getHomeSectionHref("skills"),
         },
+        {
+          id: "blog",
+          label: ui.nav.blog,
+          href: "/ko/blog",
+        },
       ],
     },
     intro: {
