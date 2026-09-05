@@ -8,3 +8,7 @@ build
 .vscode
 
 .env
+playwright-report
+test-results
+assets/blender/*.blend1
+assets/blender/__pycache__

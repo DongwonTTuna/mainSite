@@ -12,4 +12,4 @@
   {/if}
 </svelte:head>
 
-<HomePage model={data.model} />
+<HomePage model={data.model} locale={data.locale} />

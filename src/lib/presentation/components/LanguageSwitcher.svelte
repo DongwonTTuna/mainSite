@@ -3,81 +3,29 @@
   import { page } from "$app/state";
 
   let { locale: currentLocale }: { locale: AppLocale } = $props();
-
-  function getLanguageSwitchUrl(locale: AppLocale, redirectTo = page.url.href) {
-    const query = new URLSearchParams({
-      lang: locale,
-      redirectTo,
-    });
-
+  function getLanguageSwitchUrl(locale: AppLocale) {
+    const query = new URLSearchParams({ lang: locale, redirectTo: page.url.href });
     return `/locale?${query.toString()}`;
   }
-
-  function handleLanguageChange(locale: AppLocale) {
-    if (locale === currentLocale) {
-      return;
-    }
-
-    window.location.href = getLanguageSwitchUrl(locale, window.location.href);
-  }
-
-  const localeLabels: Record<AppLocale, string> = {
-    en: "EN",
-    ko: "KO",
-    ja: "JA",
-  };
+  const localeLabels = { en: "EN", ko: "KO", ja: "JA" } as const;
 </script>
 
-<div class="lang-switcher">
+<nav class="lang-switcher" aria-label="Language">
   {#each locales as locale (locale)}
-    <button
-      type="button"
-      class="lang-button"
-      class:active={locale === currentLocale}
-      onclick={() => handleLanguageChange(locale)}
+    <a href={getLanguageSwitchUrl(locale)} class:active={locale === currentLocale}
       aria-label={`Change language to ${localeLabels[locale]}`}
-      aria-pressed={locale === currentLocale}
-    >
-      {localeLabels[locale]}
-    </button>
+      aria-current={locale === currentLocale ? "true" : undefined} data-sveltekit-reload
+    >{localeLabels[locale]}</a>
   {/each}
-</div>
+</nav>
 
 <style>
-  .lang-switcher {
-    display: flex;
-    gap: 0.35rem;
-    padding: 0.35rem;
-    border: 1px solid color-mix(in srgb, var(--surface-border) 88%, white 12%);
-    background: color-mix(in srgb, var(--surface-elevated) 92%, transparent);
-    backdrop-filter: blur(12px);
-  }
-
-  .lang-button {
-    display: inline-flex;
-    align-items: center;
-    background: transparent;
-    border: none;
-    color: var(--text-muted);
-    padding: 0.25rem 0.5rem;
-    font-size: 0.72rem;
-    line-height: 1;
-    font-family: inherit;
-    cursor: pointer;
-    text-decoration: none;
-    transition:
-      color 120ms ease,
-      background-color 120ms ease;
-  }
-
-  .lang-button:hover,
-  .lang-button:focus-visible {
-    color: var(--text-strong);
-    outline: none;
-  }
-
-  .lang-button.active {
-    color: var(--text-strong);
-    background: color-mix(in srgb, var(--surface-border) 26%, transparent);
+  .lang-switcher { display: flex; align-items: center; padding-left: 1.5rem; border-left: 1px solid var(--surface-border); }
+  a { display: grid; place-items: center; width: 35px; min-height: 44px; font: 500 0.66rem var(--font-mono); color: var(--text-muted); text-decoration: none; }
+  a:hover, a.active { color: var(--accent); }
+  a.active { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px; }
+  @media (max-width: 660px) {
+    .lang-switcher { padding-left: 0.5rem; }
+    a { width: 31px; }
   }
 </style>

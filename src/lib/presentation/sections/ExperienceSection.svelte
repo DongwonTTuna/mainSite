@@ -1,28 +1,17 @@
 <script lang="ts">
   import type { HomePageViewModel } from "#application/home/types";
-  import InlineItemIcon from "#presentation/components/InlineItemIcon.svelte";
   import SectionHeading from "#presentation/components/SectionHeading.svelte";
 
   let { section }: { section: HomePageViewModel["experience"] } = $props();
 </script>
 
-<section class="panel" id={section.id}>
+<section class="section-panel experience" id={section.id}>
   <SectionHeading eyebrow={section.eyebrow} title={section.title} icon={section.id} />
-
-  <div class="section-body entry-list">
+  <div class="experience-list">
     {#each section.entries as entry (entry.id)}
-      <article class="entry">
-        <div class="entry-header">
-          <div>
-            <h3>{entry.role}</h3>
-            <p class="entry-meta">
-              <InlineItemIcon name={entry.id} />
-              <span>{entry.company}</span>
-            </p>
-          </div>
-          <p class="entry-period">{entry.periodLabel}</p>
-        </div>
-
+      <article class="experience-entry">
+        <div class="entry-heading"><h3>{entry.company}</h3><p class="entry-period">{entry.periodLabel}</p></div>
+        <p class="entry-role">{entry.role}</p>
         <p class="entry-summary">{entry.summary}</p>
       </article>
     {/each}
@@ -30,90 +19,21 @@
 </section>
 
 <style>
-  .panel {
-    padding: 1.25rem;
-    border-top: 1px solid var(--surface-border);
-  }
-
-  .section-body {
-    padding-left: 2.1rem;
-  }
-
-  .entry-meta,
-  .entry-period {
-    margin: 0;
-    color: var(--text-muted);
-  }
-
-  h3,
-  p {
-    margin: 0;
-  }
-
-  h3 {
-    font-size: 1rem;
-    line-height: 1.5;
-    color: var(--text-strong);
-  }
-
-  .entry-list {
-    display: grid;
-  }
-
-  .entry {
-    display: grid;
-    gap: 0.8rem;
-    padding: 1rem 0;
-    border-top: 1px solid var(--surface-border);
-  }
-
-  .entry:first-child {
-    padding-top: 0;
-    border-top: none;
-  }
-
-  .entry:last-child {
-    padding-bottom: 0;
-  }
-
-  .entry-header {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    align-items: baseline;
-  }
-
-  .entry-summary {
-    color: var(--text-body);
-    line-height: 1.7;
-  }
-
-  .entry-summary {
-    margin-left: 1.5rem;
-  }
-
-  .entry-meta {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  @media (max-width: 720px) {
-    .panel {
-      padding: 1rem;
-    }
-
-    .section-body {
-      padding-left: 1.2rem;
-    }
-
-    .entry-header {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-
-    .entry-summary {
-      margin-left: 1.3rem;
-    }
+  .experience { display: grid; grid-template-columns: 0.8fr 2.8fr; gap: 2.5rem; }
+  .experience-list { border-left: 1px solid var(--surface-border); }
+  .experience-entry { position: relative; padding: 0.2rem 0 2.5rem 2rem; }
+  .experience-entry:last-child { padding-bottom: 0.2rem; }
+  .experience-entry::before { content: ""; position: absolute; top: 0.7rem; left: -5px; width: 9px; height: 9px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 6px var(--page-background); }
+  .experience-entry:last-child::before { background: #9baea8; }
+  .entry-heading { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
+  h3 { color: var(--text-strong); font-size: 1.2rem; font-weight: 650; letter-spacing: -0.03em; }
+  .entry-period { color: var(--text-muted); font: 400 0.68rem/1.5 var(--font-mono); }
+  .entry-role { margin-top: 0.5rem; color: var(--accent); font-size: 0.78rem; }
+  .entry-summary { max-width: 650px; margin-top: 1rem; line-height: 1.85; font-size: 0.92rem; word-break: keep-all; overflow-wrap: anywhere; }
+  @media (max-width: 760px) {
+    .experience { grid-template-columns: 1fr; gap: 0; }
+    .experience-list { margin-left: 5px; }
+    .experience-entry { padding-left: 1.4rem; }
+    .entry-heading { flex-direction: column; gap: 0.4rem; }
   }
 </style>

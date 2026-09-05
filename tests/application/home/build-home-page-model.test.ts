@@ -2,17 +2,37 @@ import { describe, expect, test } from "bun:test";
 import { buildHomePageModel } from "../../../src/lib/application/home/build-home-page-model";
 
 describe("buildHomePageModel", () => {
-  test("builds the expected navigation and sections for ko locale", () => {
+  test("provides Korean welcome copy and accessible artwork controls", () => {
+    const model = buildHomePageModel("ko");
+
+    expect(model.hero.headline).toBe("기술에 깊이를,");
+    expect(model.hero.accentLine).toBe("경험에 색을.");
+    expect(model.hero.primaryAction).toBe("프로젝트 살펴보기");
+    expect(model.hero.artwork.pauseLabel).toBe("움직임 멈추기");
+    expect(model.hero.artwork.replayLabel).toBe("물감 효과 다시 보기");
+    expect(model.hero.artwork.replayShortLabel).toBe("다시 보기");
+    expect(model.hero.greetingEnding).toBe("입니다.");
+  });
+
+  test("localizes the welcome and static fallback in English and Japanese", () => {
+    const english = buildHomePageModel("en");
+    const japanese = buildHomePageModel("ja");
+
+    expect(english.hero.headline).toBe("Depth in code.");
+    expect(english.hero.artwork.fallbackLabel).toBe(
+      "3D unavailable · original render",
+    );
+    expect(japanese.hero.headline).toBe("技術に深みを、");
+    expect(japanese.hero.artwork.reducedMotionLabel).toBe(
+      "動きを抑える設定 · 静止画",
+    );
+  });
+
+  test("builds the expected sections for ko locale", () => {
     const model = buildHomePageModel("ko");
 
     expect(model.hero.title).toBe("이동원");
     expect(model.intro.title).toBe("개요");
-    expect(model.navigation.items).toEqual([
-      { id: "experience", label: "경력", href: "#experience" },
-      { id: "projects", label: "프로젝트", href: "#projects" },
-      { id: "skills", label: "기술", href: "#skills" },
-      { id: "blog", label: "블로그", href: "/ko/blog" },
-    ]);
     expect(model.experience.entries).toHaveLength(2);
     expect(model.projects.entries).toHaveLength(4);
     expect(model.skills.groups).toHaveLength(4);

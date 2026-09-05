@@ -10,9 +10,10 @@
       <a class="back-link" href="/ko/">Home</a>
       <p class="section-label">Blog</p>
       <h1>글</h1>
+      <p class="blog-description">만들며 배운 것들을 기록합니다.</p>
     </header>
 
-    <main class="article-list" aria-label="블로그 글 목록">
+    <main id="main-content" class="article-list" aria-label="블로그 글 목록" tabindex="-1">
       {#each articles as article (article.slug)}
         <article class="entry">
           <div class="meta-row">
@@ -31,22 +32,19 @@
 <style>
   .blog-page {
     min-height: 100dvh;
-    padding: clamp(4.5rem, 8vw, 5.5rem) clamp(1rem, 4vw, 3rem)
-      clamp(1.5rem, 4vw, 3rem);
+    padding: 3rem clamp(1.25rem, 4vw, 3rem) 5rem;
   }
 
   .shell {
     width: min(920px, 100%);
     margin: 0 auto;
-    border: 1px solid var(--surface-border);
-    background: var(--surface-elevated);
-    box-shadow: 0 30px 120px color-mix(in srgb, black 55%, transparent);
+    background: var(--page-background);
   }
 
   .blog-header {
     display: grid;
-    gap: 0.65rem;
-    padding: 1.25rem;
+    gap: 1rem;
+    padding: 1.25rem 0 2.5rem;
     border-bottom: 1px solid var(--surface-border);
   }
 
@@ -65,10 +63,10 @@
   .back-link:focus-visible {
     color: var(--text-strong);
     border-color: var(--link-border-active);
-    outline: none;
   }
 
   .section-label {
+    font-family: var(--font-mono);
     color: var(--text-muted);
     font-size: 0.76rem;
     letter-spacing: 0.08em;
@@ -77,7 +75,9 @@
 
   h1 {
     color: var(--text-strong);
-    font-size: clamp(2rem, 5vw, 3rem);
+    font-size: clamp(2.8rem, 6vw, 4rem);
+    font-weight: 700;
+    letter-spacing: -0.05em;
     line-height: 1.1;
   }
 
@@ -90,8 +90,8 @@
   .entry {
     display: grid;
     gap: 0.7rem;
-    padding: 1.25rem;
-    background: var(--surface-elevated);
+    padding: 2.25rem 0;
+    background: var(--page-background);
   }
 
   .meta-row {
@@ -103,6 +103,8 @@
   }
 
   h2 {
+    font-weight: 650;
+    letter-spacing: -0.04em;
     font-size: clamp(1.15rem, 3vw, 1.6rem);
     line-height: 1.35;
   }
@@ -115,17 +117,16 @@
   h2 a:hover,
   h2 a:focus-visible {
     border-bottom: 1px solid var(--link-border-active);
-    outline: none;
   }
 
   @media (max-width: 720px) {
     .blog-page {
-      padding: 4.25rem 1rem 1rem;
+      padding: 1.5rem 1.25rem 3rem;
     }
 
     .blog-header,
     .entry {
-      padding: 1rem;
+      padding: 1.5rem 0;
     }
   }
 </style>

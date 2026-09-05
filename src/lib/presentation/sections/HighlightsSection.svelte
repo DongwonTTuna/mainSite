@@ -1,140 +1,46 @@
 <script lang="ts">
   import type { HomePageViewModel } from "#application/home/types";
-  import InlineItemIcon from "#presentation/components/InlineItemIcon.svelte";
   import SectionHeading from "#presentation/components/SectionHeading.svelte";
 
   let { section }: { section: HomePageViewModel["intro"] } = $props();
 </script>
 
-<section class="panel" id={section.id}>
+<section class="section-panel overview" id={section.id}>
   <SectionHeading eyebrow={section.eyebrow} title={section.title} icon={section.id} />
-
-  <div class="section-body intro-grid">
-    <dl class="facts">
-      {#each section.facts as fact (fact.label)}
-        <div class="fact-row">
-          <dt>
-            <InlineItemIcon name={fact.id} />
-            <span>{fact.label}</span>
-          </dt>
-          <dd>{fact.value}</dd>
-        </div>
-      {/each}
-    </dl>
-
-    <div class="links-block">
-      <p class="links-label">{section.note}</p>
-      <div class="link-row">
-        {#each section.links as link (link.href)}
-          <!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
-          <a href={link.href} target="_blank" rel="noreferrer noopener">
-            {link.label}
-          </a>
-        {/each}
-      </div>
-    </div>
+  <dl class="facts">
+    {#each section.facts as fact (fact.id)}
+      <div><dt>{fact.label}</dt><dd>{fact.value}</dd></div>
+    {/each}
+  </dl>
+  <div class="contact-block">
+    <p class="eyebrow">{section.note} <span aria-hidden="true">↗</span></p>
+    {#each section.links as link (link.href)}
+      <a href={link.href} target="_blank" rel="noreferrer noopener">{link.label}<span aria-hidden="true">↗</span></a>
+    {/each}
   </div>
 </section>
 
 <style>
-  .panel {
-    padding: 1.25rem;
-    border-top: 1px solid var(--surface-border);
+  .overview { display: grid; grid-template-columns: 0.8fr 2fr 0.8fr; gap: 2.5rem; padding-block: 3.25rem; }
+  .facts { display: grid; grid-template-columns: 1fr 1fr; gap: 1.75rem 2.5rem; }
+  dt { margin-bottom: 0.45rem; color: var(--text-muted); font-size: 0.73rem; }
+  dd { color: var(--text-strong); font-size: 0.91rem; line-height: 1.7; word-break: keep-all; overflow-wrap: anywhere; }
+  .contact-block { align-self: start; padding-left: 1.75rem; border-left: 1px solid var(--surface-border); }
+  .contact-block > p { display: flex; justify-content: space-between; margin-bottom: 0.7rem; font-size: 0.64rem; color: var(--text-muted); }
+  .contact-block > p span { color: var(--accent); }
+  .contact-block a { display: flex; justify-content: space-between; gap: 1rem; padding-block: 0.7rem; color: var(--text-strong); font-size: 0.82rem; text-decoration: none; }
+  .contact-block a:hover { color: var(--accent); }
+  .contact-block a span { color: var(--text-muted); }
+  @media (max-width: 1000px) {
+    .overview { grid-template-columns: 0.8fr 2fr; gap: 1rem 2rem; }
+    .contact-block { grid-column: 2; display: flex; gap: 1.5rem; align-items: center; padding: 0; border: 0; }
+    .contact-block > p { margin: 0; }
+    .contact-block > p span { display: none; }
   }
-
-  .section-body {
-    padding-left: 2.1rem;
-  }
-
-  p,
-  dt,
-  dd {
-    margin: 0;
-  }
-  .intro-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1.2fr) minmax(240px, 0.8fr);
-    gap: 1.25rem;
-  }
-
-  .facts {
-    display: grid;
-    gap: 0.75rem;
-  }
-
-  .fact-row {
-    display: grid;
-    gap: 0.2rem;
-  }
-
-  dt {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.55rem;
-    color: var(--text-muted);
-  }
-
-  dd {
-    color: var(--text-body);
-    line-height: 1.7;
-  }
-
-  dd {
-    padding-left: 1.55rem;
-  }
-
-  .links-block {
-    display: grid;
-    gap: 0.75rem;
-    align-content: start;
-  }
-
-  .links-label {
-    color: var(--text-muted);
-    font-size: 0.76rem;
-    letter-spacing: 0.08em;
-    line-height: 1.4;
-    text-transform: uppercase;
-  }
-
-  .link-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem 1rem;
-  }
-
-  .link-row a {
-    color: var(--link-color);
-    border-bottom: 1px solid var(--link-border);
-    padding-bottom: 0.1rem;
-    text-decoration: none;
-    transition:
-      color 120ms ease,
-      border-color 120ms ease;
-  }
-
-  .link-row a:hover,
-  .link-row a:focus-visible {
-    color: var(--text-strong);
-    border-color: var(--link-border-active);
-    outline: none;
-  }
-
-  @media (max-width: 720px) {
-    .panel {
-      padding: 1rem;
-    }
-
-    .section-body {
-      padding-left: 1.2rem;
-    }
-
-    dd {
-      padding-left: 1.35rem;
-    }
-
-    .intro-grid {
-      grid-template-columns: 1fr;
-    }
+  @media (max-width: 660px) {
+    .overview { grid-template-columns: 1fr; gap: 0; padding-block: 2.5rem; }
+    .facts { gap: 1.5rem 1rem; }
+    dd { font-size: 0.85rem; }
+    .contact-block { grid-column: auto; margin-top: 1.75rem; padding-top: 0.75rem; border-top: 1px solid var(--surface-border); }
   }
 </style>

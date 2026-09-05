@@ -1,23 +1,21 @@
 <script lang="ts" module>
   import "../app.css";
-  import favicon from "$lib/assets/favicon.png";
 </script>
 
 <script lang="ts">
-  import LanguageSwitcher from "#presentation/components/LanguageSwitcher.svelte";
+  import SiteHeader from "#presentation/components/SiteHeader.svelte";
   import type { LayoutData } from './$types';
 
   let { children, data }: { children: import('svelte').Snippet; data: LayoutData } = $props();
 </script>
 
 <svelte:head>
-  <link rel="icon" href={favicon} />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#f8f7f3" />
 </svelte:head>
 
 <div class="layout-container">
-  <div class="switcher-wrapper">
-    <LanguageSwitcher locale={data.locale} />
-  </div>
+  <SiteHeader locale={data.locale} />
   {@render children()}
 </div>
 
@@ -27,17 +25,4 @@
     min-height: 100dvh;
   }
 
-  .switcher-wrapper {
-    position: fixed;
-    top: 1.5rem;
-    right: 1.5rem;
-    z-index: 50;
-  }
-
-  @media (max-width: 640px) {
-    .switcher-wrapper {
-      top: 1rem;
-      right: 1rem;
-    }
-  }
 </style>

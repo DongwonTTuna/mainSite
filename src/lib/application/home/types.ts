@@ -8,6 +8,11 @@ export type HomeNavigationItem = {
   href: string;
 };
 
+export type HomeNavigation = {
+  ariaLabel: string;
+  items: HomeNavigationItem[];
+};
+
 export type HomeFactRow = {
   id: ProfileFactId;
   label: string;
@@ -41,16 +46,37 @@ export type HomeSkillGroup = {
   items: string[];
 };
 
+export type HeroArtworkText = {
+  alt: string;
+  loadingLabel: string;
+  staticLabel: string;
+  reducedMotionLabel: string;
+  saveDataLabel: string;
+  fallbackLabel: string;
+  replayLabel: string;
+  pauseLabel: string;
+  resumeLabel: string;
+  replayShortLabel: string;
+  pauseShortLabel: string;
+  resumeShortLabel: string;
+};
+
+export type HeroWelcomeText = {
+  headline: string;
+  accentLine: string;
+  greeting: string;
+  greetingEnding: string;
+  primaryAction: string;
+  secondaryAction: string;
+  artwork: HeroArtworkText;
+};
+
 export type HomePageViewModel = {
-  hero: {
+  hero: HeroWelcomeText & {
     eyebrow: string;
     title: string;
     role: string;
     summary: string;
-  };
-  navigation: {
-    ariaLabel: string;
-    items: HomeNavigationItem[];
   };
   intro: {
     id: "intro";

@@ -2,18 +2,22 @@
 @import "tw-animate-css";
 
 :root {
-  --page-background: #0b0d10;
-  --surface-elevated: #101318;
-  --surface-border: #262b31;
-  --text-strong: #f9fafb;
-  --text-body: #d1d5db;
-  --text-muted: #8b949e;
-  --link-color: #f3f4f6;
-  --link-border: #39414a;
-  --link-border-active: #9ca3af;
+  color-scheme: light;
+  --page-background: #f8f7f3;
+  --surface-elevated: #fffefb;
+  --surface-border: #dcded8;
+  --text-strong: #193440;
+  --text-body: #43545b;
+  --text-muted: #68756f;
+  --link-color: #193440;
+  --link-border: #a3b5b5;
+  --link-border-active: #c94730;
+  --accent: #c94730;
+  --accent-bright: #eb6346;
   --font-ui:
-    "SFMono-Regular", "Menlo", "Monaco", "Consolas", "Liberation Mono",
-    monospace;
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo",
+    "Noto Sans KR", "Hiragino Kaku Gothic ProN", sans-serif;
+  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
 }
 
 @theme inline {
@@ -26,14 +30,11 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 5.5rem;
+    scroll-padding-top: 8rem;
   }
-
   * {
-    @apply border-border outline-ring/50;
     box-sizing: border-box;
   }
-
   body,
   h1,
   h2,
@@ -45,13 +46,65 @@
   dt {
     margin: 0;
   }
-
   body {
-    @apply bg-background text-foreground;
+    min-width: 320px;
     min-height: 100dvh;
+    background: var(--page-background);
+    color: var(--text-body);
     font-family: var(--font-ui);
-    background:
-      radial-gradient(circle at top, rgba(75, 85, 99, 0.16), transparent 34%),
-      var(--page-background);
+    -webkit-font-smoothing: antialiased;
+  }
+  button,
+  a {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  button {
+    font: inherit;
+  }
+  a:focus-visible,
+  button:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 5px;
+  }
+  ::selection {
+    background: #f4c791;
+    color: #193440;
+  }
+}
+
+.content-width {
+  width: min(1200px, calc(100% - 6rem));
+  margin-inline: auto;
+}
+.section-panel {
+  padding-block: 4.5rem;
+  border-top: 1px solid var(--surface-border);
+}
+.eyebrow {
+  font: 500 0.7rem / 1.5 var(--font-mono);
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+@media (max-width: 760px) {
+  .content-width {
+    width: calc(100% - 2.5rem);
+  }
+  .section-panel {
+    padding-block: 3rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 }
