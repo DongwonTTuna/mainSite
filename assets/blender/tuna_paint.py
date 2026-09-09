@@ -1,4 +1,4 @@
-"""Authored enamel and shallow brush relief for the volumetric tuna.
+"""Authored pigments for the volumetric tuna.
 
 The coordinates describe painted shapes in the sculpture's drawing plane.  No
 image is opened, sampled, projected, or used by a material.  All returned colors
@@ -129,7 +129,7 @@ def body_color(u, v, side=1):
     color = _mix(color, _TEAL, islands * 0.75)
 
     # An irregular ivory brush travels along the upper flank.  Its relief is
-    # articulated by the narrower, hand-shaped shells in build_paint below.
+    # articulated by narrower pigment strokes below.
     ivory_width = 7.0 + 7.0 * sin(ivory_t * pi)
     ivory_mask = 1.0 - _smooth(ivory_width - 3.0, ivory_width + 7.0, ivory + broken * 2.7)
     ivory_mask *= _smooth(284.0, 327.0, v) * (1.0 - _smooth(564.0, 612.0, v))
@@ -163,60 +163,3 @@ def body_color(u, v, side=1):
     variation = 1.0 + grain * 0.04 + broken * 0.025
     return _linear(tuple(channel * variation for channel in color))
 
-
-def build_paint(ctx):
-    """Lay 42 thin, closed brush shells over both curved body surfaces.
-
-    Each shell has a pointed, irregular contour and sub-pixel enamel depth.
-    None replaces the body's volume, normals, mesh, material, or silhouette.
-    The compact set is suitable for the caller's later static mesh batching.
-    """
-    materials = {
-        "ivory": ctx.material("Paint / warm ivory", "FFF6D6", roughness=0.48, metallic=0.025, coat=0.07),
-        "gold": ctx.material("Paint / marigold", "FFD847", roughness=0.44, metallic=0.07, coat=0.10),
-        "amber": ctx.material("Paint / orange ochre", "FFAC34", roughness=0.49, metallic=0.035, coat=0.06),
-        "coral": ctx.material("Paint / vermilion", "F53E3D", roughness=0.49, metallic=0.025, coat=0.06),
-        "salmon": ctx.material("Paint / warm salmon", "FF785B", roughness=0.48, metallic=0.025, coat=0.07),
-        "teal": ctx.material("Paint / broken teal", "357F99", roughness=0.48, metallic=0.09, coat=0.09),
-        "blue": ctx.material("Paint / cobalt highlight", "73AFCA", roughness=0.43, metallic=0.10, coat=0.12),
-        "ink": ctx.material("Paint / indigo accent", "123752", roughness=0.51, metallic=0.055, coat=0.05),
-    }
-
-    # These are designed brush contours, not traced pixel regions.  Long upper
-    # strokes follow the fish's back; the abdominal strokes converge on its
-    # narrow tail root.  All points lie within the body or a body-attached fin.
-    strokes = (
-        ("shoulder blue", "blue", ((416, 211), (450, 221), (485, 240), (535, 281), (562, 312), (522, 273), (476, 238), (443, 223))),
-        ("back blue", "blue", ((517, 261), (554, 295), (589, 336), (618, 382), (626, 399), (608, 372), (579, 336), (551, 302))),
-        ("back broken crest", "teal", ((588, 326), (610, 352), (632, 390), (650, 430), (658, 455), (650, 441), (637, 416), (627, 387), (611, 367))),
-        ("upper flank ivory", "ivory", ((469, 299), (488, 316), (510, 343), (528, 368), (522, 364), (501, 342), (486, 324), (481, 322))),
-        ("flank ivory blade", "ivory", ((579, 431), (596, 450), (624, 490), (650, 531), (676, 575), (661, 554), (638, 522), (619, 501), (616, 488), (597, 465))),
-        ("flank ivory dry tip", "ivory", ((609, 448), (622, 463), (646, 500), (657, 521), (647, 507), (638, 497), (631, 481), (616, 460))),
-        ("caudal ivory stroke", "ivory", ((665, 548), (679, 576), (692, 615), (701, 653), (695, 639), (682, 604), (680, 589))),
-        ("golden flank taper", "gold", ((469, 437), (497, 449), (522, 468), (551, 489), (531, 480), (511, 469), (489, 458))),
-        ("golden broken stroke", "gold", ((527, 467), (544, 476), (560, 493), (584, 514), (562, 500), (553, 498), (544, 485))),
-        ("golden keel", "gold", ((634, 535), (650, 552), (670, 588), (683, 618), (696, 664), (690, 648), (674, 608), (656, 579))),
-        ("amber shoulder stroke", "amber", ((442, 427), (471, 437), (498, 453), (508, 464), (492, 457), (471, 445), (455, 442))),
-        ("abdominal vermilion", "coral", ((360, 435), (405, 467), (448, 504), (501, 545), (545, 580), (577, 601), (552, 587), (526, 571), (498, 554), (460, 525), (419, 491), (383, 460))),
-        ("belly salmon glint", "salmon", ((389, 451), (420, 470), (461, 503), (511, 540), (546, 566), (525, 554), (492, 532), (447, 503), (413, 476))),
-        ("belly broken salmon", "salmon", ((485, 507), (506, 521), (538, 548), (571, 572), (611, 600), (590, 589), (558, 569), (531, 549), (523, 549), (504, 528))),
-        ("lower red sweep", "coral", ((492, 569), (537, 594), (581, 616), (632, 640), (672, 664), (642, 650), (608, 636), (562, 614), (527, 596))),
-        ("caudal orange feather", "amber", ((597, 584), (628, 604), (659, 631), (690, 670), (705, 698), (691, 681), (670, 660), (649, 636), (618, 607))),
-        ("lateral blue fragment", "teal", ((586, 368), (591, 371), (593, 377), (589, 380), (585, 375))),
-        ("lateral blue dry brush", "teal", ((616, 409), (623, 414), (625, 424), (622, 420), (618, 422), (614, 416))),
-        ("blue pigment island", "teal", ((629, 433), (635, 437), (636, 443), (632, 446), (628, 442))),
-        ("lower ink incision", "ink", ((382, 472), (414, 500), (446, 530), (476, 554), (454, 541), (427, 520), (402, 497))),
-        ("warm abdominal dry brush", "salmon", ((545, 524), (561, 538), (588, 558), (612, 582), (601, 575), (579, 556), (566, 550))),
-    )
-    objects = []
-    for side, side_name in ((1, "near"), (-1, "far")):
-        for index, (name, pigment, outline) in enumerate(strokes):
-            objects.append(ctx.patch(
-                f"Paint {side_name} / {name}",
-                outline,
-                lift=0.24 + (index % 3) * 0.035,
-                bulge=0.10 + (index % 2) * 0.04,
-                material=materials[pigment],
-                side=side,
-            ))
-    return objects

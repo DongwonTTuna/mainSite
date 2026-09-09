@@ -79,8 +79,8 @@ def _optical_eye(ctx, name, frame, mats):
     segments = 96
     # Radius, anterior height, material for the annulus ending at this station.
     profile = [(4.0, 8.65, "pupil"), (8.0, 8.3, "pupil"),
-               (11.5, 7.8, "pupil"), (13.8, 7.15, "pupil"),
-               (14.4, 6.92, "iris"), (16.25, 6.05, "iris"),
+               (10.8, 7.8, "pupil"), (12.3, 7.15, "pupil"),
+               (13.0, 6.92, "iris"), (16.25, 6.05, "iris"),
                (17.0, 5.65, "iris_light"), (17.65, 5.25, "ivory"),
                (18.8, 4.7, "iris_gold"), (20.1, 4.0, "iris_gold"),
                (20.65, 3.6, "ink"), (21.6, 2.55, "ink"),
@@ -109,6 +109,16 @@ def _optical_eye(ctx, name, frame, mats):
         faces.append((back, edge+nxt, edge+index))
         regions.append("ink")
     obj = ctx.mesh(name, vertices, faces, mats["pupil"])
+    # A small authored enamel glint echoes the crisp illustrative eye.
+    # It lies on the ocular dome, with real clearcoat reflections above it.
+    for index,face in enumerate(faces):
+        if back in face: continue
+        midpoint=sum((vertices[i] for i in face), vertices[0]*0)/len(face)-center
+        x,y=midpoint.dot(along)*ctx.scale,midpoint.dot(down)*ctx.scale
+        if ((x+4.0)/3.6)**2+((y+6.2)/4.2)**2<1:
+            regions[index]="eye_glint"
+        elif regions[index]=="iris" and index%5==0:
+            regions[index]="iris_light"
     slots = {"pupil": 0}
     for key in dict.fromkeys(regions):
         if key not in slots:
@@ -285,10 +295,11 @@ def build_face(ctx):
         "ivory": ("FFF3CC", 0.28, 0.17, 0.16),
         "silver": ("E6EEF1", 0.23, 0.38, 0.28),
         "iris_gold": ("FFC839", 0.40, 0.12, 0.12),
-        "iris": ("12396B", 0.28, 0.02, 0.14),
-        "iris_light": ("416E9E", 0.35, 0.06, 0.10),
-        "pupil": ("030D25", 0.27, 0.0, 0.12),
+        "iris": ("124E9A", 0.22, 0.0, 0.18),
+        "iris_light": ("3B97CB", 0.24, 0.0, 0.18),
+        "pupil": ("02081B", 0.22, 0.0, 0.08),
         "brow": ("F93D43", 0.42, 0.06, 0.12),
+        "eye_glint": ("F3FDFF", 0.12, 0.0, 0.45),
     }
     mats = {key: ctx.material(f"Anatomy {key}", color, roughness=roughness,
                              metallic=metallic, coat=coat)
@@ -298,9 +309,9 @@ def build_face(ctx):
     for key in ("pupil", "iris", "iris_light", "iris_gold"):
         shader = mats[key].node_tree.nodes.get("Principled BSDF")
         shader.inputs["IOR"].default_value = 1.333
-        shader.inputs["Specular IOR Level"].default_value = 0.24
+        shader.inputs["Specular IOR Level"].default_value = 0.12 if key == "pupil" else 0.3
         shader.inputs["Coat IOR"].default_value = 1.333
-        shader.inputs["Coat Roughness"].default_value = 0.16
+        shader.inputs["Coat Roughness"].default_value = 0.08
     for side in (1, -1):
         _gills_and_jaw(ctx, side, mats)
         _mouth(ctx, side, mats)

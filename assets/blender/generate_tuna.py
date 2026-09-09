@@ -396,7 +396,7 @@ def main():
     tail=bpy.data.objects.new("Tail",None);bpy.context.collection.objects.link(tail);tail.parent=ROOT
     tail.location=((711-512)/SCALE,0,(512-711)/SCALE)
     configure_body_sections()
-    from tuna_paint import body_color,build_paint
+    from tuna_paint import body_color
     from tuna_face import build_face
     body_shader=painted_material("Painted body");fin_shader=painted_material("Painted fin membranes")
     part=SHAPE["parts"][0];coords,triangles=triangulate(part["outline"],5)
@@ -411,7 +411,15 @@ def main():
     for part in SHAPE["parts"][1:]: build_fin(part,fin_shader,tail,glass)
     rib_shader=material("Fin ray pigment","16384E",0.47,0.05,0.08)
     for part in SHAPE["parts"][1:]: fin_rays(part,rib_shader,tail)
-    build_face(ctx);build_paint(ctx)
+    build_face(ctx)
+    # Opaque pigment under polished metal/clearcoat, with no embossed scratches.
+    for shader in bpy.data.materials:
+        if shader.name in ("Painted body","Anatomy operculum","Anatomy suboperculum","Anatomy jaw","Anatomy gold","Anatomy membrane"):
+            node=shader.node_tree.nodes.get("Principled BSDF")
+            node.inputs["Roughness"].default_value=0.26
+            node.inputs["Metallic"].default_value=0.7
+            node.inputs["Coat Weight"].default_value=0.5
+            node.inputs["Coat Roughness"].default_value=0.13
     configure_stage(args.samples,args.resolution)
     export_model()
     bpy.context.preferences.filepaths.save_version=0
