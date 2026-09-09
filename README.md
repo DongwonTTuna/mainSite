@@ -21,7 +21,7 @@ bun run dev --host 127.0.0.1
 - `src/lib/domain/profile/content/`: 기존 프로필과 경력의 다국어 콘텐츠.
 - `assets/blender/dongwon-tuna.blend`: 부위별 메시와 포스터용 카메라·조명을 담은 편집 원본.
 - `assets/blender/generate_tuna.py`: Blender 기본 Python API와 공식 glTF exporter를 사용하는 생성기.
-- `static/models/dongwon-tuna.glb`: 웹용 3D 모델, 약 1.31 MB / 59,248 triangles.
+- `static/models/dongwon-tuna.glb`: 웹용 3D 모델, 3 MB 미만의 양면 PBR 입체 모델 (사진 텍스처 없음).
 - `static/images/tuna-poster.webp`: 같은 모델의 투명 1000×1000 렌더, 약 75 KB.
 
 참고 그림의 색과 실루엣을 입체 조형으로 재해석했습니다. 사진을 평면에 붙인 모델이 아닙니다.
@@ -62,18 +62,18 @@ Three.js와 glTF loader는 초기 본문과 분리된 지연 로딩 청크입니
 
 ```sh
 bun run verify
-bunx playwright install chromium
-bun run test:browser
 ```
 
 `verify`는 Svelte 타입·접근성 검사, Biome, Bun 단위 테스트, Cloudflare adapter 빌드를 실행합니다.
-브라우저 테스트는 배포용 빌드를 로컬 preview 서버에서 실행합니다. 기존 프로필 테스트와
-별도로 3D 재생·재실행, 모델 오류, GPU 초기화 실패·컨텍스트 손실, 로딩 중 이동·모션 설정 변경, 데이터 절약,
-언어 전환, 블로그 왕복, 좁은 화면, 키보드, JavaScript 비활성화를 데스크톱과 모바일 크기에서 확인합니다.
-`e2e/*.pw.ts`는 Playwright가 실행하며 Bun 단위 테스트에는 섞이지 않습니다.
-실패 스크린샷·trace와 검토용 화면은 git에서 제외한 `test-results/`에 저장됩니다.
-브라우저 검증 대상은 Chromium의 데스크톱·모바일 에뮬레이션입니다. 실제 휴대폰 GPU,
-Safari와 운영 환경의 네트워크 성능은 별도 확인 대상입니다. 테스트는 4173 포트를 사용합니다.
+이 명령은 3D 외형이나 브라우저 동작을 검증하지 않습니다. 브라우저 작업은 설치된
+`ego-browser` 스킬과 `~/.codex/runbooks/ego-browser.md`에 따라 ego lite로 수행합니다.
+로컬 검증은 `bun run preview --host 127.0.0.1 --port 4173`으로 빌드 결과를 제공하고,
+참고 그림과 실제 화면 캡처를 비교합니다. 정면·커서 회전·꼬리 움직임에서 얼굴, 실루엣,
+색과 지느러미를 확인하고, 데스크톱·모바일 크기에서 재생·일시정지·모션 감소·데이터 절약·
+fallback·언어 전환·블로그 왕복·키보드 접근성을 확인합니다.
+기존 `e2e/*.pw.ts`는 Bun 단위 테스트에 포함되지 않으며, 에이전트가 별도 Playwright
+브라우저를 실행하는 경로로 사용하지 않습니다. 실제 휴대폰 GPU와 운영 환경의 네트워크 성능은
+별도 확인 대상입니다. 코드 검사 통과나 모델 생성 성공을 시각적 승인으로 간주하지 않습니다.
 
 Blender 수정과 재생성은 `assets/blender/README.md`를 따릅니다.
 수동으로 편집한 `.blend`는 생성기를 다시 실행하기 전에 다른 이름으로 보관해야 합니다.
@@ -87,7 +87,6 @@ Blender 수정과 재생성은 `assets/blender/README.md`를 따릅니다.
 
 ```sh
 bun run verify
-bun run test:browser
 bunx wrangler whoami
 bunx wrangler pages project list
 ```
@@ -103,13 +102,9 @@ bunx wrangler pages deploy .svelte-kit/cloudflare \
 Cloudflare adapter 출력은 `build/`가 아니라 `.svelte-kit/cloudflare`입니다.
 Blender 작업 중 웹에 필요한 `models/dongwon-tuna.glb`와 `images/tuna-poster.webp`가 포함됩니다.
 편집 원본 `.blend`와 참고 사진은 공개 정적 파일로 올리지 않습니다.
-배포 후 운영 주소에서 페이지·모델·포스터의 HTTP 응답과 실제 WebGL·커서 효과·언어 전환을 확인합니다.
-같은 브라우저 회귀 검사를 운영 사이트에 실행할 때는 다음 명령을 사용합니다. 이 경우 로컬
-preview 서버를 시작하지 않습니다. 오류 주입은 테스트 브라우저의 요청·GPU에만 적용됩니다.
-
-```sh
-PLAYWRIGHT_BASE_URL=https://dongwontuna.net bunx playwright test
-```
+배포 후 운영 주소에서 페이지·모델·포스터의 HTTP 응답을 확인하고, ego lite에서 실제
+WebGL·커서 효과·언어 전환과 모바일 크기를 다시 확인합니다. 운영 화면도 캡처하여 참고 그림 및
+검증한 로컬 결과와 비교합니다.
 
 직접 업로드는 GitHub 소스를 갱신하지 않습니다. 이후 Git 연동 배포가 이전 소스로 덮어쓰지 않도록,
 커밋·push는 별도 승인 후 수행합니다. 인증이 만료되면 사용자 본인이 `bunx wrangler login`의

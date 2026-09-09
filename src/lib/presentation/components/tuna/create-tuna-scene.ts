@@ -1,5 +1,4 @@
 import {
-  ACESFilmicToneMapping,
   Box3,
   Color,
   DirectionalLight,
@@ -7,6 +6,7 @@ import {
   HemisphereLight,
   type Material,
   Mesh,
+  NeutralToneMapping,
   type Object3D,
   PerspectiveCamera,
   PMREMGenerator,
@@ -62,7 +62,7 @@ export function createTunaScene(
   });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.6));
   renderer.outputColorSpace = SRGBColorSpace;
-  renderer.toneMapping = ACESFilmicToneMapping;
+  renderer.toneMapping = NeutralToneMapping;
   renderer.toneMappingExposure = 1;
   renderer.setClearColor(new Color("#f8f7f3"), 0);
 
@@ -70,8 +70,8 @@ export function createTunaScene(
   const camera = new PerspectiveCamera(34, 1, 0.1, 50);
   const tuna = new Group();
   scene.add(tuna);
-  scene.add(new HemisphereLight("#fff5db", "#3b607a", 1.5));
-  const keyLight = new DirectionalLight("#fff1da", 2.6);
+  scene.add(new HemisphereLight("#fff5db", "#3b607a", 1.2));
+  const keyLight = new DirectionalLight("#fff1da", 2.2);
   keyLight.position.set(-3, 5, 6);
   scene.add(keyLight);
   const rimLight = new DirectionalLight("#a7dff5", 2.4);
@@ -151,7 +151,7 @@ export function createTunaScene(
     tuna.rotation.x += (-pointerVertical * 0.15 - tuna.rotation.x) * 0.08;
     tuna.rotation.y +=
       (-0.12 +
-        pointerHorizontal * 0.3 +
+        pointerHorizontal * 0.65 +
         Math.sin(elapsed * 0.7) * 0.055 -
         tuna.rotation.y) *
       0.08;
