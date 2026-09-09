@@ -142,8 +142,6 @@
 
 <figure class="tuna-stage" data-scene-state={status}>
   <div class="artwork">
-    <div class="artwork-disc" aria-hidden="true"></div>
-    <div class="orbit" aria-hidden="true"></div>
     <div class="paint-layer">
       {#key splash}<PaintSplash animated={status === "ready"} {paused} />{/key}
     </div>
@@ -173,12 +171,7 @@
 <style>
   .tuna-stage { min-width: 0; width: 100%; margin: 0; align-self: center; }
   .artwork { position: relative; width: 100%; aspect-ratio: 1; isolation: isolate; }
-  .artwork-disc { position: absolute; inset: 13% 8% 12% 8%; border-radius: 50%; background: #eaece1; }
-  .orbit { position: absolute; inset: 6% 2% 8% 6%; border: 1px solid #d5dacc; border-radius: 50%; transform: scaleY(0.92); }
-  .orbit::before, .orbit::after { content: "+"; position: absolute; color: #a3afa7; font: 300 1rem var(--font-mono); }
-  .orbit::before { top: 6%; right: 14%; }
-  .orbit::after { left: 10%; bottom: 8%; }
-  .paint-layer { position: absolute; inset: -2%; pointer-events: none; }
+  .paint-layer { position: absolute; inset: 0; pointer-events: none; }
   .tuna-poster, canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: contain; transition: opacity 350ms ease; }
   .tuna-poster { pointer-events: none; }
   .tuna-poster.replaced { opacity: 0; }
@@ -193,9 +186,9 @@
     to { opacity: 0; transform: scale(3.5); }
   }
   .artwork-index { position: absolute; top: 3%; left: 6%; font-size: 0.56rem; color: var(--text-muted); letter-spacing: 0.1em; }
-  .artwork-signature { position: absolute; right: -1%; bottom: 14%; display: flex; flex-direction: column; align-items: flex-end; color: #68796d; transform: rotate(-7deg); pointer-events: none; }
+  .artwork-signature { position: absolute; left: 5%; bottom: 8%; display: flex; flex-direction: column; align-items: flex-start; color: #68796d; transform: rotate(-7deg); pointer-events: none; }
   .artwork-signature span { font-family: Georgia, serif; font-style: italic; font-size: 0.87rem; }
-  .artwork-signature svg { width: 72px; margin-right: 35%; transform: rotate(140deg); }
+  .artwork-signature svg { width: 72px; margin-left: 55%; }
   figcaption { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; min-height: 54px; padding-left: 6%; }
   .stage-status { max-width: 240px; color: var(--text-muted); font-size: 0.7rem; line-height: 1.6; word-break: keep-all; }
   .stage-controls { display: flex; flex-shrink: 0; gap: 0.4rem; }
@@ -205,7 +198,6 @@
   .control-word { font: 500 0.65rem var(--font-ui); }
   @media (max-width: 1000px) {
     .control-word { display: none; }
-    .artwork-signature { right: 0; font-size: 0.75rem; }
   }
   @media (max-width: 760px) {
     .tuna-stage { max-width: 520px; margin: 1.5rem auto 0.25rem; }
