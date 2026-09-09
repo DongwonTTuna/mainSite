@@ -134,28 +134,28 @@ def _build_eye(ctx, side, mats):
     # The broad red preorbital tissue in the reference wraps around the globe;
     # its irregular shape prevents the eye from looking like an applied button.
     ctx.patch(f"Vermilion preorbital cheek {suffix}",
-              [(235, 214), (261, 207), (283, 208), (303, 205),
-               (322, 208), (334, 218), (342, 231), (340, 243),
-               (325, 256), (305, 259), (287, 252), (269, 240),
-               (249, 237)],
+              [(240, 222), (266, 215), (288, 216), (308, 213),
+               (327, 216), (339, 226), (347, 239), (345, 251),
+               (330, 264), (310, 267), (292, 260), (274, 248),
+               (254, 245)],
               1.2, 2.2, mats["brow"], side)
     ctx.patch(f"Ivory postorbital scale plane {suffix}",
-              [(329, 207), (346, 216), (358, 230), (355, 231),
-               (363, 245), (355, 242), (366, 254), (355, 252),
-               (361, 263), (344, 258), (330, 249), (340, 237), (341, 222)],
+              [(334, 215), (351, 224), (363, 238), (360, 239),
+               (368, 253), (360, 250), (371, 262), (360, 260),
+               (366, 271), (349, 266), (335, 257), (345, 245), (346, 230)],
               1.4, 1.2, mats["ivory"], side)
-    frame = _eye_frame(ctx, 323, 228, side)
+    frame = _eye_frame(ctx, 328, 236, side)
     _optical_eye(ctx, f"Continuous dark ocular dome {suffix}", frame, mats)
     # Partial orbital bones blend into soft tissue instead of surrounding it
     # with a second complete, mechanically concentric ring.
     _ribbon(ctx, f"Supraorbital brow {suffix}",
-            [(299, 224), (304, 211), (317, 205), (331, 209), (341, 217)],
+            [(304, 232), (309, 219), (322, 213), (336, 217), (346, 225)],
             2.8, 3.4, 0.85, mats["bone"], side)
     _ribbon(ctx, f"Supraorbital ivory crest {suffix}",
-            [(305, 211), (315, 207), (325, 208), (333, 213)],
+            [(310, 219), (320, 215), (330, 216), (338, 221)],
             1.1, 4.1, 0.4, mats["ivory"], side)
     _ribbon(ctx, f"Lower orbital skin fold {suffix}",
-            [(305, 242), (317, 251), (330, 250), (341, 240)],
+            [(310, 250), (322, 259), (335, 258), (346, 248)],
             1.8, 3.0, 0.5, mats["lip_red"], side)
 
 
@@ -219,48 +219,48 @@ def _gills_and_jaw(ctx, side, mats):
               [(180, 232), (207, 244), (234, 265), (266, 291),
                (302, 315), (328, 337), (334, 360), (316, 379),
                (285, 365), (253, 343), (225, 314), (202, 279), (188, 250)],
-              1.4, 4.1, mats["jaw"], side)
+              0.8, 1.0, mats["jaw"], side)
     ctx.patch(f"Dentary gold plane {suffix}",
               [(195, 240), (223, 251), (245, 264), (253, 278),
                (279, 294), (314, 319), (292, 316), (260, 297),
                (235, 279), (211, 256)],
-              4.4, 1.0, mats["gold"], side)
+              2.0, 0.25, mats["gold"], side)
     ctx.patch(f"Branchiostegal membrane {suffix}",
               [(225, 304), (255, 331), (301, 355), (340, 369),
                (381, 369), (410, 357), (419, 359), (399, 381),
                (365, 395), (332, 397), (304, 386), (279, 361), (246, 337)],
-              1.9, 3.2, mats["membrane"], side)
+              1.0, 0.6, mats["membrane"], side)
     # The opercular cover overlaps the softer membrane with a free, fine edge.
     ctx.patch(f"Subopercular bone {suffix}",
               [(391, 244), (415, 255), (441, 281), (459, 316),
                (450, 339), (428, 358), (398, 369), (364, 371),
                (337, 357), (367, 343), (394, 318), (404, 284)],
-              3.6, 5.1, mats["suboperculum"], side)
+              0.9, 0.9, mats["suboperculum"], side)
     ctx.patch(f"Raised opercular plate {suffix}",
               [(273, 261), (295, 265), (326, 262), (350, 251),
                (376, 235), (392, 241), (400, 259), (401, 283),
                (395, 307), (383, 328), (367, 339), (345, 340),
                (318, 332), (293, 319), (275, 299), (264, 279)],
-              4.2, 7.6, mats["operculum"], side)
+              1.6, 1.2, mats["operculum"], side)
     _ribbon(ctx, f"Free opercular rear edge {suffix}",
             [(395, 244), (402, 267), (401, 295), (390, 323),
              (372, 342), (349, 347), (321, 339)],
-            2.65, 6.3, 1.2, mats["ink"], side)
+            1.6, 3.0, 0.35, mats["ink"], side)
     _ribbon(ctx, f"Operculum nacre edge {suffix}",
             [(397, 269), (396, 299), (385, 322), (369, 333), (348, 336)],
-            1.75, 7.6, 0.65, mats["ivory"], side)
+            1.2, 3.1, 0.3, mats["ivory"], side)
     _ribbon(ctx, f"Posterior gill opening {suffix}",
             [(407, 250), (429, 272), (447, 302), (454, 324),
              (444, 344), (422, 361), (393, 374), (363, 378),
              (331, 369), (307, 356)],
-            4.2, 4.8, 1.15, mats["ink"], side)
+            2.2, 2.1, 0.4, mats["ink"], side)
     _ribbon(ctx, f"Subopercular enamel rim {suffix}",
             [(424, 269), (440, 296), (447, 319), (438, 338), (416, 354)],
-            2.0, 6.2, 0.75, mats["ivory"], side)
+            1.2, 2.3, 0.3, mats["ivory"], side)
     _ribbon(ctx, f"Lower branchiostegal crease {suffix}",
             [(231, 314), (269, 348), (309, 376), (344, 390),
              (377, 389), (403, 378)],
-            3.8, 4.0, 1.0, mats["ink"], side)
+            2.1, 2.0, 0.35, mats["ink"], side)
     _ribbon(ctx, f"Throat fold {suffix}",
             [(222, 308), (249, 347), (287, 382), (313, 410)],
             3.2, 3.1, 0.8, mats["ink"], side)

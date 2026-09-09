@@ -59,6 +59,25 @@ def painted_material(name):
     return result
 
 
+def body_material():
+    from tuna_paint import pigment_color
+    size=2048
+    pixels=np.ones((size,size,4),dtype=np.float32)
+    u=(np.arange(size)+0.5)[None,:]*FRAME/size
+    for row in range(0,size,64):
+        # Blender image buffers are bottom-up; drawing coordinates are top-down.
+        v=FRAME-(np.arange(row,min(row+64,size))[:,None]+0.5)*FRAME/size
+        pixels[row:row+64,:,:3]=pigment_color(u,v)
+    image=bpy.data.images.new("Authored clean pigments",width=size,height=size,alpha=True)
+    image.colorspace_settings.name="sRGB"
+    image.pixels.foreach_set(pixels.ravel())
+    image.filepath_raw=str(HERE/"tuna-pigments.png");image.file_format="PNG";image.save();image.pack()
+    result=material("Painted body","FFFFFF",0.32,0,0.22)
+    tex=result.node_tree.nodes.new("ShaderNodeTexImage");tex.image=image;tex.interpolation="Linear"
+    result.node_tree.links.new(tex.outputs["Color"],result.node_tree.nodes["Principled BSDF"].inputs["Base Color"])
+    return result
+
+
 def configure_body_sections():
     global SECTION_S, SECTION_LO, SECTION_HI, FORWARD, CROSS
     outline=np.asarray(SHAPE["parts"][0]["outline"],dtype=float)
@@ -169,7 +188,8 @@ def solid_mesh(name,coords,triangles,front,back,shader,colors=None,parent=None,p
 def patch(name,outline,lift,bulge,material,side=1,color_fn=None):
     coords,triangles=triangulate(outline,4)
     distance=distance_to_outline(coords,outline)
-    dome=np.sqrt(np.clip(distance/max(float(max(distance)),1),0,1))
+    dome=np.clip(distance/4.0,0,1)
+    dome=dome*dome*(3-2*dome)
     base=depths(coords)+lift
     front=side*(base+bulge*dome)
     back=side*(base-0.9)
@@ -230,7 +250,7 @@ def fin_color(name,u,v,distance):
     return color
 
 
-def build_fin(part,shader,tail,glass):
+def build_fin(part,shader,tail,edge_glaze):
     name=part["name"]
     coords,triangles=triangulate(part["outline"],4.5)
     distance=distance_to_outline(coords,part["outline"])
@@ -244,20 +264,20 @@ def build_fin(part,shader,tail,glass):
         half=0.8+7*np.sqrt(np.clip(distance/30,0,1))
     else:
         center=np.full(len(coords),0.0)
-        half=0.8+part["depth"]*np.sqrt(np.clip(distance/30,0,1))
+        half=0.55+part["depth"]*0.5*np.sqrt(np.clip(distance/30,0,1))
     # Model actual membrane corrugations; no reference imagery is involved.
     base=np.asarray(part["outline"][0])
     angle=np.arctan2(c[:,1]-base[1],c[:,0]-base[0])
-    half*=1+0.18*np.sin(angle*44)*np.minimum(distance/6,1)
+    half*=1+0.055*np.sin(angle*44)*np.minimum(distance/6,1)
     colors=[fin_color(name,u,v,float(d)) for (u,v),d in zip(coords,distance)]
     parent=tail if name=="TailFan" else ROOT
     pivot=tuple(tail.location) if parent==tail else (0,0,0)
     fin=solid_mesh(name,coords,triangles,center+half,center-half,shader,colors*2,parent,pivot)
-    # A continuous rounded glass rim avoids a jagged triangle-material border.
+    # A thin continuous glazed edge avoids a jagged triangle-material border.
     if name in ("Dorsal","TailFan"):
         outline=part["outline"]
         rim=[Vector(((u-512)/SCALE,0,(512-v)/SCALE))-Vector(pivot) for u,v in outline+[outline[0]]]
-        world_tube(name+" crystal rim",rim,1.25/SCALE,glass,parent,6)
+        world_tube(name+" glazed rim",rim,0.7/SCALE,edge_glaze,parent,6)
     if name in ("Pectoral","Ventral"):
         solid_mesh("Far "+name,coords,triangles,-center-half,-center+half,shader,colors*2,ROOT)
     return coords,center,half
@@ -287,10 +307,10 @@ def fin_rays(part,shader,tail):
                     t=np.clip((u-428)/195,0,1);center=float(depths([(u,v)])[0])+4+t*38;half=1+6*math.sqrt(min(d/26,1))
                 elif name=="Ventral":
                     center=15+np.clip((v-440)/250,0,1)*18;half=0.8+7*math.sqrt(min(d/30,1))
-                else: center=0;half=0.8+part["depth"]*math.sqrt(min(d/30,1))
+                else: center=0;half=0.55+part["depth"]*0.5*math.sqrt(min(d/30,1))
                 base=part["outline"][0]
                 angle=math.atan2(v-base[1],u-base[0])
-                half*=1+0.18*math.sin(angle*44)*min(d/6,1)
+                half*=1+0.055*math.sin(angle*44)*min(d/6,1)
                 points.append(Vector(((u-512)/SCALE,-side*(center+half+0.7)/SCALE,(512-v)/SCALE)))
             parent=tail if name=="TailFan" else ROOT
             if parent==tail: points=[p-tail.location for p in points]
@@ -361,7 +381,13 @@ def web_batches():
                 attr=obj.data.color_attributes.get("Paint")
                 if attr and attr.domain=="POINT": colors.extend(tuple(attr.data[i].color) for i in used)
                 else: colors.extend([(1,1,1,1)]*len(used))
-        batches.append(mesh("Web "+shader.name,vertices,faces,shader,colors if painted else None,parent))
+        batch=mesh("Web "+shader.name,vertices,faces,shader,colors if painted else None,parent)
+        if shader.name=="Painted body":
+            uv=batch.data.uv_layers.new(name="Pigment coordinates")
+            for loop in batch.data.loops:
+                vertex=batch.data.vertices[loop.vertex_index].co
+                uv.data[loop.index].uv=((vertex.x*SCALE+512)/FRAME,(vertex.z*SCALE+512)/FRAME)
+        batches.append(batch)
     return batches
 
 
@@ -372,15 +398,15 @@ def export_model():
     path=REPO/"static/models/dongwon-tuna.glb"
     bpy.ops.export_scene.gltf(filepath=str(path),export_format="GLB",use_selection=True,
         export_yup=True,export_apply=True,export_cameras=False,export_lights=False,export_animations=False,
-        export_extras=False,export_texcoords=False)
+        export_extras=False,export_texcoords=True)
     for obj in batches:
         data=obj.data;bpy.data.objects.remove(obj,do_unlink=True);bpy.data.meshes.remove(data)
     payload=path.read_bytes();doc=json.loads(payload[20:20+struct.unpack_from("<I",payload,12)[0]])
     triangles=sum(doc["accessors"][p["indices"]]["count"]//3 for m in doc["meshes"] for p in m["primitives"])
-    if doc.get("images") or "KHR_materials_unlit" in doc.get("extensionsUsed",[]):
-        raise RuntimeError("The model must contain 3D PBR geometry without source images or unlit materials")
+    if len(doc.get("images",[]))!=1 or "KHR_materials_unlit" in doc.get("extensionsUsed",[]):
+        raise RuntimeError("Expected one independently authored pigment map and lit PBR geometry")
     if len(payload)>=3_000_000: raise RuntimeError(f"GLB exceeds 3 MB: {len(payload)}")
-    print("TUNA_REPORT",json.dumps({"bytes":len(payload),"triangles":triangles,"meshes":len(doc["meshes"]),"materials":len(doc["materials"]),"images":0}))
+    print("TUNA_REPORT",json.dumps({"bytes":len(payload),"triangles":triangles,"meshes":len(doc["meshes"]),"materials":len(doc["materials"]),"images":len(doc.get("images",[]))}))
 
 
 def main():
@@ -396,30 +422,32 @@ def main():
     tail=bpy.data.objects.new("Tail",None);bpy.context.collection.objects.link(tail);tail.parent=ROOT
     tail.location=((711-512)/SCALE,0,(512-711)/SCALE)
     configure_body_sections()
-    from tuna_paint import body_color
     from tuna_face import build_face
-    body_shader=painted_material("Painted body");fin_shader=painted_material("Painted fin membranes")
+    body_shader=body_material();fin_shader=painted_material("Painted fin membranes")
     part=SHAPE["parts"][0];coords,triangles=triangulate(part["outline"],5)
     half=depths(coords)
-    colors=[body_color(u,v,side) for side in (1,-1) for u,v in coords]
-    body=solid_mesh("Body",coords,triangles,half,-half,body_shader,colors)
+    body=solid_mesh("Body",coords,triangles,half,-half,body_shader)
+    uv=body.data.uv_layers.new(name="Pigment coordinates")
+    for loop in body.data.loops:
+        vertex=body.data.vertices[loop.vertex_index].co
+        uv.data[loop.index].uv=((vertex.x*SCALE+512)/FRAME,(vertex.z*SCALE+512)/FRAME)
     ctx=SimpleNamespace(root=ROOT,body=body,scale=SCALE,surface=surface,normal=normal,material=material,tube=tube,patch=patch,mesh=mesh)
-    glass=material("Polished cyan glass edges","D8F2F8",0.16,0.0,0.5)
-    glass.node_tree.nodes["Principled BSDF"].inputs["Transmission Weight"].default_value=0.68
-    glass.node_tree.nodes["Principled BSDF"].inputs["IOR"].default_value=1.46
-    glass.node_tree.nodes["Principled BSDF"].inputs["Coat Roughness"].default_value=0.08
-    for part in SHAPE["parts"][1:]: build_fin(part,fin_shader,tail,glass)
+    edge_glaze=material("Glazed fin edges","22546D",0.32,0.0,0.22)
+    edge_glaze.node_tree.nodes["Principled BSDF"].inputs["Transmission Weight"].default_value=0.0
+    edge_glaze.node_tree.nodes["Principled BSDF"].inputs["IOR"].default_value=1.46
+    edge_glaze.node_tree.nodes["Principled BSDF"].inputs["Coat Roughness"].default_value=0.08
+    for part in SHAPE["parts"][1:]: build_fin(part,fin_shader,tail,edge_glaze)
     rib_shader=material("Fin ray pigment","16384E",0.47,0.05,0.08)
     for part in SHAPE["parts"][1:]: fin_rays(part,rib_shader,tail)
     build_face(ctx)
-    # Opaque pigment under polished metal/clearcoat, with no embossed scratches.
+    # Clean dielectric glaze over opaque pigment; no metallic body response.
     for shader in bpy.data.materials:
         if shader.name in ("Painted body","Anatomy operculum","Anatomy suboperculum","Anatomy jaw","Anatomy gold","Anatomy membrane"):
             node=shader.node_tree.nodes.get("Principled BSDF")
-            node.inputs["Roughness"].default_value=0.26
-            node.inputs["Metallic"].default_value=0.7
-            node.inputs["Coat Weight"].default_value=0.5
-            node.inputs["Coat Roughness"].default_value=0.13
+            node.inputs["Roughness"].default_value=0.32
+            node.inputs["Metallic"].default_value=0.0
+            node.inputs["Coat Weight"].default_value=0.22
+            node.inputs["Coat Roughness"].default_value=0.18
     configure_stage(args.samples,args.resolution)
     export_model()
     bpy.context.preferences.filepaths.save_version=0
